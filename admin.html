@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة التحكم | محمد عمر موتورز</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1216;
+    --sidebar:#12151a;
+    --panel:#1b2430;
+    --panel-2:#20293a;
+    --line: rgba(237,231,218,0.10);
+    --line-strong: rgba(237,231,218,0.20);
+    --gold:#c9a227;
+    --gold-soft:#e4c55e;
+    --ivory:#ede7da;
+    --slate:#8b94a3;
+    --rust:#b23a2e;
+    --green:#3f8f5f;
+    --green-soft:#69c48d;
+    --radius:12px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ivory);
+    font-family:'Tajawal', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{ font-family:'Cairo', sans-serif; font-weight:800; margin:0; }
+  button, input, select{ font-family:inherit; }
+  a{ color:inherit; }
+  :focus-visible{ outline:2px solid var(--gold-soft); outline-offset:2px; border-radius:4px; }
+  @media (prefers-reduced-motion: reduce){ *{ transition:none !important; animation:none !important; } }
+
+  /* ===== LOGIN SCREEN ===== */
+  #login-screen{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 10%, rgba(201,162,39,0.08), transparent 60%),
+      var(--bg);
+    padding:20px;
+  }
+  .login-card{
+    width:100%;
+    max-width:380px;
+    background:var(--panel);
+    border:1px solid var(--line-strong);
+    border-radius:var(--radius);
+    padding:36px 32px;
+    box-shadow:0 30px 60px rgba(0,0,0,0.4);
+  }
+  .login-brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:26px;
+  }
+  .login-brand svg{ width:42px; height:42px; flex-shrink:0; }
+  .login-brand strong{ display:block; font-size:1rem; }
+  .login-brand span{ font-size:0.72rem; color:var(--slate); letter-spacing:0.08em; }
+  .login-title{ font-size:1.3rem; margin-bottom:6px; }
+  .login-sub{ color:var(--slate); font-size:0.88rem; margin-bottom:26px; }
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-size:0.82rem; color:var(--slate); margin-bottom:7px; }
+  .field input{
+    width:100%;
+    padding:11px 13px;
+    border-radius:8px;
+    border:1px solid var(--line-strong);
+    background:var(--bg);
+    color:var(--ivory);
+    font-size:0.92rem;
+  }
+  .field input:focus{ border-color:var(--gold-soft); }
+  .login-hint{
+    font-size:0.76rem;
+    color:var(--slate);
+    background:rgba(201,162,39,0.08);
+    border:1px dashed var(--line-strong);
+    padding:9px 11px;
+    border-radius:8px;
+    margin-bottom:20px;
+  }
+  .login-error{
+    font-size:0.82rem;
+    color:var(--rust);
+    margin-bottom:14px;
+    display:none;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:0.9rem;
+    padding:12px 20px;
+    border-radius:8px;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease;
+  }
+  .btn-gold{ background:linear-gradient(180deg, var(--gold-soft), var(--gold)); color:#1a1305; }
+  .btn-gold:hover{ transform:translateY(-1px); box-shadow:0 10px 22px rgba(201,162,39,0.28); }
+  .btn-ghost{ background:transparent; border-color:var(--line-strong); color:var(--ivory); }
+  .btn-ghost:hover{ border-color:var(--gold-soft); color:var(--gold-soft); }
+  .btn-block{ width:100%; }
+  .btn-sm{ padding:7px 12px; font-size:0.78rem; }
+  .btn-danger-ghost{ background:transparent; border-color:rgba(178,58,46,0.4); color:var(--rust); }
+  .btn-danger-ghost:hover{ background:rgba(178,58,46,0.1); }
+  .back-link{
+    display:block;
+    text-align:center;
+    margin-top:18px;
+    font-size:0.82rem;
+    color:var(--slate);
+  }
+  .back-link:hover{ color:var(--gold-soft); }
+
+  /* ===== APP SHELL ===== */
+  #app-shell{ display:none; }
+  #app-shell.is-active{ display:flex; min-height:100vh; }
+
+  .sidebar{
+    width:240px;
+    flex-shrink:0;
+    background:var(--sidebar);
+    border-left:1px solid var(--line);
+    padding:22px 16px;
+    display:flex;
+    flex-direction:column;
+    position:sticky;
+    top:0;
+    height:100vh;
+  }
+  .sidebar-brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:6px 8px 22px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:16px;
+  }
+  .sidebar-brand svg{ width:34px; height:34px; flex-shrink:0; }
+  .sidebar-brand strong{ font-size:0.88rem; display:block; }
+  .sidebar-brand span{ font-size:0.66rem; color:var(--slate); letter-spacing:0.06em; }
+
+  .nav-group{ margin-bottom:8px; }
+  .nav-label{
+    font-size:0.68rem;
+    color:var(--slate);
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    padding:10px 10px 8px;
+  }
+  .nav-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    width:100%;
+    text-align:right;
+    background:transparent;
+    border:none;
+    color:var(--slate);
+    padding:10px 12px;
+    border-radius:8px;
+    font-size:0.9rem;
+    cursor:pointer;
+    margin-bottom:3px;
+    transition:background .15s ease, color .15s ease;
+  }
+  .nav-item svg{ width:18px; height:18px; flex-shrink:0; }
+  .nav-item:hover{ background:var(--panel); color:var(--ivory); }
+  .nav-item.is-active{ background:var(--panel-2); color:var(--gold-soft); }
+  .nav-item.is-active svg{ color:var(--gold-soft); }
+
+  .sidebar-foot{ margin-top:auto; padding-top:16px; border-top:1px solid var(--line); }
+  .admin-chip{
+    display:flex; align-items:center; gap:9px;
+    padding:8px; border-radius:8px; margin-bottom:8px;
+  }
+  .admin-avatar{
+    width:32px; height:32px; border-radius:50%;
+    background:var(--panel-2);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Cairo', sans-serif; font-weight:800; font-size:0.75rem; color:var(--gold-soft);
+    border:1px solid var(--line-strong);
+  }
+  .admin-chip b{ display:block; font-size:0.82rem; }
+  .admin-chip span{ font-size:0.7rem; color:var(--slate); }
+
+  .main{
+    flex:1;
+    min-width:0;
+    padding:26px 32px 60px;
+  }
+  .main-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:26px;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .main-title{ font-size:1.4rem; }
+  .main-sub{ color:var(--slate); font-size:0.86rem; margin-top:4px; }
+
+  .view{ display:none; }
+  .view.is-active{ display:block; }
+
+  /* KPI cards */
+  .kpi-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+    margin-bottom:28px;
+  }
+  .kpi-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:18px 20px;
+  }
+  .kpi-card span{ font-size:0.8rem; color:var(--slate); }
+  .kpi-card b{
+    display:block;
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:1.6rem;
+    margin-top:8px;
+    color:var(--gold-soft);
+  }
+  .kpi-card small{ color:var(--slate); font-size:0.74rem; }
+
+  /* panel / table shell */
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+    margin-bottom:24px;
+  }
+  .panel-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 20px;
+    border-bottom:1px solid var(--line);
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .panel-head h3{ font-size:1rem; }
+  .panel-tools{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  .search-box{
+    display:flex; align-items:center; gap:8px;
+    background:var(--bg);
+    border:1px solid var(--line-strong);
+    border-radius:8px;
+    padding:8px 12px;
+  }
+  .search-box svg{ width:16px; height:16px; color:var(--slate); flex-shrink:0; }
+  .search-box input{
+    background:transparent; border:none; color:var(--ivory);
+    font-size:0.85rem; width:170px;
+  }
+  .search-box input:focus{ outline:none; }
+  select.filter-select{
+    background:var(--bg);
+    border:1px solid var(--line-strong);
+    color:var(--ivory);
+    padding:8px 12px;
+    border-radius:8px;
+    font-size:0.85rem;
+  }
+
+  table{ width:100%; border-collapse:collapse; }
+  thead th{
+    text-align:right;
+    font-size:0.74rem;
+    color:var(--slate);
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    padding:12px 20px;
+    border-bottom:1px solid var(--line);
+    white-space:nowrap;
+  }
+  tbody td{
+    padding:14px 20px;
+    font-size:0.87rem;
+    border-bottom:1px solid var(--line);
+    vertical-align:middle;
+  }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody tr:hover{ background:rgba(255,255,255,0.02); }
+
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:0.72rem;
+    padding:5px 11px;
+    border-radius:20px;
+  }
+  .badge::before{ content:""; width:6px; height:6px; border-radius:50%; }
+  .badge-confirmed{ background:rgba(63,143,95,0.14); color:var(--green-soft); }
+  .badge-confirmed::before{ background:var(--green-soft); }
+  .badge-pending{ background:rgba(228,197,94,0.14); color:var(--gold-soft); }
+  .badge-pending::before{ background:var(--gold-soft); }
+  .badge-cancelled{ background:rgba(178,58,46,0.14); color:#e0796d; }
+  .badge-cancelled::before{ background:#e0796d; }
+  .badge-maintenance{ background:rgba(178,58,46,0.14); color:#e0796d; }
+  .badge-maintenance::before{ background:#e0796d; }
+  .badge-available{ background:rgba(63,143,95,0.14); color:var(--green-soft); }
+  .badge-available::before{ background:var(--green-soft); }
+  .badge-rented{ background:rgba(228,197,94,0.14); color:var(--gold-soft); }
+  .badge-rented::before{ background:var(--gold-soft); }
+
+  .status-select{
+    background:var(--bg);
+    border:1px solid var(--line-strong);
+    color:var(--ivory);
+    font-size:0.8rem;
+    padding:6px 10px;
+    border-radius:7px;
+  }
+
+  .row-actions{ display:flex; gap:8px; }
+  .icon-btn{
+    width:30px; height:30px;
+    display:flex; align-items:center; justify-content:center;
+    background:transparent;
+    border:1px solid var(--line-strong);
+    border-radius:7px;
+    color:var(--slate);
+    cursor:pointer;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .icon-btn:hover{ color:var(--gold-soft); border-color:var(--gold-soft); }
+  .icon-btn.danger:hover{ color:var(--rust); border-color:var(--rust); }
+  .icon-btn svg{ width:14px; height:14px; }
+
+  .empty-row td{ text-align:center; color:var(--slate); padding:34px 20px; }
+
+  /* fleet grid */
+  .fleet-admin-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+  }
+  .fleet-admin-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:18px 20px;
+  }
+  .fac-top{
+    display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:12px;
+  }
+  .fac-cat{ font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold-soft); }
+  .fac-name{ font-family:'Cairo', sans-serif; font-weight:800; font-size:1.02rem; margin-top:4px; }
+  .fac-specs{ display:flex; gap:16px; color:var(--slate); font-size:0.8rem; margin:12px 0; flex-wrap:wrap; }
+  .fac-bottom{ display:flex; align-items:center; justify-content:space-between; }
+  .fac-price{ font-family:'Cairo', sans-serif; font-weight:800; color:var(--gold-soft); font-size:1.05rem; }
+
+  /* branches */
+  .branch-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+  .branch-card{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+    padding:18px 20px;
+  }
+  .branch-card h4{ font-size:0.98rem; margin-bottom:6px; }
+  .branch-card p{ color:var(--slate); font-size:0.85rem; margin:2px 0; }
+
+  /* modal */
+  .modal-backdrop{
+    position:fixed; inset:0; background:rgba(8,10,13,0.6);
+    display:none; align-items:center; justify-content:center;
+    padding:20px; z-index:100;
+  }
+  .modal-backdrop.is-active{ display:flex; }
+  .modal{
+    width:100%; max-width:460px;
+    background:var(--panel);
+    border:1px solid var(--line-strong);
+    border-radius:var(--radius);
+    padding:26px;
+    max-height:88vh;
+    overflow-y:auto;
+  }
+  .modal h3{ font-size:1.1rem; margin-bottom:18px; }
+  .modal .field label{ font-size:0.8rem; color:var(--slate); margin-bottom:6px; display:block; }
+  .modal .field input, .modal .field select{
+    width:100%; padding:10px 12px; border-radius:8px;
+    border:1px solid var(--line-strong); background:var(--bg); color:var(--ivory);
+    font-size:0.88rem;
+  }
+  .modal .field{ margin-bottom:14px; }
+  .modal-row{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .modal-actions{ display:flex; gap:10px; justify-content:flex-end; margin-top:8px; }
+
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--panel-2); border:1px solid var(--line-strong);
+    color:var(--ivory); padding:12px 20px; border-radius:9px;
+    font-size:0.85rem; opacity:0; transition:opacity .25s ease, transform .25s ease;
+    z-index:200;
+  }
+  .toast.is-visible{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  @media (max-width:1000px){
+    .kpi-grid{ grid-template-columns:repeat(2,1fr); }
+    .fleet-admin-grid, .branch-grid{ grid-template-columns:1fr; }
+  }
+  @media (max-width:820px){
+    #app-shell.is-active{ flex-direction:column; }
+    .sidebar{ width:100%; height:auto; position:relative; flex-direction:row; align-items:center; overflow-x:auto; }
+    .sidebar-brand{ border-bottom:none; border-left:1px solid var(--line); padding:6px 14px 6px 0; margin-bottom:0; }
+    .nav-group{ display:flex; gap:4px; margin-bottom:0; }
+    .nav-label{ display:none; }
+    .sidebar-foot{ display:none; }
+    .main{ padding:20px; }
+  }
+  @media (max-width:560px){
+    .kpi-grid{ grid-template-columns:1fr; }
+    table{ font-size:0.8rem; }
+    thead th, tbody td{ padding:10px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN SCREEN ============ -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-brand">
+      <svg viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="28" stroke="#c9a227" stroke-width="2"/><text x="30" y="38" text-anchor="middle" font-family="Cairo, sans-serif" font-weight="800" font-size="20" fill="#ede7da">MO</text></svg>
+      <div>
+        <strong>محمد عمر موتورز</strong>
+        <span>لوحة التحكم الإدارية</span>
+      </div>
+    </div>
+    <h1 class="login-title">تسجيل دخول الموظفين</h1>
+    <p class="login-sub">الوصول لهذه الصفحة مخصص لفريق العمل فقط.</p>
+    <p class="login-error" id="login-error">البريد أو كلمة المرور غير صحيحة.</p>
+    <form id="login-form">
+      <div class="field">
+        <label for="login-email">البريد الإلكتروني</label>
+        <input id="login-email" type="email" placeholder="omarcar2007" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label for="login-pass">كلمة المرور</label>
+        <input id="login-pass" type="password" placeholder="omarkhaled123" autocomplete="current-password" required>
+      </div>
+      <div class="login-hint">تجربة العرض: admin@momotors.example / admin123</div>
+      <button type="submit" class="btn btn-gold btn-block">دخول للوحة التحكم</button>
+    </form>
+    <a href="mohamed-omar-motors.html" class="back-link">← الرجوع لموقع العملاء</a>
+  </div>
+</div>
+
+<!-- ============ ADMIN APP SHELL ============ -->
+<div id="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <svg viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="28" stroke="#c9a227" stroke-width="2"/><text x="30" y="38" text-anchor="middle" font-family="Cairo, sans-serif" font-weight="800" font-size="20" fill="#ede7da">MO</text></svg>
+      <div>
+        <strong>محمد عمر موتورز</strong>
+        <span>ADMIN PANEL</span>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">الإدارة</div>
+      <button class="nav-item is-active" data-view="overview">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>
+        نظرة عامة
+      </button>
+      <button class="nav-item" data-view="bookings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4M16 3v4"/></svg>
+        الحجوزات
+      </button>
+      <button class="nav-item" data-view="fleet">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17h1M20 17h1M6 17a2 2 0 1 0 4 0 2 2 0 0 0-4 0zM14 17a2 2 0 1 0 4 0 2 2 0 0 0-4 0z"/><path d="M4 17l1-6 2-3h8l3 3 2 6"/></svg>
+        الأسطول
+      </button>
+      <button class="nav-item" data-view="branches">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></svg>
+        الفروع
+      </button>
+    </div>
+
+    <div class="sidebar-foot">
+      <div class="admin-chip">
+        <div class="admin-avatar" id="admin-initials">أد</div>
+        <div>
+          <b id="admin-name">مدير النظام</b>
+          <span id="admin-email">admin@momotors.example</span>
+        </div>
+      </div>
+      <button class="btn btn-ghost btn-block btn-sm" id="logout-btn">تسجيل الخروج</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- OVERVIEW -->
+    <section class="view is-active" id="view-overview">
+      <div class="main-head">
+        <div>
+          <h1 class="main-title">نظرة عامة</h1>
+          <p class="main-sub">ملخص سريع على أداء اليوم</p>
+        </div>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card"><span>حجوزات اليوم</span><b id="kpi-today">—</b><small>مقارنة بالأمس</small></div>
+        <div class="kpi-card"><span>سيارات متاحة</span><b id="kpi-available">—</b><small>من إجمالي الأسطول</small></div>
+        <div class="kpi-card"><span>إيرادات الشهر</span><b id="kpi-revenue">—</b><small>جنيه مصري</small></div>
+        <div class="kpi-card"><span>معدل الإشغال</span><b id="kpi-occupancy">—</b><small>من كل الفروع</small></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>أحدث الحجوزات</h3>
+          <button class="btn btn-ghost btn-sm" data-nav="bookings">عرض الكل</button>
+        </div>
+        <table>
+          <thead>
+            <tr><th>العميل</th><th>السيارة</th><th>الفرع</th><th>الحالة</th></tr>
+          </thead>
+          <tbody id="overview-bookings-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- BOOKINGS -->
+    <section class="view" id="view-bookings">
+      <div class="main-head">
+        <div>
+          <h1 class="main-title">الحجوزات</h1>
+          <p class="main-sub">إدارة حالة كل عملية حجز</p>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <h3>كل الحجوزات (<span id="bookings-count">0</span>)</h3>
+          <div class="panel-tools">
+            <div class="search-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+              <input type="text" id="booking-search" placeholder="ابحث باسم العميل...">
+            </div>
+            <select class="filter-select" id="booking-filter">
+              <option value="all">كل الحالات</option>
+              <option value="مؤكد">مؤكد</option>
+              <option value="قيد الانتظار">قيد الانتظار</option>
+              <option value="ملغي">ملغي</option>
+            </select>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>رقم الحجز</th><th>العميل</th><th>الهاتف</th><th>السيارة</th><th>من - إلى</th><th>الفرع</th><th>المبلغ</th><th>الحالة</th>
+            </tr>
+          </thead>
+          <tbody id="bookings-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- FLEET -->
+    <section class="view" id="view-fleet">
+      <div class="main-head">
+        <div>
+          <h1 class="main-title">إدارة الأسطول</h1>
+          <p class="main-sub">أضف أو عدّل بيانات السيارات المعروضة للعملاء</p>
+        </div>
+        <button class="btn btn-gold" id="add-car-btn">+ إضافة سيارة</button>
+      </div>
+      <div class="fleet-admin-grid" id="fleet-admin-grid"></div>
+    </section>
+
+    <!-- BRANCHES -->
+    <section class="view" id="view-branches">
+      <div class="main-head">
+        <div>
+          <h1 class="main-title">الفروع</h1>
+          <p class="main-sub">بيانات فروع الاستلام والتسليم</p>
+        </div>
+      </div>
+      <div class="branch-grid" id="branch-grid"></div>
+    </section>
+  </main>
+</div>
+
+<!-- ADD/EDIT CAR MODAL -->
+<div class="modal-backdrop" id="car-modal-backdrop">
+  <div class="modal">
+    <h3 id="car-modal-title">إضافة سيارة جديدة</h3>
+    <form id="car-form">
+      <div class="field">
+        <label>اسم السيارة</label>
+        <input type="text" id="car-name" placeholder="مثال: تويوتا كورولا 2024" required>
+      </div>
+      <div class="modal-row">
+        <div class="field">
+          <label>الفئة</label>
+          <select id="car-cat">
+            <option>اقتصادية</option>
+            <option>صالون</option>
+            <option>SUV</option>
+            <option>فاخرة</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>السعر لليوم (ج.م)</label>
+          <input type="number" id="car-price" min="0" required>
+        </div>
+      </div>
+      <div class="modal-row">
+        <div class="field">
+          <label>ناقل الحركة</label>
+          <select id="car-trans">
+            <option>أوتوماتيك</option>
+            <option>مانيوال</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>عدد الركاب</label>
+          <input type="number" id="car-seats" min="1" max="9" value="5" required>
+        </div>
+      </div>
+      <div class="field">
+        <label>الحالة</label>
+        <select id="car-status">
+          <option value="available">متاحة</option>
+          <option value="rented">محجوزة حاليًا</option>
+          <option value="maintenance">في الصيانة</option>
+        </select>
+      </div>
+      <input type="hidden" id="car-id">
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" id="car-cancel-btn">إلغاء</button>
+        <button type="submit" class="btn btn-gold">حفظ السيارة</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  /* ============ DEMO DATA (in-memory only — no backend) ============ */
+  const DEMO_ADMIN = { email:'admin@momotors.example', password:'admin123', name:'مدير النظام' };
+
+  let cars = [
+    { id:1, name:'هيونداي إلنترا 2023', cat:'اقتصادية', price:550, trans:'أوتوماتيك', seats:5, status:'available' },
+    { id:2, name:'تويوتا كورولا 2024', cat:'صالون', price:750, trans:'أوتوماتيك', seats:5, status:'available' },
+    { id:3, name:'هيونداي توسان 2023', cat:'SUV', price:1200, trans:'أوتوماتيك', seats:5, status:'rented' },
+    { id:4, name:'مرسيدس E200 2024', cat:'فاخرة', price:2500, trans:'أوتوماتيك', seats:5, status:'maintenance' }
+  ];
+
+  let bookings = [
+    { id:'BK-1042', customer:'أحمد فتحي', car:'هيونداي إلنترا 2023', from:'20 يوليو', to:'23 يوليو', branch:'القاهرة', amount:1650, status:'مؤكد' },
+    { id:'BK-1041', customer:'منى الشربيني', car:'تويوتا كورولا 2024', from:'19 يوليو', to:'25 يوليو', branch:'الإسكندرية', amount:4500, status:'قيد الانتظار' },
+    { id:'BK-1040', customer:'كريم عادل', car:'هيونداي توسان 2023', from:'18 يوليو', to:'20 يوليو', branch:'الجيزة', amount:2400, status:'مؤكد' },
+    { id:'BK-1039', customer:'سارة حماد', car:'مرسيدس E200 2024', from:'15 يوليو', to:'17 يوليو', branch:'شرم الشيخ', amount:5000, status:'ملغي' },
+    { id:'BK-1038', customer:'يوسف طارق', car:'تويوتا كورولا 2024', from:'14 يوليو', to:'16 يوليو', branch:'القاهرة', amount:1500, status:'مؤكد' }
+  ];
+
+  const branches = [
+    { name:'القاهرة - مدينة نصر', address:'شارع عباس العقاد، مدينة نصر', phone:'01000000001' },
+    { name:'الجيزة - الشيخ زايد', address:'محور 26 يوليو، الشيخ زايد', phone:'01000000002' },
+    { name:'الإسكندرية - سموحة', address:'طريق الحرية، سموحة', phone:'01000000003' },
+    { name:'شرم الشيخ', address:'شارع الفنادق، شرم الشيخ', phone:'01000000004' }
+  ];
+
+  /* ============ LOGIN ============ */
+  const loginScreen = document.getElementById('login-screen');
+  const appShell = document.getElementById('app-shell');
+  const loginForm = document.getElementById('login-form');
+  const loginError = document.getElementById('login-error');
+
+  loginForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const email = document.getElementById('login-email').value.trim();
+    const pass = document.getElementById('login-pass').value.trim();
+    if(email === DEMO_ADMIN.email && pass === DEMO_ADMIN.password){
+      loginError.style.display = 'none';
+      loginScreen.style.display = 'none';
+      appShell.classList.add('is-active');
+      document.getElementById('admin-email').textContent = email;
+    } else {
+      loginError.style.display = 'block';
+    }
+  });
+
+  document.getElementById('logout-btn').addEventListener('click', ()=>{
+    appShell.classList.remove('is-active');
+    loginScreen.style.display = 'flex';
+    loginForm.reset();
+  });
+
+  /* ============ NAV ============ */
+  const navItems = document.querySelectorAll('.nav-item[data-view]');
+  const views = document.querySelectorAll('.view');
+  function switchView(name){
+    navItems.forEach(b=> b.classList.toggle('is-active', b.dataset.view === name));
+    views.forEach(v=> v.classList.toggle('is-active', v.id === 'view-' + name));
+  }
+  navItems.forEach(btn=> btn.addEventListener('click', ()=> switchView(btn.dataset.view)));
+  document.querySelectorAll('[data-nav]').forEach(btn=>{
+    btn.addEventListener('click', ()=> switchView(btn.dataset.nav));
+  });
+
+  /* ============ TOAST ============ */
+  const toastEl = document.getElementById('toast');
+  function showToast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add('is-visible');
+    setTimeout(()=> toastEl.classList.remove('is-visible'), 2200);
+  }
+
+  /* ============ OVERVIEW ============ */
+  function renderOverview(){
+    document.getElementById('kpi-today').textContent = bookings.length;
+    document.getElementById('kpi-available').textContent = cars.filter(c=>c.status==='available').length + ' / ' + cars.length;
+    const revenue = bookings.filter(b=>b.status!=='ملغي').reduce((s,b)=> s+b.amount, 0);
+    document.getElementById('kpi-revenue').textContent = revenue.toLocaleString('ar-EG') + ' ج.م';
+    const occ = Math.round((cars.filter(c=>c.status==='rented').length / cars.length) * 100);
+    document.getElementById('kpi-occupancy').textContent = occ + '%';
+
+    const body = document.getElementById('overview-bookings-body');
+    body.innerHTML = '';
+    bookings.slice(0,4).forEach(b=>{
+      body.innerHTML += `<tr>
+        <td>${b.customer}</td>
+        <td>${b.car}</td>
+        <td>${b.branch}</td>
+        <td>${statusBadge(b.status)}</td>
+      </tr>`;
+    });
+  }
+
+  function statusBadge(status){
+    const map = { 'مؤكد':'badge-confirmed', 'قيد الانتظار':'badge-pending', 'ملغي':'badge-cancelled' };
+    return `<span class="badge ${map[status]||''}">${status}</span>`;
+  }
+
+  /* ============ BOOKINGS ============ */
+  const bookingSearch = document.getElementById('booking-search');
+  const bookingFilter = document.getElementById('booking-filter');
+
+  function renderBookings(){
+    const q = bookingSearch.value.trim();
+    const f = bookingFilter.value;
+    const filtered = bookings.filter(b=>{
+      const matchesSearch = !q || b.customer.includes(q);
+      const matchesFilter = f === 'all' || b.status === f;
+      return matchesSearch && matchesFilter;
+    });
+    document.getElementById('bookings-count').textContent = bookings.length;
+    const body = document.getElementById('bookings-body');
+    body.innerHTML = '';
+    if(filtered.length === 0){
+      body.innerHTML = `<tr class="empty-row"><td colspan="8">مفيش حجوزات مطابقة للبحث الحالي.</td></tr>`;
+      return;
+    }
+    filtered.forEach(b=>{
+      body.innerHTML += `<tr>
+        <td>${b.id}</td>
+        <td>${b.customer}</td>
+        <td>${b.phone || '—'}</td>
+        <td>${b.car}</td>
+        <td>${b.from} → ${b.to}</td>
+        <td>${b.branch}</td>
+        <td>${b.amount.toLocaleString('ar-EG')} ج.م</td>
+        <td>
+          <select class="status-select" data-id="${b.id}">
+            <option ${b.status==='مؤكد'?'selected':''}>مؤكد</option>
+            <option ${b.status==='قيد الانتظار'?'selected':''}>قيد الانتظار</option>
+            <option ${b.status==='ملغي'?'selected':''}>ملغي</option>
+          </select>
+        </td>
+      </tr>`;
+    });
+    body.querySelectorAll('.status-select').forEach(sel=>{
+      sel.addEventListener('change', ()=>{
+        const b = bookings.find(x=> x.id === sel.dataset.id);
+        b.status = sel.value;
+        showToast(`تم تحديث حالة الحجز ${b.id} إلى "${b.status}"`);
+        renderOverview();
+      });
+    });
+  }
+  bookingSearch.addEventListener('input', renderBookings);
+  bookingFilter.addEventListener('change', renderBookings);
+
+  /* ============ FLEET ============ */
+  const fleetGrid = document.getElementById('fleet-admin-grid');
+  const carModalBackdrop = document.getElementById('car-modal-backdrop');
+  const carForm = document.getElementById('car-form');
+
+  function fleetStatusBadge(status){
+    const map = {
+      available:['badge-available','متاحة'],
+      rented:['badge-rented','محجوزة حاليًا'],
+      maintenance:['badge-maintenance','في الصيانة']
+    };
+    const [cls, label] = map[status];
+    return `<span class="badge ${cls}">${label}</span>`;
+  }
+
+  function renderFleet(){
+    fleetGrid.innerHTML = '';
+    cars.forEach(car=>{
+      fleetGrid.innerHTML += `
+      <div class="fleet-admin-card">
+        <div class="fac-top">
+          <div>
+            <div class="fac-cat">${car.cat}</div>
+            <div class="fac-name">${car.name}</div>
+          </div>
+          ${fleetStatusBadge(car.status)}
+        </div>
+        <div class="fac-specs">
+          <span>${car.trans}</span>
+          <span>${car.seats} ركاب</span>
+        </div>
+        <div class="fac-bottom">
+          <span class="fac-price">${car.price.toLocaleString('ar-EG')} ج.م / يوم</span>
+          <div class="row-actions">
+            <button class="icon-btn edit-car-btn" data-id="${car.id}" aria-label="تعديل">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+            </button>
+            <button class="icon-btn danger delete-car-btn" data-id="${car.id}" aria-label="حذف">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>`;
+    });
+
+    fleetGrid.querySelectorAll('.edit-car-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=> openCarModal(Number(btn.dataset.id)));
+    });
+    fleetGrid.querySelectorAll('.delete-car-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const car = cars.find(c=> c.id === Number(btn.dataset.id));
+        cars = cars.filter(c=> c.id !== Number(btn.dataset.id));
+        renderFleet(); renderOverview();
+        showToast(`تم حذف "${car.name}" من الأسطول`);
+      });
+    });
+  }
+
+  function openCarModal(id){
+    carForm.reset();
+    if(id){
+      const car = cars.find(c=> c.id === id);
+      document.getElementById('car-modal-title').textContent = 'تعديل بيانات السيارة';
+      document.getElementById('car-id').value = car.id;
+      document.getElementById('car-name').value = car.name;
+      document.getElementById('car-cat').value = car.cat;
+      document.getElementById('car-price').value = car.price;
+      document.getElementById('car-trans').value = car.trans;
+      document.getElementById('car-seats').value = car.seats;
+      document.getElementById('car-status').value = car.status;
+    } else {
+      document.getElementById('car-modal-title').textContent = 'إضافة سيارة جديدة';
+      document.getElementById('car-id').value = '';
+    }
+    carModalBackdrop.classList.add('is-active');
+  }
+  function closeCarModal(){ carModalBackdrop.classList.remove('is-active'); }
+
+  document.getElementById('add-car-btn').addEventListener('click', ()=> openCarModal(null));
+  document.getElementById('car-cancel-btn').addEventListener('click', closeCarModal);
+  carModalBackdrop.addEventListener('click', (e)=>{ if(e.target === carModalBackdrop) closeCarModal(); });
+
+  carForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const id = document.getElementById('car-id').value;
+    const data = {
+      name: document.getElementById('car-name').value.trim(),
+      cat: document.getElementById('car-cat').value,
+      price: Number(document.getElementById('car-price').value),
+      trans: document.getElementById('car-trans').value,
+      seats: Number(document.getElementById('car-seats').value),
+      status: document.getElementById('car-status').value
+    };
+    if(id){
+      const car = cars.find(c=> c.id === Number(id));
+      Object.assign(car, data);
+      showToast(`تم تحديث بيانات "${car.name}"`);
+    } else {
+      const newId = cars.length ? Math.max(...cars.map(c=>c.id)) + 1 : 1;
+      cars.push({ id:newId, ...data });
+      showToast(`تمت إضافة "${data.name}" للأسطول`);
+    }
+    closeCarModal();
+    renderFleet();
+    renderOverview();
+  });
+
+  /* ============ BRANCHES ============ */
+  function renderBranches(){
+    const grid = document.getElementById('branch-grid');
+    grid.innerHTML = '';
+    branches.forEach(b=>{
+      grid.innerHTML += `
+      <div class="branch-card">
+        <h4>${b.name}</h4>
+        <p>${b.address}</p>
+        <p>${b.phone}</p>
+      </div>`;
+    });
+  }
+
+  /* ============ استقبال حجوزات موقع العميل ============ */
+  // يقرأ الحجوزات اللي بعتها العملاء من صفحة الموقع عبر التخزين المشترك.
+  // ده بيشتغل فقط لما الصفحتين مفتوحين داخل معاينة Claude لنفس المحادثة/الأداة.
+  // في أي بيئة تانية (فتح الملف عادي في المتصفح) الاعتماد الأساسي هو رسالة الواتساب اللي بتوصل مباشرة.
+  async function syncLiveBookings(){
+    if(!window.storage) return;
+    try{
+      const list = await window.storage.list('booking:', true);
+      if(!list || !list.keys) return;
+      for(const key of list.keys){
+        if(bookings.some(b=> b.sourceKey === key)) continue;
+        try{
+          const res = await window.storage.get(key, true);
+          if(!res || !res.value) continue;
+          const order = JSON.parse(res.value);
+          const carNames = (order.items || []).map(i=> `${i.name} ×${i.qty}`).join('، ');
+          bookings.unshift({
+            id: order.id,
+            sourceKey: key,
+            customer: order.customer,
+            phone: order.phone,
+            car: carNames || '—',
+            from: 'من الموقع', to: '',
+            branch: 'حجز أونلاين',
+            amount: order.total || 0,
+            status: order.status || 'قيد الانتظار'
+          });
+        } catch(err){ /* تجاهل عنصر تالف */ }
+      }
+      renderBookings();
+      renderOverview();
+    } catch(err){ /* التخزين المشترك غير متاح في هذه البيئة */ }
+  }
+
+  syncLiveBookings();
+  setInterval(syncLiveBookings, 6000);
+
+  /* ============ INIT ============ */
+  renderOverview();
+  renderBookings();
+  renderFleet();
+  renderBranches();
+</script>
+<div>
+  <input id="carName" placeholder="اسم العربية">
+  <input id="carPrice" placeholder="السعر">
+  <button onclick="addCar()">إضافة عربية</button>
+</div>
+function addCar(){
+  let name = document.getElementById("carName").value;
+  let price = document.getElementById("carPrice").value;
+
+  let cars = JSON.parse(localStorage.getItem("cars")) || [];
+
+  cars.push({
+    name: name,
+    price: price
+  });
+
+  localStorage.setItem("cars", JSON.stringify(cars));
+
+  alert("تمت إضافة العربية");
+}
+</script>
+</body>
+</html>
