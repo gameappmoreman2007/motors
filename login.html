@@ -242,8 +242,43 @@
   }
   .toast.is-visible{ opacity:1; transform:translateX(-50%) translateY(0); }
 
-  /* Success step */
+  .avatar-upload-box{
+    width:84px; height:84px;
+    border-radius:50%;
+    border:1.5px dashed var(--line-strong);
+    background:var(--bg);
+    display:flex; align-items:center; justify-content:center;
+    margin:0 auto;
+    cursor:pointer;
+    overflow:hidden;
+    color:var(--slate);
+    transition:border-color .18s ease;
+  }
+  .avatar-upload-box:hover{ border-color:var(--gold-soft); }
+  #avatar-upload-icon{ width:30px; height:30px; }
+  #avatar-upload-img{ width:100%; height:100%; object-fit:cover; }
+
+  .wb-avatar{
+    width:64px; height:64px;
+    border-radius:50%;
+    background:var(--panel-2);
+    border:1px solid var(--line-strong);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Cairo', sans-serif; font-weight:800; font-size:1.3rem;
+    color:var(--gold-soft);
+    margin:0 auto 16px;
+    overflow:hidden;
+    animation:popIn .4s ease;
+  }
+  .wb-avatar img{ width:100%; height:100%; object-fit:cover; }
+
+  @keyframes popIn{
+    0%{ transform:scale(0.6); opacity:0; }
+    70%{ transform:scale(1.08); opacity:1; }
+    100%{ transform:scale(1); }
+  }
   .success-icon{
+    animation:popIn .45s ease;
     width:56px; height:56px;
     border-radius:50%;
     background:rgba(63,143,95,0.15);
@@ -312,7 +347,73 @@
         <button type="submit" class="btn btn-gold">إرسال رابط الدخول</button>
       </form>
     </div>
+
+    <div class="divider">أو</div>
+    <button type="button" class="btn btn-ghost btn-block" id="open-signup-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg>
+      إنشاء حساب جديد
+    </button>
   </div>
+
+  <div class="back-row" style="margin-top:22px;">
+    <a href="#" id="admin-code-link">أنت من فريق العمل؟ دخول بكود الإدارة</a>
+  </div>
+
+  <!-- ===== دخول الإدارة بكود ===== -->
+  <div class="step" id="step-admin-code">
+    <h1 class="step-title">دخول فريق العمل</h1>
+    <p class="step-sub">اكتب كود الدخول الخاص بالإدارة للانتقال مباشرة للوحة التحكم.</p>
+    <form id="admin-code-form">
+      <div class="field">
+        <label for="admin-code-input">كود الإدارة</label>
+        <input type="text" id="admin-code-input" placeholder="اكتب الكود" inputmode="numeric" required>
+        <div class="field-error" id="admin-code-error">الكود غير صحيح، حاول تاني.</div>
+      </div>
+      <button type="submit" class="btn btn-gold">دخول للوحة التحكم</button>
+    </form>
+    <div class="back-row"><a href="#" id="admin-code-back">← رجوع لتسجيل الدخول</a></div>
+  </div>
+
+  <!-- ===== إنشاء حساب جديد ===== -->
+  <div class="step" id="step-signup">
+    <h1 class="step-title">إنشاء حساب جديد</h1>
+    <p class="step-sub">بياناتك هتتحفظ عشان مش تحتاج تسجل دخول تاني كل ما تزور الموقع.</p>
+    <form id="signup-form">
+      <div class="field" style="text-align:center;">
+        <label>صورتك الشخصية (اختياري)</label>
+        <div class="avatar-upload-box" id="avatar-upload-box">
+          <input type="file" id="signup-photo-input" accept="image/*" hidden>
+          <svg id="avatar-upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+          <img id="avatar-upload-img" style="display:none;">
+        </div>
+      </div>
+      <div class="field">
+        <label for="signup-name">الاسم بالكامل</label>
+        <input type="text" id="signup-name" placeholder="مثال: أحمد فتحي" required>
+      </div>
+      <div class="field">
+        <label for="signup-phone">رقم الهاتف</label>
+        <div class="phone-input-wrap">
+          <span class="phone-code">+20</span>
+          <input type="tel" id="signup-phone" placeholder="1xxxxxxxxx" inputmode="numeric" maxlength="10" required>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-gold">إنشاء الحساب والدخول</button>
+    </form>
+    <div class="back-row"><a href="#" id="signup-back-link">← رجوع لتسجيل الدخول</a></div>
+  </div>
+
+  <!-- ===== أهلاً بيك تاني (حساب محفوظ مسبقًا) ===== -->
+  <div class="step" id="step-welcome-back">
+    <div class="step-center">
+      <div class="wb-avatar" id="wb-avatar">؟</div>
+      <h1 class="step-title">أهلاً بيك تاني، <span class="welcome-name" id="wb-name"></span></h1>
+      <p class="step-sub" id="wb-phone"></p>
+      <a href="mohamed-omar-motors.html" class="btn btn-gold">متابعة للموقع</a>
+      <button type="button" class="btn btn-ghost" id="wb-logout-btn" style="margin-top:10px;">تسجيل الخروج من هذا الحساب</button>
+    </div>
+  </div>
+
 
   <!-- ===== الخطوة 2: إدخال كود OTP (للهاتف) ===== -->
   <div class="step" id="step-otp">
@@ -361,7 +462,7 @@
       </div>
       <h1 class="step-title">أهلاً بيك، <span class="welcome-name" id="success-name">عميلنا العزيز</span></h1>
       <p class="step-sub">تم تسجيل دخولك بنجاح. تقدر دلوقتي تتصفح الأسطول وتحجز سيارتك.</p>
-      <a href="index.html" class="btn btn-gold">الذهاب لصفحة الحجز</a>
+      <a href="mohamed-omar-motors.html" class="btn btn-gold">الذهاب لصفحة الحجز</a>
     </div>
   </div>
 </div>
@@ -387,6 +488,111 @@
     toastEl.classList.add('is-visible');
     setTimeout(()=> toastEl.classList.remove('is-visible'), 2500);
   }
+
+  /* ============ حفظ واسترجاع بيانات الحساب (تخزين دائم) ============
+     نستخدم window.storage (شخصي، غير مشترك) عشان بيانات العميل تفضل
+     محفوظة بين الزيارات المختلفة من غير ما يسجل دخول تاني كل مرة.
+     ده بيشتغل داخل معاينة Claude. لو الموقع اتفتح كملف عادي في متصفح
+     عادي بره Claude، الحفظ الدائم محتاج باك إند حقيقي (قاعدة بيانات + سيرفر). */
+  async function saveAccount(account){
+    try{
+      if(window.storage){
+        await window.storage.set('account:profile', JSON.stringify(account), false);
+        return true;
+      }
+    } catch(err){ /* التخزين غير متاح */ }
+    return false;
+  }
+  async function loadAccount(){
+    try{
+      if(window.storage){
+        const res = await window.storage.get('account:profile', false);
+        if(res && res.value) return JSON.parse(res.value);
+      }
+    } catch(err){ /* لا يوجد حساب محفوظ */ }
+    return null;
+  }
+  async function clearAccount(){
+    try{ if(window.storage) await window.storage.delete('account:profile', false); }
+    catch(err){ /* تجاهل */ }
+  }
+
+  /* ============ التحقق من وجود حساب محفوظ عند فتح الصفحة ============ */
+  (async ()=>{
+    const account = await loadAccount();
+    if(account){
+      document.getElementById('wb-name').textContent = account.name || account.phone || account.email || 'عميلنا العزيز';
+      document.getElementById('wb-phone').textContent = account.phone ? ('+20 ' + account.phone) : (account.email || '');
+      const avatarEl = document.getElementById('wb-avatar');
+      if(account.photo){
+        avatarEl.innerHTML = `<img src="${account.photo}" alt="${account.name || ''}">`;
+      } else {
+        avatarEl.textContent = (account.name || 'ع').trim().charAt(0);
+      }
+      showStep('step-welcome-back');
+    }
+  })();
+
+  document.getElementById('wb-logout-btn').addEventListener('click', async ()=>{
+    await clearAccount();
+    showStep('step-choose');
+    showToast('تم تسجيل الخروج من الحساب');
+  });
+
+  /* ============ إنشاء حساب جديد ============ */
+  document.getElementById('open-signup-btn').addEventListener('click', ()=> showStep('step-signup'));
+  document.getElementById('signup-back-link').addEventListener('click', (e)=>{ e.preventDefault(); showStep('step-choose'); });
+
+  function compressImage(file, cb){
+    const reader = new FileReader();
+    reader.onload = (ev)=>{
+      const img = new Image();
+      img.onload = ()=>{
+        const maxW = 300;
+        const scale = Math.min(1, maxW / img.width);
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        cb(canvas.toDataURL('image/jpeg', 0.75));
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  let signupPhoto = '';
+  const avatarUploadBox = document.getElementById('avatar-upload-box');
+  const avatarUploadIcon = document.getElementById('avatar-upload-icon');
+  const avatarUploadImg = document.getElementById('avatar-upload-img');
+  const signupPhotoInput = document.getElementById('signup-photo-input');
+  avatarUploadBox.addEventListener('click', ()=> signupPhotoInput.click());
+  signupPhotoInput.addEventListener('change', ()=>{
+    const file = signupPhotoInput.files[0];
+    if(!file) return;
+    compressImage(file, (dataUrl)=>{
+      signupPhoto = dataUrl;
+      avatarUploadImg.src = dataUrl;
+      avatarUploadImg.style.display = 'block';
+      avatarUploadIcon.style.display = 'none';
+    });
+  });
+
+  document.getElementById('signup-form').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const name = document.getElementById('signup-name').value.trim();
+    const phone = document.getElementById('signup-phone').value.trim();
+    if(!name || !/^1[0125][0-9]{8}$/.test(phone)){
+      showToast('تأكد من الاسم ورقم الهاتف قبل المتابعة');
+      return;
+    }
+    const account = { name, phone, photo: signupPhoto, createdAt: new Date().toISOString() };
+    await saveAccount(account);
+    document.getElementById('success-name').textContent = name;
+    showStep('step-success');
+    showToast('تم إنشاء حسابك وحفظ بياناتك بنجاح');
+  });
 
   /* ============ التبويبات ============ */
   const tabBtns = document.querySelectorAll('.tab-btn');
@@ -467,7 +673,9 @@
       return;
     }
     otpError.classList.remove('is-visible');
-    document.getElementById('success-name').textContent = '+20' + enteredPhone.slice(1);
+    const phoneForAccount = enteredPhone.slice(1);
+    document.getElementById('success-name').textContent = '+20' + phoneForAccount;
+    saveAccount({ name:'', phone: phoneForAccount, photo:'', createdAt: new Date().toISOString() });
     showStep('step-success');
   });
 
@@ -522,8 +730,30 @@
     showToast('(محاكاة) هيتفتح هنا نافذة اختيار حساب جيميل الحقيقية بعد ربط Google OAuth');
     setTimeout(()=>{
       document.getElementById('success-name').textContent = 'name@gmail.com';
+      saveAccount({ name:'', phone:'', email:'name@gmail.com', photo:'', createdAt: new Date().toISOString() });
       showStep('step-success');
     }, 900);
+  });
+  /* ============ دخول الإدارة بكود ============ */
+  const ADMIN_ACCESS_CODE = '208700';
+  document.getElementById('admin-code-link').addEventListener('click', (e)=>{
+    e.preventDefault();
+    showStep('step-admin-code');
+  });
+  document.getElementById('admin-code-back').addEventListener('click', (e)=>{
+    e.preventDefault();
+    showStep('step-choose');
+  });
+  document.getElementById('admin-code-form').addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const code = document.getElementById('admin-code-input').value.trim();
+    const errorEl = document.getElementById('admin-code-error');
+    if(code === ADMIN_ACCESS_CODE){
+      errorEl.classList.remove('is-visible');
+      window.location.href = 'admin.html?code=' + code;
+    } else {
+      errorEl.classList.add('is-visible');
+    }
   });
 </script>
 
