@@ -328,6 +328,65 @@
   }
 
   /* ============ FLEET — window-sticker cards (signature) ============ */
+  .fleet-toolbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-bottom:30px;
+  }
+  .sort-select{
+    background:var(--panel);
+    border:1px solid var(--line-strong);
+    color:var(--ivory);
+    padding:9px 14px;
+    border-radius:8px;
+    font-size:0.84rem;
+    font-family:'Tajawal', sans-serif;
+  }
+  .sticker-top-row{
+    position:absolute;
+    top:14px; left:14px; right:14px;
+    display:flex;
+    justify-content:space-between;
+    z-index:2;
+  }
+  .sticker-quick-actions{ display:flex; gap:6px; }
+  .wishlist-btn, .share-btn{
+    width:30px; height:30px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.85);
+    border:1px solid rgba(28,23,16,0.15);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .wishlist-btn:hover, .share-btn:hover{ transform:scale(1.08); }
+  .wishlist-btn svg, .share-btn svg{ width:15px; height:15px; color:#1c1710; }
+  .wishlist-btn.is-active svg{ color:var(--rust); fill:var(--rust); }
+  .wishlist-btn.is-active{ animation:heartPop .3s ease; }
+  @keyframes heartPop{
+    0%{ transform:scale(1); } 40%{ transform:scale(1.35); } 100%{ transform:scale(1); }
+  }
+  .sticker-discount-badge{
+    position:absolute;
+    top:14px; left:52px;
+    background:var(--rust);
+    color:#fff;
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:0.65rem;
+    padding:4px 8px;
+    border-radius:4px;
+    z-index:2;
+  }
+  .price-original{
+    text-decoration:line-through;
+    color:#8a8577;
+    font-size:0.8rem;
+    margin-left:6px;
+  }
   .fleet-filters{
     display:flex;
     gap:10px;
@@ -781,6 +840,17 @@
   .account-menu-info{ margin-bottom:12px; padding-bottom:12px; border-bottom:1px solid var(--line); }
   .account-menu-info b{ display:block; font-size:0.88rem; }
   .account-menu-info span{ font-size:0.76rem; color:var(--slate); direction:ltr; display:block; text-align:right; }
+  .loyalty-row{
+    font-size:0.8rem; color:var(--slate);
+    margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid var(--line);
+  }
+  .loyalty-row b{ color:var(--gold-soft); }
+  .account-menu-link{
+    width:100%; background:transparent; border:1px solid var(--line-strong);
+    color:var(--ivory); font-family:'Cairo', sans-serif; font-weight:700; font-size:0.8rem;
+    padding:8px; border-radius:7px; cursor:pointer; margin-bottom:8px;
+  }
+  .account-menu-link:hover{ border-color:var(--gold-soft); color:var(--gold-soft); }
   .account-menu-logout{
     width:100%; background:transparent; border:1px solid var(--line-strong);
     color:var(--rust); font-family:'Cairo', sans-serif; font-weight:700; font-size:0.8rem;
@@ -876,6 +946,11 @@
     font-size:0.92rem;
   }
   .field input:focus{ border-color:var(--gold-soft); }
+  .btn-sm{ padding:8px 14px; font-size:0.78rem; width:auto; }
+  .field-note{ font-size:0.76rem; color:var(--slate); margin-top:6px; min-height:14px; }
+  .field-note.is-success{ color:var(--green-soft, #69c48d); }
+  .field-note.is-error{ color:var(--rust); }
+
   .checkout-summary{
     background:var(--bg); border:1px solid var(--line);
     border-radius:8px; padding:12px 14px; margin-bottom:18px;
@@ -884,6 +959,15 @@
   .checkout-summary li{ display:flex; justify-content:space-between; padding:3px 0; }
   .modal-actions{ display:flex; gap:10px; }
   .modal-actions .btn{ flex:1; }
+
+  .mb-item{
+    background:var(--bg); border:1px solid var(--line);
+    border-radius:8px; padding:12px 14px; margin-bottom:10px;
+    font-size:0.85rem;
+  }
+  .mb-item-top{ display:flex; justify-content:space-between; margin-bottom:6px; }
+  .mb-item-top b{ font-family:'Cairo', sans-serif; font-size:0.88rem; }
+  .mb-empty{ color:var(--slate); text-align:center; padding:24px 0; font-size:0.88rem; }
 
   .toast{
     position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
@@ -953,6 +1037,8 @@
             <b id="account-menu-name"></b>
             <span id="account-menu-phone"></span>
           </div>
+          <div class="loyalty-row" id="loyalty-row">🎁 نقاط الولاء: <b id="loyalty-points">0</b></div>
+          <button type="button" class="account-menu-link" id="my-bookings-btn">حجوزاتي</button>
           <button type="button" class="account-menu-logout" id="account-logout-btn">تسجيل الخروج</button>
         </div>
       </div>
@@ -993,6 +1079,10 @@
     <p class="sub">هنبعت طلبك مباشرة لفريقنا على واتساب لتأكيد الحجز.</p>
     <ul class="checkout-summary" id="checkout-summary"></ul>
     <form id="checkout-form">
+      <div class="field" id="rental-days-field">
+        <label for="checkout-days">عدد أيام الإيجار</label>
+        <input type="number" id="checkout-days" min="1" value="1" required>
+      </div>
       <div class="field">
         <label for="checkout-name">الاسم بالكامل</label>
         <input type="text" id="checkout-name" placeholder="مثال: أحمد فتحي" required>
@@ -1000,6 +1090,14 @@
       <div class="field">
         <label for="checkout-phone">رقم الهاتف</label>
         <input type="tel" id="checkout-phone" placeholder="01xxxxxxxxx" pattern="^01[0-9]{9}$" required>
+      </div>
+      <div class="field">
+        <label for="checkout-coupon">كود خصم (اختياري)</label>
+        <div style="display:flex; gap:8px;">
+          <input type="text" id="checkout-coupon" placeholder="مثال: WELCOME10" style="flex:1;">
+          <button type="button" class="btn btn-ghost btn-sm" id="apply-coupon-btn">تطبيق</button>
+        </div>
+        <div class="field-note" id="coupon-note"></div>
       </div>
       <div class="modal-actions">
         <button type="button" class="btn btn-ghost" id="checkout-cancel">رجوع</button>
@@ -1021,6 +1119,18 @@
     <div class="gallery-stage" id="gallery-stage"></div>
     <div class="gallery-thumbs" id="gallery-thumbs"></div>
     <p class="gallery-note">صور توضيحية مبدئية — تقدر تستبدلها بصور حقيقية للسيارة من لوحة التحكم.</p>
+  </div>
+</div>
+
+<!-- MY BOOKINGS MODAL -->
+<div class="modal-backdrop" id="mybookings-backdrop">
+  <div class="checkout-modal">
+    <h3>حجوزاتي</h3>
+    <p class="sub" id="mybookings-sub">آخر الحجوزات المرتبطة برقم هاتفك</p>
+    <div id="mybookings-list"></div>
+    <div class="modal-actions" style="margin-top:16px;">
+      <button type="button" class="btn btn-ghost btn-block" id="mybookings-close">إغلاق</button>
+    </div>
   </div>
 </div>
 
@@ -1105,10 +1215,18 @@
         <p class="section-lead">كل سيارة عندها بطاقة مواصفات واضحة، زي اللي بتشوفها على شباك العربية عند البيع.</p>
       </div>
 
-      <div class="fleet-filters reveal" id="fleet-filters">
-        <button type="button" class="filter-tab is-active" data-filter="all">كل السيارات</button>
-        <button type="button" class="filter-tab" data-filter="rent">للإيجار</button>
-        <button type="button" class="filter-tab" data-filter="sale">للبيع</button>
+      <div class="fleet-toolbar reveal">
+        <div class="fleet-filters" id="fleet-filters">
+          <button type="button" class="filter-tab is-active" data-filter="all">كل السيارات</button>
+          <button type="button" class="filter-tab" data-filter="rent">للإيجار</button>
+          <button type="button" class="filter-tab" data-filter="sale">للبيع</button>
+          <button type="button" class="filter-tab" data-filter="wishlist">❤ المفضلة</button>
+        </div>
+        <select class="sort-select" id="sort-select">
+          <option value="default">الترتيب: الأحدث</option>
+          <option value="price-asc">السعر: من الأقل للأعلى</option>
+          <option value="price-desc">السعر: من الأعلى للأقل</option>
+        </select>
       </div>
 
       <div class="fleet-grid reveal" id="fleet-grid-dynamic">
@@ -1292,6 +1410,7 @@
       }
     } catch(err){ /* لا يوجد حساب محفوظ، أو التخزين غير متاح في هذه البيئة */ }
     renderAccountUI();
+    if(loggedInAccount) updateLoyaltyPoints();
   }
 
   function renderAccountUI(){
@@ -1334,6 +1453,56 @@
   });
 
   loadAndRenderAccount();
+
+  /* ============ حجوزاتي ونقاط الولاء ============ */
+  async function fetchMyBookings(){
+    if(!loggedInAccount || !loggedInAccount.phone || !window.storage) return [];
+    try{
+      const list = await window.storage.list('booking:', true);
+      if(!list || !list.keys) return [];
+      const mine = [];
+      for(const key of list.keys){
+        try{
+          const res = await window.storage.get(key, true);
+          if(!res || !res.value) continue;
+          const order = JSON.parse(res.value);
+          if(order.phone === loggedInAccount.phone) mine.push(order);
+        } catch(err){}
+      }
+      return mine.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt));
+    } catch(err){ return []; }
+  }
+
+  async function updateLoyaltyPoints(){
+    const mine = await fetchMyBookings();
+    document.getElementById('loyalty-points').textContent = (mine.length * 10);
+  }
+
+  document.getElementById('my-bookings-btn').addEventListener('click', async ()=>{
+    document.getElementById('account-menu').classList.remove('is-open');
+    const list = document.getElementById('mybookings-list');
+    list.innerHTML = '<div class="mb-empty">جاري التحميل...</div>';
+    document.getElementById('mybookings-backdrop').classList.add('is-active');
+    const mine = await fetchMyBookings();
+    if(mine.length === 0){
+      list.innerHTML = '<div class="mb-empty">لسه معملتش أي حجز من الموقع.</div>';
+      return;
+    }
+    list.innerHTML = mine.map(o=>{
+      const items = (o.items||[]).map(i=> `${i.name} ×${i.qty}`).join('، ');
+      return `<div class="mb-item">
+        <div class="mb-item-top"><b>${o.id}</b><span>${(o.total||0).toLocaleString('ar-EG')} ج.م</span></div>
+        <div>${items}</div>
+        <div style="color:var(--slate); margin-top:6px;">الحالة: ${o.status || 'قيد الانتظار'}</div>
+      </div>`;
+    }).join('');
+  });
+  document.getElementById('mybookings-close').addEventListener('click', ()=>{
+    document.getElementById('mybookings-backdrop').classList.remove('is-active');
+  });
+  document.getElementById('mybookings-backdrop').addEventListener('click', (e)=>{
+    if(e.target.id === 'mybookings-backdrop') e.currentTarget.classList.remove('is-active');
+  });
 
   /* ============ حالة السلة (في الذاكرة فقط) ============ */
   let cart = [];
@@ -1379,9 +1548,31 @@
   ];
   let fleetCars = DEFAULT_CARS.slice();
   let currentFilter = 'all';
+  let currentSort = 'default';
+  let wishlist = [];
 
   const fleetGridEl = document.getElementById('fleet-grid-dynamic');
   const filterTabs = document.querySelectorAll('.filter-tab');
+  const sortSelect = document.getElementById('sort-select');
+
+  /* ============ المفضلة (تخزين شخصي دائم) ============ */
+  async function loadWishlist(){
+    try{
+      if(window.storage){
+        const res = await window.storage.get('wishlist', false);
+        if(res && res.value) wishlist = JSON.parse(res.value);
+      }
+    } catch(err){ wishlist = []; }
+  }
+  async function saveWishlist(){
+    try{ if(window.storage) await window.storage.set('wishlist', JSON.stringify(wishlist), false); }
+    catch(err){ /* التخزين غير متاح — المفضلة هتفضل للجلسة الحالية بس */ }
+  }
+  function toggleWishlist(id){
+    const idx = wishlist.indexOf(String(id));
+    if(idx === -1){ wishlist.push(String(id)); } else { wishlist.splice(idx,1); }
+    saveWishlist();
+  }
 
   function fleetAvailBadge(status){
     const map = { available:'متوفر الآن', rented:'محجوزة حاليًا', maintenance:'في الصيانة' };
@@ -1389,9 +1580,16 @@
   }
 
   function renderFleetGrid(){
-    const list = fleetCars.filter(c=> currentFilter === 'all' || c.type === currentFilter);
+    let list = fleetCars.filter(c=>{
+      if(currentFilter === 'all') return true;
+      if(currentFilter === 'wishlist') return wishlist.includes(String(c.id));
+      return c.type === currentFilter;
+    });
+    if(currentSort === 'price-asc') list = [...list].sort((a,b)=> a.price - b.price);
+    if(currentSort === 'price-desc') list = [...list].sort((a,b)=> b.price - a.price);
     if(list.length === 0){
-      fleetGridEl.innerHTML = '<div class="fleet-empty">مفيش سيارات في هذا التصنيف حاليًا.</div>';
+      const emptyMsg = currentFilter === 'wishlist' ? 'لسه مضفتش أي سيارة للمفضلة. دوس على ❤ على أي كارت.' : 'مفيش سيارات في هذا التصنيف حاليًا.';
+      fleetGridEl.innerHTML = `<div class="fleet-empty">${emptyMsg}</div>`;
       return;
     }
     fleetGridEl.innerHTML = list.map(car=>{
@@ -1399,19 +1597,38 @@
       const priceLabel = isSale ? 'السعر' : 'لليوم الواحد';
       const icon = CATEGORY_ICONS[car.cat] || CATEGORY_ICONS['صالون'];
       const isBookable = !isSale && car.status === 'available';
+      const discount0 = Number(car.discount) || 0;
+      const finalPrice0 = discount0 > 0 ? Math.round(car.price * (1 - discount0/100)) : car.price;
       const ctaHtml = isSale
-        ? `<button type="button" class="sticker-cta cta-sale sale-inquiry-btn" data-id="${car.id}" data-name="${car.name}" data-price="${car.price}">استفسر عن الشراء</button>`
-        : `<button type="button" class="sticker-cta add-to-cart-btn" data-id="${car.id}" data-name="${car.name}" data-price="${car.price}" ${isBookable ? '' : 'disabled'}>${isBookable ? 'أضف للسلة' : 'غير متاح حاليًا'}</button>`;
-      const media = car.image
-        ? `<img class="sticker-photo" src="${car.image}" alt="${car.name}">`
+        ? `<button type="button" class="sticker-cta cta-sale sale-inquiry-btn" data-id="${car.id}" data-name="${car.name}" data-price="${finalPrice0}">استفسر عن الشراء</button>`
+        : `<button type="button" class="sticker-cta add-to-cart-btn" data-id="${car.id}" data-name="${car.name}" data-price="${finalPrice0}" ${isBookable ? '' : 'disabled'}>${isBookable ? 'أضف للسلة' : 'غير متاح حاليًا'}</button>`;
+      const frontImg = (car.images && car.images.front) || car.image || '';
+      const media = frontImg
+        ? `<img class="sticker-photo" src="${frontImg}" alt="${car.name}">`
         : `<svg class="sticker-icon" viewBox="0 0 64 64" fill="none">${icon}</svg>`;
       const descHtml = car.desc ? `<p class="sticker-desc">${car.desc}</p>` : '';
       const featuredBadge = car.featured ? `<span class="sticker-featured">⭐ مميزة</span>` : '';
+      const isWished = wishlist.includes(String(car.id));
+      const priceHtml = discount0 > 0
+        ? `<b>${finalPrice0.toLocaleString('ar-EG')} ج.م <span class="price-original">${Number(car.price).toLocaleString('ar-EG')}</span></b>`
+        : `<b>${Number(car.price).toLocaleString('ar-EG')} ج.م</b>`;
+      const discountBadge = discount0 > 0 ? `<span class="sticker-discount-badge">خصم ${discount0}%</span>` : '';
 
       return `
       <article class="sticker-card">
         <div class="sticker-tape" aria-hidden="true"></div>
-        <span class="sticker-type-badge sticker-type-${car.type}">${isSale ? 'للبيع' : 'للإيجار'}</span>
+        <div class="sticker-top-row">
+          <span class="sticker-type-badge sticker-type-${car.type}" style="position:static;">${isSale ? 'للبيع' : 'للإيجار'}</span>
+          <div class="sticker-quick-actions">
+            <button type="button" class="wishlist-btn ${isWished ? 'is-active' : ''}" data-id="${car.id}" aria-label="أضف للمفضلة">
+              <svg viewBox="0 0 24 24" fill="${isWished ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+            </button>
+            <button type="button" class="share-btn" data-id="${car.id}" aria-label="مشاركة">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.6l6.8-3.8M8.6 13.4l6.8 3.8"/></svg>
+            </button>
+          </div>
+        </div>
+        ${discountBadge}
         <span class="sticker-avail">${isSale ? 'معروضة للبيع' : fleetAvailBadge(car.status)}</span>
         ${media}
         ${featuredBadge}
@@ -1424,10 +1641,10 @@
           <li><span>الحالة</span><span>${isSale ? 'معروضة للبيع' : fleetAvailBadge(car.status)}</span></li>
         </ul>
         <div class="sticker-price">
-          <b>${Number(car.price).toLocaleString('ar-EG')} ج.م</b>
+          ${priceHtml}
           <small>${priceLabel}</small>
         </div>
-        <button type="button" class="sticker-photos-btn photos-btn" data-id="${car.id}" data-name="${car.name}" data-cat="${car.cat}" data-image="${car.image ? encodeURIComponent(car.image) : ''}">
+        <button type="button" class="sticker-photos-btn photos-btn" data-id="${car.id}">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 16l-5-4-4 3-3-2-6 5"/></svg>
           صور السيارة
         </button>
@@ -1462,10 +1679,33 @@
       });
     });
 
-    // ربط أزرار الصور
+    // ربط أزرار الصور — بنجيب بيانات السيارة كاملة من القائمة الحالية عشان نعرض الصور الأربعة
     fleetGridEl.querySelectorAll('.photos-btn').forEach(btn=>{
-      const img = btn.dataset.image ? decodeURIComponent(btn.dataset.image) : '';
-      btn.addEventListener('click', ()=> openGallery(btn.dataset.name, btn.dataset.cat, img));
+      btn.addEventListener('click', ()=>{
+        const car = fleetCars.find(c=> String(c.id) === String(btn.dataset.id));
+        if(car) openGallery(car);
+      });
+    });
+
+    // ربط زر المفضلة
+    fleetGridEl.querySelectorAll('.wishlist-btn').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        toggleWishlist(btn.dataset.id);
+        renderFleetGrid();
+        showToast(wishlist.includes(String(btn.dataset.id)) ? 'تمت الإضافة للمفضلة' : 'تمت الإزالة من المفضلة');
+      });
+    });
+
+    // ربط زر المشاركة
+    fleetGridEl.querySelectorAll('.share-btn').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        const car = fleetCars.find(c=> String(c.id) === String(btn.dataset.id));
+        if(!car) return;
+        const text = `شوف السيارة دي في محمد عمر موتورز: ${car.name} — ${Number(car.price).toLocaleString('ar-EG')} ج.م`;
+        window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+      });
     });
   }
 
@@ -1475,6 +1715,10 @@
       currentFilter = tab.dataset.filter;
       renderFleetGrid();
     });
+  });
+  sortSelect.addEventListener('change', ()=>{
+    currentSort = sortSelect.value;
+    renderFleetGrid();
   });
 
   /* ============ مزامنة الأسطول مع لوحة الأدمن (تخزين مشترك) ============ */
@@ -1491,8 +1735,9 @@
     } catch(err){ /* لا توجد بيانات محفوظة بعد، أو التخزين غير متاح — نستخدم البيانات الافتراضية */ }
     renderFleetGrid();
   }
-  syncFleetFromAdmin();
+  (async ()=>{ await loadWishlist(); syncFleetFromAdmin(); })();
   setInterval(syncFleetFromAdmin, 6000);
+
 
   /* ============ معرض صور السيارة (Lightbox) ============ */
   const galleryBackdrop = document.getElementById('gallery-backdrop');
@@ -1502,20 +1747,21 @@
   let galleryShots = [];
   let galleryIndex = 0;
 
-  function openGallery(name, cat, image){
-    galleryTitle.textContent = name;
-    const icon = CATEGORY_ICONS[cat] || CATEGORY_ICONS['صالون'];
-    if(image){
-      galleryShots = [
-        { label:'صورة السيارة', tint:'#12151a', image }
-      ];
-    } else {
-      galleryShots = [
-        { label:'الواجهة الأمامية', tint:'#1b2430' },
-        { label:'الجانب', tint:'#20293a' },
-        { label:'الداخلية', tint:'#171b22' }
-      ].map(shot=> ({ ...shot, icon }));
-    }
+  function openGallery(car){
+    galleryTitle.textContent = car.name;
+    const icon = CATEGORY_ICONS[car.cat] || CATEGORY_ICONS['صالون'];
+    const angleLabels = { front:'الأمام', right:'الجانب الأيمن', left:'الجانب الأيسر', back:'الخلف' };
+    const images = car.images || (car.image ? { front: car.image } : {});
+    const realShots = Object.keys(angleLabels)
+      .filter(angle=> images[angle])
+      .map(angle=> ({ label: angleLabels[angle], tint:'#12151a', image: images[angle] }));
+
+    galleryShots = realShots.length ? realShots : [
+      { label:'الواجهة الأمامية', tint:'#1b2430' },
+      { label:'الجانب', tint:'#20293a' },
+      { label:'الداخلية', tint:'#171b22' }
+    ].map(shot=> ({ ...shot, icon }));
+
     galleryIndex = 0;
     galleryThumbs.innerHTML = galleryShots.length > 1
       ? galleryShots.map((_,i)=> `<div class="gallery-thumb ${i===0?'is-active':''}" data-i="${i}"></div>`).join('')
@@ -1590,11 +1836,40 @@
   }
 
   /* ============ نافذة إتمام الحجز ============ */
+  const COUPONS = { 'WELCOME10': 10, 'MOM20': 20, 'EID15': 15 }; // أكواد خصم تجريبية (نسبة %)
+  let appliedCoupon = null;
+
+  function computeCheckoutTotals(){
+    const days = Math.max(1, Number(document.getElementById('checkout-days').value) || 1);
+    const rawTotal = cart.reduce((s,i)=> s + (i.price * i.qty * days), 0);
+    const discountAmount = appliedCoupon ? Math.round(rawTotal * appliedCoupon.percent / 100) : 0;
+    const finalTotal = rawTotal - discountAmount;
+    return { days, rawTotal, discountAmount, finalTotal };
+  }
+
+  function renderCheckoutSummary(){
+    const { days, rawTotal, discountAmount, finalTotal } = computeCheckoutTotals();
+    let html = cart.map(i=> `<li><span>${i.name} × ${i.qty} × ${days} يوم</span><span>${(i.price*i.qty*days).toLocaleString('ar-EG')} ج.م</span></li>`).join('');
+    if(discountAmount > 0){
+      html += `<li style="color:var(--green-soft,#69c48d);"><span>خصم الكوبون (${appliedCoupon.code})</span><span>-${discountAmount.toLocaleString('ar-EG')} ج.م</span></li>`;
+    }
+    html += `<li style="border-top:1px dashed var(--line-strong); margin-top:6px; padding-top:8px; color:var(--ivory); font-weight:700;"><span>الإجمالي</span><span>${finalTotal.toLocaleString('ar-EG')} ج.م</span></li>`;
+    checkoutSummary.innerHTML = html;
+  }
+
   checkoutBtn.addEventListener('click', ()=>{
     if(cart.length === 0) return;
-    checkoutSummary.innerHTML = cart.map(i=> `<li><span>${i.name} × ${i.qty}</span><span>${(i.price*i.qty).toLocaleString('ar-EG')} ج.م</span></li>`).join('');
-    const total = cart.reduce((s,i)=> s + (i.price * i.qty), 0);
-    checkoutSummary.innerHTML += `<li style="border-top:1px dashed var(--line-strong); margin-top:6px; padding-top:8px; color:var(--ivory); font-weight:700;"><span>الإجمالي / اليوم</span><span>${total.toLocaleString('ar-EG')} ج.م</span></li>`;
+    appliedCoupon = null;
+    document.getElementById('checkout-coupon').value = '';
+    document.getElementById('coupon-note').textContent = '';
+    document.getElementById('checkout-days').value = 1;
+    // لو في السلة سيارات بيع بس (مش إيجار)، اخفاء حقل عدد الأيام لعدم الحاجة له
+    const hasRentItems = cart.some(i=> {
+      const car = fleetCars.find(c=> String(c.id) === String(i.id));
+      return !car || car.type !== 'sale';
+    });
+    document.getElementById('rental-days-field').style.display = hasRentItems ? 'block' : 'none';
+    renderCheckoutSummary();
     // تعبئة تلقائية لبيانات العميل لو مسجل دخول، لتوفير وقته
     if(loggedInAccount){
       if(loggedInAccount.name) document.getElementById('checkout-name').value = loggedInAccount.name;
@@ -1602,6 +1877,22 @@
     }
     checkoutBackdrop.classList.add('is-active');
     closeCart();
+  });
+  document.getElementById('checkout-days').addEventListener('input', renderCheckoutSummary);
+  document.getElementById('apply-coupon-btn').addEventListener('click', ()=>{
+    const code = document.getElementById('checkout-coupon').value.trim().toUpperCase();
+    const note = document.getElementById('coupon-note');
+    if(!code){ note.textContent=''; note.className='field-note'; appliedCoupon=null; renderCheckoutSummary(); return; }
+    if(COUPONS[code]){
+      appliedCoupon = { code, percent: COUPONS[code] };
+      note.textContent = `✓ تم تطبيق خصم ${COUPONS[code]}%`;
+      note.className = 'field-note is-success';
+    } else {
+      appliedCoupon = null;
+      note.textContent = 'الكود غير صحيح';
+      note.className = 'field-note is-error';
+    }
+    renderCheckoutSummary();
   });
   document.getElementById('checkout-cancel').addEventListener('click', ()=>{
     checkoutBackdrop.classList.remove('is-active');
@@ -1617,33 +1908,41 @@
     const phone = document.getElementById('checkout-phone').value.trim();
     if(!name || !phone || cart.length === 0) return;
 
-    const total = cart.reduce((s,i)=> s + (i.price * i.qty), 0);
+    const { days, finalTotal } = computeCheckoutTotals();
     const orderId = 'BK-' + Date.now().toString().slice(-6);
 
     // محاولة حفظ الطلب في تخزين مشترك (يعمل فقط داخل معاينة Claude، مع تجاهل الخطأ في أي مكان آخر)
     try{
       if(window.storage){
         await window.storage.set('booking:' + orderId, JSON.stringify({
-          id: orderId, customer:name, phone, items:cart, total,
+          id: orderId, customer:name, phone, items:cart, days,
+          coupon: appliedCoupon ? appliedCoupon.code : null,
+          total: finalTotal,
           status:'قيد الانتظار', createdAt: new Date().toISOString()
         }), true);
       }
     } catch(err){ /* تجاهل: التخزين المشترك مش متاح في هذه البيئة */ }
 
+    // تحديث نقاط الولاء فورًا لو العميل مسجل دخول بنفس الرقم
+    if(loggedInAccount && loggedInAccount.phone === phone) updateLoyaltyPoints();
+
     // بناء رسالة واتساب وإرسالها لفريق العمل
-    const lines = cart.map(i=> `- ${i.name} × ${i.qty} (${(i.price*i.qty).toLocaleString('ar-EG')} ج.م)`).join('%0A');
+    const lines = cart.map(i=> `- ${i.name} × ${i.qty} × ${days} يوم`).join('%0A');
+    const couponLine = appliedCoupon ? `كود الخصم: ${appliedCoupon.code} (${appliedCoupon.percent}%)%0A` : '';
     const message =
       `طلب حجز جديد من موقع محمد عمر موتورز%0A` +
       `رقم الطلب: ${orderId}%0A` +
       `الاسم: ${name}%0A` +
       `رقم الهاتف: ${phone}%0A` +
       `السيارات المطلوبة:%0A${lines}%0A` +
-      `الإجمالي التقديري لليوم: ${total.toLocaleString('ar-EG')} ج.م`;
+      couponLine +
+      `الإجمالي النهائي: ${finalTotal.toLocaleString('ar-EG')} ج.م`;
 
     window.open(`https://wa.me/${BUSINESS_WHATSAPP}?text=${message}`, '_blank');
 
     checkoutBackdrop.classList.remove('is-active');
     cart = [];
+    appliedCoupon = null;
     renderCart();
     checkoutForm.reset();
     showToast(`تم إرسال طلبك، هنتواصل معاك على ${phone} لتأكيد الحجز`);
