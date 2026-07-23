@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>محمد عمر موتورز | تأجير سيارات</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 60 60%27%3E%3Ccircle cx=%2730%27 cy=%2730%27 r=%2728%27 fill=%27%2312151a%27 stroke=%27%23c9a227%27 stroke-width=%272%27/%3E%3Ctext x=%2730%27 y=%2739%27 text-anchor=%27middle%27 font-family=%27Arial%27 font-weight=%27800%27 font-size=%2722%27 fill=%27%23e4c55e%27%3EMO%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -160,6 +161,7 @@
     color:#1a1305;
   }
   .btn-gold:hover{ transform:translateY(-2px); box-shadow:0 10px 24px rgba(201,162,39,0.28); }
+  .btn-gold:disabled{ opacity:0.5; cursor:not-allowed; transform:none; box-shadow:none; }
   .btn-ghost{
     background:transparent;
     border-color:var(--line-strong);
@@ -468,7 +470,10 @@
     border:1px solid var(--line-strong);
     border-radius:var(--radius);
     padding:20px;
+    max-height:90vh;
+    overflow-y:auto;
   }
+  .detail-modal{ max-width:560px; }
   .gallery-head{
     display:flex; align-items:center; justify-content:space-between;
     margin-bottom:14px;
@@ -508,6 +513,32 @@
   .gallery-note{
     color:var(--slate); font-size:0.78rem; margin-top:14px; text-align:center;
   }
+  .detail-body{ margin-top:18px; padding-top:18px; border-top:1px solid var(--line); }
+  .detail-badges{ display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap; }
+  .detail-badges span{
+    font-family:'Cairo', sans-serif; font-weight:700; font-size:0.72rem;
+    padding:4px 10px; border-radius:20px;
+    background:var(--panel-2); color:var(--gold-soft);
+    border:1px solid var(--line-strong);
+  }
+  .detail-desc{ color:var(--ivory); font-size:0.9rem; line-height:1.7; margin-bottom:16px; }
+  .detail-specs{
+    display:grid; grid-template-columns:1fr 1fr; gap:10px;
+    margin-bottom:18px;
+  }
+  .detail-specs li{
+    background:var(--bg); border:1px solid var(--line);
+    border-radius:8px; padding:10px 12px;
+    font-size:0.84rem;
+    display:flex; flex-direction:column; gap:3px;
+  }
+  .detail-specs li span:first-child{ color:var(--slate); font-size:0.72rem; }
+  .detail-specs li span:last-child{ font-weight:700; }
+  .detail-price-row{
+    display:flex; align-items:center; justify-content:space-between; gap:14px;
+    flex-wrap:wrap;
+  }
+  .detail-price-row b{ font-family:'Cairo', sans-serif; font-weight:800; font-size:1.3rem; color:var(--gold-soft); }
 
   .fleet-grid{
     display:grid;
@@ -636,6 +667,72 @@
     transition:background .2s ease;
   }
   .sticker-cta:hover{ background:#31281a; }
+
+  /* ============ RENTAL TERMS ============ */
+  .terms-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:22px;
+    margin-bottom:24px;
+  }
+  .terms-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:26px 24px;
+  }
+  .terms-icon{ width:36px; height:36px; margin-bottom:16px; }
+  .terms-card h3{ font-family:'Cairo', sans-serif; font-weight:800; font-size:1rem; margin-bottom:8px; }
+  .terms-card p{ color:var(--slate); font-size:0.88rem; margin:0; line-height:1.7; }
+  .terms-agree-note{
+    display:block;
+    background:rgba(201,162,39,0.08);
+    border:1px dashed var(--line-strong);
+    border-radius:10px;
+    padding:14px 18px;
+    color:var(--slate);
+    font-size:0.86rem;
+    text-align:center;
+  }
+
+  /* ============ FAQ ============ */
+  .faq-list{ display:flex; flex-direction:column; gap:12px; }
+  .faq-item{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+  }
+  .faq-question{
+    width:100%;
+    display:flex; align-items:center; justify-content:space-between;
+    background:transparent; border:none; cursor:pointer;
+    padding:18px 20px;
+    color:var(--ivory);
+    font-family:'Cairo', sans-serif; font-weight:700; font-size:0.94rem;
+    text-align:right;
+  }
+  .faq-arrow{ width:18px; height:18px; flex-shrink:0; transition:transform .25s ease; color:var(--gold-soft); }
+  .faq-item.is-open .faq-arrow{ transform:rotate(180deg); }
+  .faq-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+  }
+  .faq-answer p{
+    color:var(--slate); font-size:0.88rem; line-height:1.7;
+    padding:0 20px 18px;
+    margin:0;
+  }
+  .faq-item.is-open .faq-answer{ max-height:220px; }
+
+  /* ============ BRANCHES MAP ============ */
+  .map-wrap{
+    border-radius:14px;
+    overflow:hidden;
+    border:1px solid var(--line-strong);
+  }
+  .map-wrap iframe{ display:block; filter:grayscale(0.15) contrast(1.05); }
 
   /* ============ WHY US ============ */
   .why-grid{
@@ -809,8 +906,17 @@
     color:var(--ivory);
     transition:border-color .18s ease;
     animation:acctPop .35s ease;
+    position:relative;
   }
   .account-chip-btn:hover{ border-color:var(--gold-soft); }
+  .account-chip-btn.has-notification{ border-color:var(--rust); }
+  .account-chip-btn.has-notification::after{
+    content:"";
+    position:absolute; top:-2px; left:-2px;
+    width:9px; height:9px; border-radius:50%;
+    background:var(--rust);
+    border:2px solid var(--bg);
+  }
   @keyframes acctPop{
     0%{ transform:scale(0.85); opacity:0; }
     100%{ transform:scale(1); opacity:1; }
@@ -947,9 +1053,43 @@
   }
   .field input:focus{ border-color:var(--gold-soft); }
   .btn-sm{ padding:8px 14px; font-size:0.78rem; width:auto; }
+  .modal-row{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .modal-row input{
+    padding:11px 13px; border-radius:8px;
+    border:1px solid var(--line-strong); background:var(--bg); color:var(--ivory);
+    font-size:0.86rem;
+  }
   .field-note{ font-size:0.76rem; color:var(--slate); margin-top:6px; min-height:14px; }
   .field-note.is-success{ color:var(--green-soft, #69c48d); }
   .field-note.is-error{ color:var(--rust); }
+
+  .payment-options{ display:flex; gap:10px; }
+  .payment-option{
+    flex:1;
+    display:flex; align-items:center; justify-content:center;
+    gap:6px;
+    border:1px solid var(--line-strong);
+    border-radius:8px;
+    padding:11px;
+    font-size:0.85rem;
+    cursor:pointer;
+    transition:border-color .18s ease, background .18s ease;
+  }
+  .payment-option input{ display:none; }
+  .payment-option.is-active{ border-color:var(--gold-soft); background:rgba(201,162,39,0.08); }
+  .instapay-box{
+    margin-top:12px;
+    background:var(--bg);
+    border:1px dashed var(--line-strong);
+    border-radius:9px;
+    padding:12px 14px;
+  }
+  .instapay-box p{ font-size:0.82rem; color:var(--slate); margin:0 0 6px; line-height:1.6; }
+  .instapay-box p:last-child{ margin-bottom:0; }
+  .instapay-number{
+    font-family:'Cairo', sans-serif; font-weight:800; color:var(--gold-soft);
+    direction:ltr; display:inline-block;
+  }
 
   .checkout-summary{
     background:var(--bg); border:1px solid var(--line);
@@ -989,6 +1129,7 @@
     .process-step:first-child{ border-top:none; }
     .fleet-grid{ grid-template-columns:repeat(2,1fr); }
     .why-grid{ grid-template-columns:1fr; }
+    .terms-grid{ grid-template-columns:1fr; }
     .testi-grid{ grid-template-columns:1fr; }
     .footer-grid{ grid-template-columns:1fr 1fr; }
   }
@@ -1018,6 +1159,7 @@
     <nav class="main-nav" aria-label="التنقل الرئيسي">
       <a href="#fleet">أسطولنا</a>
       <a href="#process">طريقة الحجز</a>
+      <a href="#terms">شروط الإيجار</a>
       <a href="#why">ليه احنا</a>
       <a href="#testimonials">آراء العملاء</a>
       <a href="#contact">تواصل معنا</a>
@@ -1080,8 +1222,12 @@
     <ul class="checkout-summary" id="checkout-summary"></ul>
     <form id="checkout-form">
       <div class="field" id="rental-days-field">
-        <label for="checkout-days">عدد أيام الإيجار</label>
-        <input type="number" id="checkout-days" min="1" value="1" required>
+        <label>تاريخ الاستلام والتسليم</label>
+        <div class="modal-row">
+          <input type="date" id="checkout-pickup-date" required>
+          <input type="date" id="checkout-return-date" required>
+        </div>
+        <div class="field-note" id="days-note">مدة الإيجار: يوم واحد</div>
       </div>
       <div class="field">
         <label for="checkout-name">الاسم بالكامل</label>
@@ -1099,6 +1245,25 @@
         </div>
         <div class="field-note" id="coupon-note"></div>
       </div>
+
+      <div class="field">
+        <label>طريقة الدفع</label>
+        <div class="payment-options">
+          <label class="payment-option is-active">
+            <input type="radio" name="payment-method" value="cash" checked>
+            <span>💵 كاش عند الاستلام</span>
+          </label>
+          <label class="payment-option">
+            <input type="radio" name="payment-method" value="instapay">
+            <span>📲 InstaPay مقدّم</span>
+          </label>
+        </div>
+        <div class="instapay-box" id="instapay-box" style="display:none;">
+          <p><b>حوّل على رقم InstaPay:</b> <span class="instapay-number">01551831312</span></p>
+          <p>بعد التحويل، ابعتلنا صورة إيصال التحويل على واتساب مع رقم الطلب عشان نأكد الحجز فورًا.</p>
+        </div>
+      </div>
+
       <div class="modal-actions">
         <button type="button" class="btn btn-ghost" id="checkout-cancel">رجوع</button>
         <button type="submit" class="btn btn-gold">تأكيد عبر واتساب</button>
@@ -1109,7 +1274,7 @@
 
 <!-- CAR PHOTOS LIGHTBOX -->
 <div class="gallery-backdrop" id="gallery-backdrop">
-  <div class="gallery-modal">
+  <div class="gallery-modal detail-modal">
     <div class="gallery-head">
       <h3 id="gallery-title">صور السيارة</h3>
       <button class="gallery-close" id="gallery-close" aria-label="إغلاق">
@@ -1118,7 +1283,17 @@
     </div>
     <div class="gallery-stage" id="gallery-stage"></div>
     <div class="gallery-thumbs" id="gallery-thumbs"></div>
-    <p class="gallery-note">صور توضيحية مبدئية — تقدر تستبدلها بصور حقيقية للسيارة من لوحة التحكم.</p>
+    <p class="gallery-note" id="gallery-note">صور توضيحية مبدئية — تقدر تستبدلها بصور حقيقية للسيارة من لوحة التحكم.</p>
+
+    <div class="detail-body" id="detail-body">
+      <div class="detail-badges" id="detail-badges"></div>
+      <p class="detail-desc" id="detail-desc"></p>
+      <ul class="detail-specs" id="detail-specs"></ul>
+      <div class="detail-price-row">
+        <div id="detail-price"></div>
+        <button type="button" class="btn btn-gold" id="detail-cta">أضف للسلة</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1277,8 +1452,119 @@
     </div>
   </section>
 
+  <!-- RENTAL TERMS -->
+  <section class="section section-alt" id="terms">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">قبل ما تحجز</span>
+        <h2 class="section-title">شروط الإيجار</h2>
+        <p class="section-lead">اقرأها كويس قبل الحجز، عشان تبقى عارف كل حاجة بالظبط من غير مفاجآت.</p>
+      </div>
+      <div class="terms-grid reveal">
+        <div class="terms-card">
+          <svg class="terms-icon" viewBox="0 0 40 40" fill="none"><rect x="8" y="6" width="24" height="30" rx="2" stroke="#e4c55e" stroke-width="2"/><line x1="14" y1="14" x2="26" y2="14" stroke="#e4c55e" stroke-width="1.6"/><line x1="14" y1="20" x2="26" y2="20" stroke="#e4c55e" stroke-width="1.6"/><line x1="14" y1="26" x2="22" y2="26" stroke="#e4c55e" stroke-width="1.6"/></svg>
+          <h3>المستندات المطلوبة</h3>
+          <p>رخصة قيادة سارية (مصرية أو دولية)، وبطاقة الرقم القومي أو جواز السفر ساري. لازم تحضرهم وقت الاستلام.</p>
+        </div>
+        <div class="terms-card">
+          <svg class="terms-icon" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="14" r="6" stroke="#e4c55e" stroke-width="2"/><path d="M8 34c0-7 5-11 12-11s12 4 12 11" stroke="#e4c55e" stroke-width="2"/></svg>
+          <h3>الحد الأدنى للسن</h3>
+          <p>21 سنة للسيارات الاقتصادية والصالون، و25 سنة للـ SUV والفئات الفاخرة، مع رخصة قيادة لا تقل مدتها عن سنة.</p>
+        </div>
+        <div class="terms-card">
+          <svg class="terms-icon" viewBox="0 0 40 40" fill="none"><path d="M20 4 L34 10 V19 C34 28 28 34 20 36 C12 34 6 28 6 19 V10 Z" stroke="#e4c55e" stroke-width="2"/></svg>
+          <h3>التأمين والتحمل (Deposit)</h3>
+          <p>كل سياراتنا مؤمنة تأمين شامل. بندفع مبلغ تحمّل مسترد وقت الاستلام (يختلف حسب فئة السيارة) وبيرجع كامل عند التسليم بحالة سليمة.</p>
+        </div>
+        <div class="terms-card">
+          <svg class="terms-icon" viewBox="0 0 40 40" fill="none"><path d="M10 30h20M14 30V14a6 6 0 0 1 12 0v16" stroke="#e4c55e" stroke-width="2"/></svg>
+          <h3>سياسة الوقود</h3>
+          <p>بتستلم السيارة بخزان ممتلئ، وبترجعها بنفس المستوى. لو رجعتها فاضية، بنحسب فرق الوقود + رسوم تعبئة.</p>
+        </div>
+        <div class="terms-card">
+          <svg class="terms-icon" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="15" stroke="#e4c55e" stroke-width="2"/><path d="M20 12v8l6 4" stroke="#e4c55e" stroke-width="2"/></svg>
+          <h3>غرامة التأخير</h3>
+          <p>لو رجّعت السيارة بعد ميعاد التسليم المتفق عليه، بيتحسب يوم إيجار إضافي كامل عن كل تأخير يتجاوز ساعتين.</p>
+        </div>
+        <div class="terms-card">
+          <svg class="terms-icon" viewBox="0 0 40 40" fill="none"><path d="M8 20h24M20 8v24" stroke="#e4c55e" stroke-width="2"/><circle cx="20" cy="20" r="15" stroke="#e4c55e" stroke-width="2"/></svg>
+          <h3>الإلغاء والاسترجاع</h3>
+          <p>إلغاء مجاني حتى 24 ساعة قبل ميعاد الاستلام. الإلغاء بعد كده بيخصم منه 20% من قيمة اليوم الأول كرسوم إدارية.</p>
+        </div>
+      </div>
+      <label class="terms-agree-note reveal">
+        📄 بمجرد إتمام أي حجز من الموقع، إنت بتوافق تلقائيًا على الشروط دي بالكامل.
+      </label>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">أسئلة شائعة</span>
+        <h2 class="section-title">عندك سؤال؟ يمكن إجابته هنا</h2>
+      </div>
+      <div class="faq-list reveal" id="faq-list">
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span>ممكن أدفع كاش ولا لازم أونلاين؟</span>
+            <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><p>تقدر تدفع كاش وقت الاستلام، أو تحوّل مقدّم عن طريق InstaPay على الرقم 01551831312 وتبعتلنا صورة التحويل على واتساب لتأكيد الحجز فورًا.</p></div>
+        </div>
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span>لو رجّعت العربية متأخر يحصل إيه؟</span>
+            <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><p>مسموح بساعتين سماح بعد ميعاد التسليم من غير أي غرامة. بعد كده بيتحسب يوم إيجار إضافي كامل. لو هتتأخر، كلّمنا الأول ونتفاهم.</p></div>
+        </div>
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span>ينفع سائق تاني غيري يقود السيارة؟</span>
+            <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><p>لازم أي سائق إضافي يكون مسجل معانا وقت الحجز بنفس شروط السن والرخصة، عشان التأمين يغطّيه.</p></div>
+        </div>
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span>فيه مبلغ تأمين (Deposit) بيترد إمتى؟</span>
+            <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><p>بيترد كامل وقت تسليم السيارة مباشرة لو مفيش أي أضرار أو مخالفات، وبيتحصّل منه أي فرق وقود أو غرامة تأخير لو حصلت.</p></div>
+        </div>
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span>ممكن أستلم السيارة في فرع وأسلمها في فرع تاني؟</span>
+            <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><p>أيوه، بس ده بيتحسبله رسوم نقل بسيطة حسب المسافة بين الفروع — كلّمنا وقت الحجز نتفق على التفاصيل.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BRANCHES MAP -->
+  <section class="section section-alt" id="branches-map">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">فروعنا</span>
+        <h2 class="section-title">لاقينا على الخريطة</h2>
+        <p class="section-lead">القاهرة، الجيزة، الإسكندرية، وشرم الشيخ — اختار أقرب فرع ليك.</p>
+      </div>
+      <div class="map-wrap reveal">
+        <iframe
+          src="https://www.google.com/maps?q=Cairo,Egypt&output=embed"
+          width="100%" height="380" style="border:0; border-radius:14px;"
+          allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          title="فروع محمد عمر موتورز"></iframe>
+      </div>
+    </div>
+  </section>
+
   <!-- TESTIMONIALS -->
-  <section class="section section-alt" id="testimonials">
+  <section class="section" id="testimonials">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">آراء عملائنا</span>
@@ -1355,6 +1641,8 @@
         <ul>
           <li><a href="#fleet">أسطولنا</a></li>
           <li><a href="#process">طريقة الحجز</a></li>
+          <li><a href="#terms">شروط الإيجار</a></li>
+          <li><a href="#faq">أسئلة شائعة</a></li>
           <li><a href="#why">ليه احنا</a></li>
           <li><a href="#testimonials">آراء العملاء</a></li>
         </ul>
@@ -1390,6 +1678,16 @@
   } else {
     revealEls.forEach(el=> el.classList.add('is-visible'));
   }
+
+  /* ============ الأسئلة الشائعة (أكورديون) ============ */
+  document.querySelectorAll('.faq-question').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const item = btn.closest('.faq-item');
+      const wasOpen = item.classList.contains('is-open');
+      document.querySelectorAll('.faq-item.is-open').forEach(i=> i.classList.remove('is-open'));
+      if(!wasOpen) item.classList.add('is-open');
+    });
+  });
 </script>
 
 <script>
@@ -1410,7 +1708,7 @@
       }
     } catch(err){ /* لا يوجد حساب محفوظ، أو التخزين غير متاح في هذه البيئة */ }
     renderAccountUI();
-    if(loggedInAccount) updateLoyaltyPoints();
+    if(loggedInAccount){ updateLoyaltyPoints(); startStatusPolling(); }
   }
 
   function renderAccountUI(){
@@ -1477,6 +1775,50 @@
     const mine = await fetchMyBookings();
     document.getElementById('loyalty-points').textContent = (mine.length * 10);
   }
+
+  /* ============ تنبيه العميل عند تغيّر حالة حجزه ============ */
+  let seenBookingStatuses = {};
+  let statusCheckStarted = false;
+
+  async function loadSeenStatuses(){
+    try{
+      if(window.storage){
+        const res = await window.storage.get('seen-booking-statuses', false);
+        if(res && res.value) seenBookingStatuses = JSON.parse(res.value);
+      }
+    } catch(err){ seenBookingStatuses = {}; }
+  }
+  async function saveSeenStatuses(){
+    try{ if(window.storage) await window.storage.set('seen-booking-statuses', JSON.stringify(seenBookingStatuses), false); }
+    catch(err){}
+  }
+
+  async function checkBookingStatusUpdates(){
+    if(!loggedInAccount || !loggedInAccount.phone) return;
+    const mine = await fetchMyBookings();
+    let changed = false;
+    mine.forEach(o=>{
+      const prev = seenBookingStatuses[o.id];
+      if(prev !== undefined && prev !== o.status){
+        showToast(`🔔 تحديث في حجزك ${o.id}: بقت حالته "${o.status}"`);
+        document.getElementById('account-chip-btn').classList.add('has-notification');
+        changed = true;
+      }
+      seenBookingStatuses[o.id] = o.status;
+    });
+    if(changed) saveSeenStatuses();
+  }
+
+  function startStatusPolling(){
+    if(statusCheckStarted) return;
+    statusCheckStarted = true;
+    loadSeenStatuses().then(checkBookingStatusUpdates);
+    setInterval(checkBookingStatusUpdates, 10000);
+  }
+
+  document.getElementById('account-chip-btn').addEventListener('click', ()=>{
+    document.getElementById('account-chip-btn').classList.remove('has-notification');
+  });
 
   document.getElementById('my-bookings-btn').addEventListener('click', async ()=>{
     document.getElementById('account-menu').classList.remove('is-open');
@@ -1633,7 +1975,7 @@
         ${media}
         ${featuredBadge}
         <span class="sticker-cat">${car.cat}</span>
-        <h3 class="sticker-name">${car.name}</h3>
+        <h3 class="sticker-name car-detail-trigger" data-id="${car.id}" style="cursor:pointer;">${car.name}</h3>
         ${descHtml}
         <ul class="sticker-specs">
           <li><span>ناقل الحركة</span><span>${car.trans}</span></li>
@@ -1680,7 +2022,7 @@
     });
 
     // ربط أزرار الصور — بنجيب بيانات السيارة كاملة من القائمة الحالية عشان نعرض الصور الأربعة
-    fleetGridEl.querySelectorAll('.photos-btn').forEach(btn=>{
+    fleetGridEl.querySelectorAll('.photos-btn, .car-detail-trigger').forEach(btn=>{
       btn.addEventListener('click', ()=>{
         const car = fleetCars.find(c=> String(c.id) === String(btn.dataset.id));
         if(car) openGallery(car);
@@ -1771,6 +2113,50 @@
     });
     renderGalleryShot(0);
     galleryBackdrop.classList.add('is-active');
+
+    // تعبئة قسم التفاصيل الكاملة
+    const isSale = car.type === 'sale';
+    const discount = Number(car.discount) || 0;
+    const finalPrice = discount > 0 ? Math.round(car.price * (1 - discount/100)) : car.price;
+    const isBookable = !isSale && car.status === 'available';
+
+    document.getElementById('detail-badges').innerHTML = `
+      <span>${isSale ? 'للبيع' : 'للإيجار'}</span>
+      <span>${car.cat}</span>
+      ${car.featured ? '<span>⭐ مميزة</span>' : ''}
+      ${discount > 0 ? `<span>خصم ${discount}%</span>` : ''}
+    `;
+    document.getElementById('detail-desc').textContent = car.desc || 'سيارة بحالة ممتازة وجاهزة للاستخدام فورًا.';
+    document.getElementById('detail-specs').innerHTML = `
+      <li><span>ناقل الحركة</span><span>${car.trans}</span></li>
+      <li><span>عدد الركاب</span><span>${car.seats}</span></li>
+      <li><span>الفئة</span><span>${car.cat}</span></li>
+      <li><span>الحالة</span><span>${isSale ? 'معروضة للبيع' : fleetAvailBadge(car.status)}</span></li>
+    `;
+    document.getElementById('detail-price').innerHTML = discount > 0
+      ? `<b>${finalPrice.toLocaleString('ar-EG')} ج.م</b> <span class="price-original">${Number(car.price).toLocaleString('ar-EG')}</span> <small style="color:var(--slate);">${isSale?'':' / اليوم'}</small>`
+      : `<b>${Number(car.price).toLocaleString('ar-EG')} ج.م</b> <small style="color:var(--slate);">${isSale?'':' / اليوم'}</small>`;
+
+    const detailCta = document.getElementById('detail-cta');
+    if(isSale){
+      detailCta.textContent = 'استفسر عن الشراء';
+      detailCta.disabled = false;
+      detailCta.onclick = ()=>{
+        const msg = `استفسار عن شراء سيارة من موقع محمد عمر موتورز%0Aالسيارة: ${car.name}%0Aالسعر المعروض: ${finalPrice.toLocaleString('ar-EG')} ج.م%0Aمن فضلكم كلموني لمناقشة التفاصيل.`;
+        window.open(`https://wa.me/${BUSINESS_WHATSAPP}?text=${msg}`, '_blank');
+      };
+    } else {
+      detailCta.textContent = isBookable ? 'أضف للسلة' : 'غير متاح حاليًا';
+      detailCta.disabled = !isBookable;
+      detailCta.onclick = isBookable ? ()=>{
+        const existing = cart.find(item=> item.id === String(car.id));
+        if(existing){ existing.qty += 1; } else { cart.push({ id:String(car.id), name:car.name, price:finalPrice, qty:1 }); }
+        renderCart();
+        showToast(`تمت إضافة "${car.name}" للسلة`);
+        galleryBackdrop.classList.remove('is-active');
+        openCart();
+      } : null;
+    }
   }
   function renderGalleryShot(i){
     galleryIndex = i;
@@ -1839,8 +2225,16 @@
   const COUPONS = { 'WELCOME10': 10, 'MOM20': 20, 'EID15': 15 }; // أكواد خصم تجريبية (نسبة %)
   let appliedCoupon = null;
 
+  function getRentalDays(){
+    const pickup = document.getElementById('checkout-pickup-date').value;
+    const ret = document.getElementById('checkout-return-date').value;
+    if(!pickup || !ret) return 1;
+    const diff = Math.round((new Date(ret) - new Date(pickup)) / (1000*60*60*24));
+    return diff > 0 ? diff : 1;
+  }
+
   function computeCheckoutTotals(){
-    const days = Math.max(1, Number(document.getElementById('checkout-days').value) || 1);
+    const days = getRentalDays();
     const rawTotal = cart.reduce((s,i)=> s + (i.price * i.qty * days), 0);
     const discountAmount = appliedCoupon ? Math.round(rawTotal * appliedCoupon.percent / 100) : 0;
     const finalTotal = rawTotal - discountAmount;
@@ -1849,6 +2243,7 @@
 
   function renderCheckoutSummary(){
     const { days, rawTotal, discountAmount, finalTotal } = computeCheckoutTotals();
+    document.getElementById('days-note').textContent = `مدة الإيجار: ${days} ${days === 1 ? 'يوم' : 'أيام'}`;
     let html = cart.map(i=> `<li><span>${i.name} × ${i.qty} × ${days} يوم</span><span>${(i.price*i.qty*days).toLocaleString('ar-EG')} ج.م</span></li>`).join('');
     if(discountAmount > 0){
       html += `<li style="color:var(--green-soft,#69c48d);"><span>خصم الكوبون (${appliedCoupon.code})</span><span>-${discountAmount.toLocaleString('ar-EG')} ج.م</span></li>`;
@@ -1862,13 +2257,23 @@
     appliedCoupon = null;
     document.getElementById('checkout-coupon').value = '';
     document.getElementById('coupon-note').textContent = '';
-    document.getElementById('checkout-days').value = 1;
-    // لو في السلة سيارات بيع بس (مش إيجار)، اخفاء حقل عدد الأيام لعدم الحاجة له
+    const today = new Date();
+    const tomorrow = new Date(today.getTime() + 86400000);
+    document.getElementById('checkout-pickup-date').value = today.toISOString().slice(0,10);
+    document.getElementById('checkout-return-date').value = tomorrow.toISOString().slice(0,10);
+    document.getElementById('checkout-pickup-date').min = today.toISOString().slice(0,10);
+    document.getElementById('checkout-return-date').min = tomorrow.toISOString().slice(0,10);
+    // لو في السلة سيارات بيع بس (مش إيجار)، اخفاء حقل التواريخ لعدم الحاجة له
     const hasRentItems = cart.some(i=> {
       const car = fleetCars.find(c=> String(c.id) === String(i.id));
       return !car || car.type !== 'sale';
     });
     document.getElementById('rental-days-field').style.display = hasRentItems ? 'block' : 'none';
+    // إعادة الضبط على الدفع كاش كافتراضي في كل مرة
+    document.querySelector('input[name="payment-method"][value="cash"]').checked = true;
+    document.querySelectorAll('.payment-option').forEach(opt=> opt.classList.remove('is-active'));
+    document.querySelector('.payment-option').classList.add('is-active');
+    document.getElementById('instapay-box').style.display = 'none';
     renderCheckoutSummary();
     // تعبئة تلقائية لبيانات العميل لو مسجل دخول، لتوفير وقته
     if(loggedInAccount){
@@ -1878,7 +2283,17 @@
     checkoutBackdrop.classList.add('is-active');
     closeCart();
   });
-  document.getElementById('checkout-days').addEventListener('input', renderCheckoutSummary);
+  document.getElementById('checkout-pickup-date').addEventListener('change', ()=>{
+    const pickup = document.getElementById('checkout-pickup-date').value;
+    const returnInput = document.getElementById('checkout-return-date');
+    if(pickup){
+      const nextDay = new Date(new Date(pickup).getTime() + 86400000).toISOString().slice(0,10);
+      returnInput.min = nextDay;
+      if(returnInput.value && returnInput.value <= pickup) returnInput.value = nextDay;
+    }
+    renderCheckoutSummary();
+  });
+  document.getElementById('checkout-return-date').addEventListener('change', renderCheckoutSummary);
   document.getElementById('apply-coupon-btn').addEventListener('click', ()=>{
     const code = document.getElementById('checkout-coupon').value.trim().toUpperCase();
     const note = document.getElementById('coupon-note');
@@ -1902,6 +2317,15 @@
     if(e.target === checkoutBackdrop) checkoutBackdrop.classList.remove('is-active');
   });
 
+  /* ============ اختيار طريقة الدفع ============ */
+  document.querySelectorAll('input[name="payment-method"]').forEach(radio=>{
+    radio.addEventListener('change', ()=>{
+      document.querySelectorAll('.payment-option').forEach(opt=> opt.classList.remove('is-active'));
+      radio.closest('.payment-option').classList.add('is-active');
+      document.getElementById('instapay-box').style.display = radio.value === 'instapay' ? 'block' : 'none';
+    });
+  });
+
   checkoutForm.addEventListener('submit', async (e)=>{
     e.preventDefault();
     const name = document.getElementById('checkout-name').value.trim();
@@ -1910,13 +2334,17 @@
 
     const { days, finalTotal } = computeCheckoutTotals();
     const orderId = 'BK-' + Date.now().toString().slice(-6);
+    const pickupDate = document.getElementById('checkout-pickup-date').value;
+    const returnDate = document.getElementById('checkout-return-date').value;
+    const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
 
     // محاولة حفظ الطلب في تخزين مشترك (يعمل فقط داخل معاينة Claude، مع تجاهل الخطأ في أي مكان آخر)
     try{
       if(window.storage){
         await window.storage.set('booking:' + orderId, JSON.stringify({
-          id: orderId, customer:name, phone, items:cart, days,
+          id: orderId, customer:name, phone, items:cart, days, pickupDate, returnDate,
           coupon: appliedCoupon ? appliedCoupon.code : null,
+          paymentMethod,
           total: finalTotal,
           status:'قيد الانتظار', createdAt: new Date().toISOString()
         }), true);
@@ -1929,11 +2357,17 @@
     // بناء رسالة واتساب وإرسالها لفريق العمل
     const lines = cart.map(i=> `- ${i.name} × ${i.qty} × ${days} يوم`).join('%0A');
     const couponLine = appliedCoupon ? `كود الخصم: ${appliedCoupon.code} (${appliedCoupon.percent}%)%0A` : '';
+    const datesLine = pickupDate && returnDate ? `الاستلام: ${pickupDate} — التسليم: ${returnDate}%0A` : '';
+    const paymentLine = paymentMethod === 'instapay'
+      ? `طريقة الدفع: InstaPay مقدّم (هبعت صورة التحويل حالًا)%0A`
+      : `طريقة الدفع: كاش عند الاستلام%0A`;
     const message =
       `طلب حجز جديد من موقع محمد عمر موتورز%0A` +
       `رقم الطلب: ${orderId}%0A` +
       `الاسم: ${name}%0A` +
       `رقم الهاتف: ${phone}%0A` +
+      datesLine +
+      paymentLine +
       `السيارات المطلوبة:%0A${lines}%0A` +
       couponLine +
       `الإجمالي النهائي: ${finalTotal.toLocaleString('ar-EG')} ج.م`;
