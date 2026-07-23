@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>تسجيل الدخول | محمد عمر موتورز</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 60 60%27%3E%3Ccircle cx=%2730%27 cy=%2730%27 r=%2728%27 fill=%27%2312151a%27 stroke=%27%23c9a227%27 stroke-width=%272%27/%3E%3Ctext x=%2730%27 y=%2739%27 text-anchor=%27middle%27 font-family=%27Arial%27 font-weight=%27800%27 font-size=%2722%27 fill=%27%23e4c55e%27%3EMO%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 60 60%27%3E%3Ccircle cx=%2730%27 cy=%2730%27 r=%2728%27 fill=%27%2312151a%27 stroke=%27%23c9a227%27 stroke-width=%272%27/%3E%3Ctext x=%2730%27 y=%2739%27 text-anchor=%27middle%27 font-family=%27Arial%27 font-weight=%27800%27 font-size=%2722%27 fill=%27%23e4c55e%27%3EMO%3C/text%3E%3Cpath d=%27M15 43 Q30 47 45 43%27 stroke=%27%23c9a227%27 stroke-width=%271.6%27 fill=%27none%27/%3E%3Ccircle cx=%2745%27 cy=%2719%27 r=%272.3%27 fill=%27%23e4c55e%27/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -288,6 +288,14 @@
   }
   .success-icon svg{ width:28px; height:28px; color:var(--green-soft); }
   .step-center{ text-align:center; }
+  .redirect-note{ font-size:0.8rem; color:var(--slate); margin-bottom:16px; }
+  .redirect-note b{ color:var(--gold-soft); }
+  .troubleshoot-note{
+    font-size:0.74rem; color:var(--slate); margin-top:16px; line-height:1.6;
+    background:rgba(201,162,39,0.06); border:1px dashed var(--line-strong);
+    padding:10px 12px; border-radius:8px;
+  }
+  .troubleshoot-note code{ color:var(--gold-soft); }
   .welcome-name{ color:var(--gold-soft); }
 </style>
 </head>
@@ -295,7 +303,7 @@
 
 <div class="auth-card">
   <div class="brand">
-    <svg viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="28" stroke="#c9a227" stroke-width="2"/><text x="30" y="38" text-anchor="middle" font-family="Cairo, sans-serif" font-weight="800" font-size="20" fill="#ede7da">MO</text></svg>
+    <svg viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="28" stroke="#c9a227" stroke-width="2"/><text x="30" y="38" text-anchor="middle" font-family="Cairo, sans-serif" font-weight="800" font-size="20" fill="#ede7da">MO</text><path d="M15 43 Q30 47 45 43" stroke="#c9a227" stroke-width="1.6" fill="none" stroke-linecap="round" opacity="0.8"/><circle cx="45" cy="19" r="2.3" fill="#e4c55e"/></svg>
     <div>
       <strong>محمد عمر موتورز</strong>
       <span>MOHAMED OMAR MOTORS</span>
@@ -412,6 +420,7 @@
       <p class="step-sub" id="wb-phone"></p>
       <a href="mohamed-omar-motors.html" class="btn btn-gold">متابعة للموقع</a>
       <button type="button" class="btn btn-ghost" id="wb-logout-btn" style="margin-top:10px;">تسجيل الخروج من هذا الحساب</button>
+      <p class="troubleshoot-note">لو الصفحة معرفتش تفتح: تأكد إن ملف <code>mohamed-omar-motors.html</code> موجود في نفس المجلد اللي فيه هذا الملف بالظبط.</p>
     </div>
   </div>
 
@@ -462,8 +471,10 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>
       </div>
       <h1 class="step-title">أهلاً بيك، <span class="welcome-name" id="success-name">عميلنا العزيز</span></h1>
-      <p class="step-sub">تم تسجيل دخولك بنجاح. تقدر دلوقتي تتصفح الأسطول وتحجز سيارتك.</p>
-      <a href="mohamed-omar-motors.html" class="btn btn-gold">الذهاب لصفحة الحجز</a>
+      <p class="step-sub">تم تسجيل دخولك وحفظ بياناتك بنجاح. تقدر دلوقتي تتصفح الأسطول وتحجز سيارتك.</p>
+      <p class="redirect-note" id="redirect-note">هننقلك تلقائيًا للموقع خلال <b id="redirect-seconds">2</b> ثانية...</p>
+      <a href="mohamed-omar-motors.html" class="btn btn-gold">الذهاب لصفحة الحجز الآن</a>
+      <p class="troubleshoot-note">لو الصفحة معرفتش تفتح: تأكد إن ملف <code>mohamed-omar-motors.html</code> موجود في نفس المجلد اللي فيه هذا الملف بالظبط.</p>
     </div>
   </div>
 </div>
@@ -481,6 +492,25 @@
   const steps = document.querySelectorAll('.step');
   function showStep(id){
     steps.forEach(s=> s.classList.toggle('is-active', s.id === id));
+  }
+
+  /* ============ توجيه تلقائي بعد نجاح تسجيل الدخول/الحساب ============
+     ملاحظة: التوجيه محتاج ملف mohamed-omar-motors.html يكون موجود فعليًا
+     في نفس المجلد، وإلا المتصفح هيوريك خطأ "الملف غير موجود" (زي أي رابط
+     عادي في أي موقع) — ده مش خطأ في الكود، لازم الملفات الأربعة كلها
+     تكون محفوظة مع بعض في نفس المكان. */
+  function startRedirectCountdown(){
+    let seconds = 2;
+    const secEl = document.getElementById('redirect-seconds');
+    if(secEl) secEl.textContent = seconds;
+    const interval = setInterval(()=>{
+      seconds -= 1;
+      if(secEl) secEl.textContent = Math.max(seconds, 0);
+      if(seconds <= 0){
+        clearInterval(interval);
+        window.location.href = 'mohamed-omar-motors.html';
+      }
+    }, 1000);
   }
 
   const toastEl = document.getElementById('toast');
@@ -591,7 +621,7 @@
     const account = { name, phone, photo: signupPhoto, createdAt: new Date().toISOString() };
     await saveAccount(account);
     document.getElementById('success-name').textContent = name;
-    showStep('step-success');
+    showStep('step-success'); startRedirectCountdown();
     showToast('تم إنشاء حسابك وحفظ بياناتك بنجاح');
   });
 
@@ -677,7 +707,7 @@
     const phoneForAccount = enteredPhone.slice(1);
     document.getElementById('success-name').textContent = '+20' + phoneForAccount;
     saveAccount({ name:'', phone: phoneForAccount, photo:'', createdAt: new Date().toISOString() });
-    showStep('step-success');
+    showStep('step-success'); startRedirectCountdown();
   });
 
   document.getElementById('otp-back-link').addEventListener('click', (e)=>{
@@ -732,7 +762,7 @@
     setTimeout(()=>{
       document.getElementById('success-name').textContent = 'name@gmail.com';
       saveAccount({ name:'', phone:'', email:'name@gmail.com', photo:'', createdAt: new Date().toISOString() });
-      showStep('step-success');
+      showStep('step-success'); startRedirectCountdown();
     }, 900);
   });
   /* ============ دخول الإدارة بكود ============ */

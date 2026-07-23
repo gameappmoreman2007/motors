@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>محمد عمر موتورز | تأجير سيارات</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 60 60%27%3E%3Ccircle cx=%2730%27 cy=%2730%27 r=%2728%27 fill=%27%2312151a%27 stroke=%27%23c9a227%27 stroke-width=%272%27/%3E%3Ctext x=%2730%27 y=%2739%27 text-anchor=%27middle%27 font-family=%27Arial%27 font-weight=%27800%27 font-size=%2722%27 fill=%27%23e4c55e%27%3EMO%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 60 60%27%3E%3Ccircle cx=%2730%27 cy=%2730%27 r=%2728%27 fill=%27%2312151a%27 stroke=%27%23c9a227%27 stroke-width=%272%27/%3E%3Ctext x=%2730%27 y=%2739%27 text-anchor=%27middle%27 font-family=%27Arial%27 font-weight=%27800%27 font-size=%2722%27 fill=%27%23e4c55e%27%3EMO%3C/text%3E%3Cpath d=%27M15 43 Q30 47 45 43%27 stroke=%27%23c9a227%27 stroke-width=%271.6%27 fill=%27none%27/%3E%3Ccircle cx=%2745%27 cy=%2719%27 r=%272.3%27 fill=%27%23e4c55e%27/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -733,6 +733,20 @@
     border:1px solid var(--line-strong);
   }
   .map-wrap iframe{ display:block; filter:grayscale(0.15) contrast(1.05); }
+  .branch-tabs{
+    display:flex; gap:10px; flex-wrap:wrap; margin-bottom:18px;
+  }
+  .branch-tab{
+    font-family:'Cairo', sans-serif; font-weight:700; font-size:0.84rem;
+    padding:9px 18px; border-radius:30px;
+    border:1px solid var(--line-strong); background:transparent; color:var(--slate);
+    cursor:pointer; transition:all .18s ease;
+  }
+  .branch-tab:hover{ color:var(--ivory); border-color:var(--gold-soft); }
+  .branch-tab.is-active{
+    background:linear-gradient(180deg, var(--gold-soft), var(--gold));
+    color:#1a1305; border-color:transparent;
+  }
 
   /* ============ WHY US ============ */
   .why-grid{
@@ -1059,6 +1073,12 @@
     border:1px solid var(--line-strong); background:var(--bg); color:var(--ivory);
     font-size:0.86rem;
   }
+  .checkbox-row{
+    display:flex; align-items:flex-start; gap:9px;
+    font-size:0.82rem; color:var(--ivory); line-height:1.5;
+    cursor:pointer;
+  }
+  .checkbox-row input{ width:16px; height:16px; accent-color:var(--gold); cursor:pointer; margin-top:2px; flex-shrink:0; }
   .field-note{ font-size:0.76rem; color:var(--slate); margin-top:6px; min-height:14px; }
   .field-note.is-success{ color:var(--green-soft, #69c48d); }
   .field-note.is-error{ color:var(--rust); }
@@ -1149,7 +1169,7 @@
       <svg class="brand-mark" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="30" cy="30" r="28" stroke="#c9a227" stroke-width="2"/>
         <circle cx="30" cy="30" r="22" stroke="#c9a227" stroke-width="1" opacity="0.5"/>
-        <text x="30" y="38" text-anchor="middle" font-family="Cairo, sans-serif" font-weight="800" font-size="20" fill="#ede7da">MO</text>
+        <text x="30" y="38" text-anchor="middle" font-family="Cairo, sans-serif" font-weight="800" font-size="20" fill="#ede7da">MO</text><path d="M15 43 Q30 47 45 43" stroke="#c9a227" stroke-width="1.6" fill="none" stroke-linecap="round" opacity="0.8"/><circle cx="45" cy="19" r="2.3" fill="#e4c55e"/>
       </svg>
       <span class="brand-text">
         <strong>محمد عمر موتورز</strong>
@@ -1160,7 +1180,9 @@
       <a href="#fleet">أسطولنا</a>
       <a href="#process">طريقة الحجز</a>
       <a href="#terms">شروط الإيجار</a>
+      <a href="#faq">أسئلة شائعة</a>
       <a href="#why">ليه احنا</a>
+      <a href="#branches-map">فروعنا</a>
       <a href="#testimonials">آراء العملاء</a>
       <a href="#contact">تواصل معنا</a>
     </nav>
@@ -1260,9 +1282,15 @@
         </div>
         <div class="instapay-box" id="instapay-box" style="display:none;">
           <p><b>حوّل على رقم InstaPay:</b> <span class="instapay-number">01551831312</span></p>
+          <p><b>باسم:</b> عمر خالد</p>
           <p>بعد التحويل، ابعتلنا صورة إيصال التحويل على واتساب مع رقم الطلب عشان نأكد الحجز فورًا.</p>
         </div>
       </div>
+
+      <label class="checkbox-row" style="margin:14px 0 4px;">
+        <input type="checkbox" id="checkout-terms" required>
+        <span>قرأت ووافقت على <a href="#terms" id="terms-link" style="color:var(--gold-soft); text-decoration:underline;">شروط الإيجار</a></span>
+      </label>
 
       <div class="modal-actions">
         <button type="button" class="btn btn-ghost" id="checkout-cancel">رجوع</button>
@@ -1553,9 +1581,15 @@
         <h2 class="section-title">لاقينا على الخريطة</h2>
         <p class="section-lead">القاهرة، الجيزة، الإسكندرية، وشرم الشيخ — اختار أقرب فرع ليك.</p>
       </div>
+      <div class="branch-tabs reveal" id="branch-tabs">
+        <button type="button" class="branch-tab is-active" data-q="Nasr City, Cairo, Egypt">القاهرة (مدينة نصر)</button>
+        <button type="button" class="branch-tab" data-q="Sheikh Zayed, Giza, Egypt">الجيزة (الشيخ زايد)</button>
+        <button type="button" class="branch-tab" data-q="Smouha, Alexandria, Egypt">الإسكندرية (سموحة)</button>
+        <button type="button" class="branch-tab" data-q="Sharm El Sheikh, Egypt">شرم الشيخ</button>
+      </div>
       <div class="map-wrap reveal">
-        <iframe
-          src="https://www.google.com/maps?q=Cairo,Egypt&output=embed"
+        <iframe id="branch-map-frame"
+          src="https://www.google.com/maps?q=Nasr City, Cairo, Egypt&output=embed"
           width="100%" height="380" style="border:0; border-radius:14px;"
           allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
           title="فروع محمد عمر موتورز"></iframe>
@@ -1621,7 +1655,7 @@
         <div class="footer-brand">
           <svg width="40" height="40" viewBox="0 0 60 60" fill="none">
             <circle cx="30" cy="30" r="28" stroke="#c9a227" stroke-width="2"/>
-            <text x="30" y="38" text-anchor="middle" font-family="Cairo, sans-serif" font-weight="800" font-size="20" fill="#ede7da">MO</text>
+            <text x="30" y="38" text-anchor="middle" font-family="Cairo, sans-serif" font-weight="800" font-size="20" fill="#ede7da">MO</text><path d="M15 43 Q30 47 45 43" stroke="#c9a227" stroke-width="1.6" fill="none" stroke-linecap="round" opacity="0.8"/><circle cx="45" cy="19" r="2.3" fill="#e4c55e"/>
           </svg>
           <strong style="font-family:'Cairo',sans-serif; font-weight:800;">محمد عمر موتورز</strong>
         </div>
@@ -1686,6 +1720,14 @@
       const wasOpen = item.classList.contains('is-open');
       document.querySelectorAll('.faq-item.is-open').forEach(i=> i.classList.remove('is-open'));
       if(!wasOpen) item.classList.add('is-open');
+    });
+  });
+
+  /* ============ تبديل خريطة الفرع ============ */
+  document.querySelectorAll('.branch-tab').forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      document.querySelectorAll('.branch-tab').forEach(t=> t.classList.toggle('is-active', t === tab));
+      document.getElementById('branch-map-frame').src = `https://www.google.com/maps?q=${encodeURIComponent(tab.dataset.q)}&output=embed`;
     });
   });
 </script>
