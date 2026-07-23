@@ -1,0 +1,2389 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>محمد عمر موتورز | تأجير سيارات</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 60 60%27%3E%3Ccircle cx=%2730%27 cy=%2730%27 r=%2728%27 fill=%27%2312151a%27 stroke=%27%23c9a227%27 stroke-width=%272%27/%3E%3Ctext x=%2730%27 y=%2739%27 text-anchor=%27middle%27 font-family=%27Arial%27 font-weight=%27800%27 font-size=%2722%27 fill=%27%23e4c55e%27%3EMO%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12151a;
+    --bg-soft:#161b22;
+    --panel:#1b2430;
+    --panel-2:#20293a;
+    --line: rgba(237,231,218,0.12);
+    --line-strong: rgba(237,231,218,0.22);
+    --gold:#c9a227;
+    --gold-soft:#e4c55e;
+    --ivory:#ede7da;
+    --slate:#8b94a3;
+    --rust:#b23a2e;
+    --rust-soft:#d1584a;
+    --radius:14px;
+    --wrap:1180px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ivory);
+    font-family:'Tajawal', sans-serif;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4, .display{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    margin:0;
+  }
+  a{color:inherit; text-decoration:none;}
+  ul{margin:0; padding:0; list-style:none;}
+  img,svg{display:block; max-width:100%;}
+  button{font-family:inherit;}
+
+  :focus-visible{
+    outline:2px solid var(--gold-soft);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important; scroll-behavior:auto !important;}
+  }
+
+  .wrap{
+    max-width:var(--wrap);
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:0.78rem;
+    letter-spacing:0.14em;
+    color:var(--gold-soft);
+    text-transform:uppercase;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:2px;
+    background:var(--gold);
+    display:inline-block;
+  }
+
+  /* ============ HEADER ============ */
+  .site-header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(18,21,26,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .header-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 28px;
+    gap:20px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .brand-mark{
+    width:46px; height:46px;
+    flex-shrink:0;
+  }
+  .brand-text{
+    display:flex;
+    flex-direction:column;
+    line-height:1.15;
+  }
+  .brand-text strong{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:1.05rem;
+    letter-spacing:0.01em;
+  }
+  .brand-text span{
+    font-size:0.72rem;
+    color:var(--slate);
+    letter-spacing:0.08em;
+  }
+  .main-nav{
+    display:flex;
+    align-items:center;
+    gap:30px;
+  }
+  .main-nav a{
+    font-size:0.92rem;
+    color:var(--ivory);
+    opacity:0.82;
+    position:relative;
+    padding:6px 0;
+    transition:opacity .2s ease;
+  }
+  .main-nav a:hover{opacity:1;}
+  .main-nav a::after{
+    content:"";
+    position:absolute; right:0; bottom:0;
+    width:0; height:2px;
+    background:var(--gold);
+    transition:width .25s ease;
+  }
+  .main-nav a:hover::after{width:100%;}
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:0.9rem;
+    padding:12px 22px;
+    border-radius:8px;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+    white-space:nowrap;
+  }
+  .btn-gold{
+    background:linear-gradient(180deg, var(--gold-soft), var(--gold));
+    color:#1a1305;
+  }
+  .btn-gold:hover{ transform:translateY(-2px); box-shadow:0 10px 24px rgba(201,162,39,0.28); }
+  .btn-gold:disabled{ opacity:0.5; cursor:not-allowed; transform:none; box-shadow:none; }
+  .btn-ghost{
+    background:transparent;
+    border-color:var(--line-strong);
+    color:var(--ivory);
+  }
+  .btn-ghost:hover{ border-color:var(--gold-soft); color:var(--gold-soft); }
+  .btn-block{ width:100%; }
+
+  .nav-toggle{ display:none; }
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    padding:76px 0 40px;
+    background:
+      radial-gradient(ellipse 60% 50% at 78% 8%, rgba(201,162,39,0.10), transparent 60%),
+      radial-gradient(ellipse 70% 60% at 15% 100%, rgba(178,58,46,0.10), transparent 60%),
+      var(--bg);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:40px;
+    align-items:center;
+  }
+  .hero-headline{
+    font-size:clamp(2.3rem, 4.2vw, 3.6rem);
+    line-height:1.12;
+    margin:18px 0 20px;
+    letter-spacing:-0.01em;
+  }
+  .hero-headline .hl{
+    color:var(--gold-soft);
+  }
+  .hero-sub{
+    color:var(--slate);
+    font-size:1.05rem;
+    max-width:46ch;
+    margin-bottom:30px;
+  }
+  .hero-actions{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-bottom:40px;
+  }
+
+  .trust-strip{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+    background:rgba(27,36,48,0.5);
+  }
+  .trust-item{
+    padding:16px 14px;
+    text-align:center;
+    border-inline-start:1px solid var(--line);
+  }
+  .trust-item:first-child{ border-inline-start:none; }
+  .trust-item b{
+    display:block;
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:1.35rem;
+    color:var(--gold-soft);
+  }
+  .trust-item small{
+    color:var(--slate);
+    font-size:0.75rem;
+  }
+
+  .hero-art{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  }
+  .hero-art-glow{
+    position:absolute;
+    inset:0;
+    background:radial-gradient(circle at 55% 55%, rgba(201,162,39,0.16), transparent 62%);
+    filter:blur(6px);
+  }
+  .headlight-glow{
+    animation:pulseGlow 3.2s ease-in-out infinite;
+    transform-origin:center;
+  }
+  @keyframes pulseGlow{
+    0%, 100%{ opacity:0.55; }
+    50%{ opacity:1; }
+  }
+  .plate-tag{
+    position:absolute;
+    bottom:6%;
+    left:50%;
+    transform:translateX(-50%);
+    background:var(--ivory);
+    color:#12151a;
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    letter-spacing:0.12em;
+    font-size:0.78rem;
+    padding:6px 18px;
+    border-radius:5px;
+    border:2px solid #12151a;
+    box-shadow:0 8px 18px rgba(0,0,0,0.35);
+  }
+
+  /* ============ SECTION SHELL ============ */
+  .section{
+    padding:88px 0;
+    border-top:1px solid var(--line);
+  }
+  .section-head{
+    max-width:640px;
+    margin-bottom:52px;
+  }
+  .section-title{
+    font-size:clamp(1.7rem, 2.6vw, 2.3rem);
+    margin-top:14px;
+  }
+  .section-lead{
+    color:var(--slate);
+    margin-top:12px;
+    font-size:1.02rem;
+  }
+  .section-alt{ background:var(--bg-soft); }
+
+  /* ============ PROCESS ============ */
+  .process-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:0;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .process-step{
+    padding:34px 30px;
+    border-inline-start:1px solid var(--line);
+    position:relative;
+    background:var(--panel);
+  }
+  .process-step:first-child{ border-inline-start:none; }
+  .process-num{
+    font-family:'Cairo', sans-serif;
+    font-weight:900;
+    font-size:2.6rem;
+    color:transparent;
+    -webkit-text-stroke:1.5px var(--gold);
+    line-height:1;
+    margin-bottom:18px;
+  }
+  .process-step h3{
+    font-size:1.15rem;
+    margin-bottom:10px;
+  }
+  .process-step p{
+    color:var(--slate);
+    font-size:0.94rem;
+    margin:0;
+  }
+
+  /* ============ FLEET — window-sticker cards (signature) ============ */
+  .fleet-toolbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-bottom:30px;
+  }
+  .sort-select{
+    background:var(--panel);
+    border:1px solid var(--line-strong);
+    color:var(--ivory);
+    padding:9px 14px;
+    border-radius:8px;
+    font-size:0.84rem;
+    font-family:'Tajawal', sans-serif;
+  }
+  .sticker-top-row{
+    position:absolute;
+    top:14px; left:14px; right:14px;
+    display:flex;
+    justify-content:space-between;
+    z-index:2;
+  }
+  .sticker-quick-actions{ display:flex; gap:6px; }
+  .wishlist-btn, .share-btn{
+    width:30px; height:30px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.85);
+    border:1px solid rgba(28,23,16,0.15);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .wishlist-btn:hover, .share-btn:hover{ transform:scale(1.08); }
+  .wishlist-btn svg, .share-btn svg{ width:15px; height:15px; color:#1c1710; }
+  .wishlist-btn.is-active svg{ color:var(--rust); fill:var(--rust); }
+  .wishlist-btn.is-active{ animation:heartPop .3s ease; }
+  @keyframes heartPop{
+    0%{ transform:scale(1); } 40%{ transform:scale(1.35); } 100%{ transform:scale(1); }
+  }
+  .sticker-discount-badge{
+    position:absolute;
+    top:14px; left:52px;
+    background:var(--rust);
+    color:#fff;
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:0.65rem;
+    padding:4px 8px;
+    border-radius:4px;
+    z-index:2;
+  }
+  .price-original{
+    text-decoration:line-through;
+    color:#8a8577;
+    font-size:0.8rem;
+    margin-left:6px;
+  }
+  .fleet-filters{
+    display:flex;
+    gap:10px;
+    margin-bottom:30px;
+    flex-wrap:wrap;
+  }
+  .filter-tab{
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:0.86rem;
+    padding:10px 20px;
+    border-radius:30px;
+    border:1px solid var(--line-strong);
+    background:transparent;
+    color:var(--slate);
+    cursor:pointer;
+    transition:all .18s ease;
+  }
+  .filter-tab:hover{ color:var(--ivory); border-color:var(--gold-soft); }
+  .filter-tab.is-active{
+    background:linear-gradient(180deg, var(--gold-soft), var(--gold));
+    color:#1a1305;
+    border-color:transparent;
+  }
+  .fleet-loading, .fleet-empty{
+    grid-column:1/-1;
+    text-align:center;
+    color:var(--slate);
+    padding:40px;
+  }
+  .sticker-type-badge{
+    position:absolute;
+    top:14px; right:14px;
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:0.64rem;
+    padding:4px 9px;
+    border-radius:4px;
+  }
+  .sticker-type-rent{ background:rgba(178,58,46,0.12); color:#8a2c22; }
+  .sticker-type-sale{ background:rgba(63,110,143,0.14); color:#245273; }
+  .sticker-photos-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    width:100%;
+    background:transparent;
+    border:1px solid rgba(28,23,16,0.25);
+    color:#1c1710;
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:0.8rem;
+    padding:9px;
+    border-radius:5px;
+    cursor:pointer;
+    margin-bottom:8px;
+    transition:background .18s ease;
+  }
+  .sticker-photos-btn:hover{ background:rgba(28,23,16,0.06); }
+  .sticker-photos-btn svg{ width:15px; height:15px; }
+  .sticker-cta[disabled]{
+    opacity:0.55;
+    cursor:not-allowed;
+  }
+  .sticker-cta.cta-sale{ background:#1d3b52; color:#dcebf5; }
+  .sticker-cta.cta-sale:hover{ background:#264c69; }
+
+  /* ============ GALLERY LIGHTBOX ============ */
+  .gallery-backdrop{
+    position:fixed; inset:0; background:rgba(8,10,13,0.75);
+    display:none; align-items:center; justify-content:center;
+    padding:20px; z-index:110;
+  }
+  .gallery-backdrop.is-active{ display:flex; }
+  .gallery-modal{
+    width:100%; max-width:480px;
+    background:var(--panel);
+    border:1px solid var(--line-strong);
+    border-radius:var(--radius);
+    padding:20px;
+    max-height:90vh;
+    overflow-y:auto;
+  }
+  .detail-modal{ max-width:560px; }
+  .gallery-head{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:14px;
+  }
+  .gallery-head h3{ font-size:1rem; }
+  .gallery-close{
+    background:transparent; border:none; color:var(--slate);
+    width:30px; height:30px; cursor:pointer; border-radius:6px;
+  }
+  .gallery-close:hover{ color:var(--gold-soft); }
+  .gallery-close svg{ width:18px; height:18px; }
+  .gallery-stage{
+    background:var(--bg);
+    border:1px solid var(--line);
+    border-radius:10px;
+    height:220px;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:14px;
+    position:relative;
+    overflow:hidden;
+  }
+  .gallery-stage svg{ width:120px; height:120px; opacity:0.9; }
+  .gallery-stage span{
+    position:absolute; bottom:10px; right:14px;
+    font-size:0.76rem; color:var(--slate);
+    background:rgba(0,0,0,0.4);
+    padding:3px 10px; border-radius:20px;
+  }
+  .gallery-thumbs{ display:flex; gap:8px; }
+  .gallery-thumb{
+    flex:1; height:6px; border-radius:4px;
+    background:var(--line-strong);
+    cursor:pointer;
+    transition:background .2s ease;
+  }
+  .gallery-thumb.is-active{ background:var(--gold-soft); }
+  .gallery-note{
+    color:var(--slate); font-size:0.78rem; margin-top:14px; text-align:center;
+  }
+  .detail-body{ margin-top:18px; padding-top:18px; border-top:1px solid var(--line); }
+  .detail-badges{ display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap; }
+  .detail-badges span{
+    font-family:'Cairo', sans-serif; font-weight:700; font-size:0.72rem;
+    padding:4px 10px; border-radius:20px;
+    background:var(--panel-2); color:var(--gold-soft);
+    border:1px solid var(--line-strong);
+  }
+  .detail-desc{ color:var(--ivory); font-size:0.9rem; line-height:1.7; margin-bottom:16px; }
+  .detail-specs{
+    display:grid; grid-template-columns:1fr 1fr; gap:10px;
+    margin-bottom:18px;
+  }
+  .detail-specs li{
+    background:var(--bg); border:1px solid var(--line);
+    border-radius:8px; padding:10px 12px;
+    font-size:0.84rem;
+    display:flex; flex-direction:column; gap:3px;
+  }
+  .detail-specs li span:first-child{ color:var(--slate); font-size:0.72rem; }
+  .detail-specs li span:last-child{ font-weight:700; }
+  .detail-price-row{
+    display:flex; align-items:center; justify-content:space-between; gap:14px;
+    flex-wrap:wrap;
+  }
+  .detail-price-row b{ font-family:'Cairo', sans-serif; font-weight:800; font-size:1.3rem; color:var(--gold-soft); }
+
+  .fleet-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:26px;
+  }
+  .sticker-card{
+    position:relative;
+    background:var(--ivory);
+    color:#1c1710;
+    border-radius:6px;
+    padding:22px 20px 20px;
+    box-shadow:0 18px 40px rgba(0,0,0,0.35);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .sticker-card:hover{
+    transform:translateY(-6px) rotate(-0.4deg);
+    box-shadow:0 24px 50px rgba(0,0,0,0.45);
+  }
+  .sticker-tape{
+    position:absolute;
+    top:-10px; right:26px;
+    width:64px; height:22px;
+    background:rgba(237,231,218,0.65);
+    border:1px solid rgba(0,0,0,0.08);
+    transform:rotate(-3deg);
+    box-shadow:0 4px 6px rgba(0,0,0,0.15);
+  }
+  .sticker-avail{
+    position:absolute;
+    top:14px; left:14px;
+    background:#1c1710;
+    color:var(--gold-soft);
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:0.66rem;
+    padding:4px 9px;
+    border-radius:4px;
+    letter-spacing:0.02em;
+  }
+  .sticker-icon{
+    width:56px; height:56px;
+    margin:6px 0 14px;
+  }
+  .sticker-photo{
+    width:100%; height:120px;
+    object-fit:cover;
+    border-radius:6px;
+    margin:4px 0 14px;
+  }
+  .sticker-featured{
+    display:inline-block;
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:0.68rem;
+    color:#8a6a10;
+    background:rgba(201,162,39,0.18);
+    padding:3px 8px;
+    border-radius:4px;
+    margin-bottom:8px;
+  }
+  .sticker-desc{
+    font-size:0.8rem;
+    color:#5c5344;
+    margin:-6px 0 12px;
+    line-height:1.5;
+  }
+  .sticker-cat{
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:0.72rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--rust);
+  }
+  .sticker-name{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:1.18rem;
+    margin:4px 0 14px;
+    color:#1c1710;
+  }
+  .sticker-specs{
+    border-top:1px dashed rgba(0,0,0,0.25);
+    border-bottom:1px dashed rgba(0,0,0,0.25);
+    padding:12px 0;
+    margin-bottom:16px;
+  }
+  .sticker-specs li{
+    display:flex;
+    justify-content:space-between;
+    font-size:0.85rem;
+    padding:4px 0;
+  }
+  .sticker-specs li span:first-child{ color:#5c5344; }
+  .sticker-specs li span:last-child{ font-weight:700; }
+  .sticker-price{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:16px;
+  }
+  .sticker-price b{
+    font-family:'Cairo', sans-serif;
+    font-weight:900;
+    font-size:1.5rem;
+    color:#1c1710;
+  }
+  .sticker-price small{
+    color:#5c5344;
+    font-size:0.78rem;
+  }
+  .sticker-cta{
+    display:block;
+    width:100%;
+    text-align:center;
+    background:#1c1710;
+    color:var(--gold-soft);
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:0.88rem;
+    padding:11px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    transition:background .2s ease;
+  }
+  .sticker-cta:hover{ background:#31281a; }
+
+  /* ============ RENTAL TERMS ============ */
+  .terms-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:22px;
+    margin-bottom:24px;
+  }
+  .terms-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:26px 24px;
+  }
+  .terms-icon{ width:36px; height:36px; margin-bottom:16px; }
+  .terms-card h3{ font-family:'Cairo', sans-serif; font-weight:800; font-size:1rem; margin-bottom:8px; }
+  .terms-card p{ color:var(--slate); font-size:0.88rem; margin:0; line-height:1.7; }
+  .terms-agree-note{
+    display:block;
+    background:rgba(201,162,39,0.08);
+    border:1px dashed var(--line-strong);
+    border-radius:10px;
+    padding:14px 18px;
+    color:var(--slate);
+    font-size:0.86rem;
+    text-align:center;
+  }
+
+  /* ============ FAQ ============ */
+  .faq-list{ display:flex; flex-direction:column; gap:12px; }
+  .faq-item{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+  }
+  .faq-question{
+    width:100%;
+    display:flex; align-items:center; justify-content:space-between;
+    background:transparent; border:none; cursor:pointer;
+    padding:18px 20px;
+    color:var(--ivory);
+    font-family:'Cairo', sans-serif; font-weight:700; font-size:0.94rem;
+    text-align:right;
+  }
+  .faq-arrow{ width:18px; height:18px; flex-shrink:0; transition:transform .25s ease; color:var(--gold-soft); }
+  .faq-item.is-open .faq-arrow{ transform:rotate(180deg); }
+  .faq-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+  }
+  .faq-answer p{
+    color:var(--slate); font-size:0.88rem; line-height:1.7;
+    padding:0 20px 18px;
+    margin:0;
+  }
+  .faq-item.is-open .faq-answer{ max-height:220px; }
+
+  /* ============ BRANCHES MAP ============ */
+  .map-wrap{
+    border-radius:14px;
+    overflow:hidden;
+    border:1px solid var(--line-strong);
+  }
+  .map-wrap iframe{ display:block; filter:grayscale(0.15) contrast(1.05); }
+
+  /* ============ WHY US ============ */
+  .why-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:22px;
+  }
+  .why-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:28px 26px;
+  }
+  .why-icon{
+    width:40px; height:40px;
+    margin-bottom:18px;
+    color:var(--gold-soft);
+  }
+  .why-card h3{
+    font-size:1.05rem;
+    margin-bottom:8px;
+  }
+  .why-card p{
+    color:var(--slate);
+    font-size:0.92rem;
+    margin:0;
+  }
+
+  /* ============ TESTIMONIALS ============ */
+  .testi-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+  }
+  .testi-card{
+    background:var(--bg);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:26px;
+  }
+  .testi-stars{
+    color:var(--gold-soft);
+    font-size:0.9rem;
+    letter-spacing:2px;
+    margin-bottom:14px;
+  }
+  .testi-quote{
+    font-size:0.96rem;
+    color:var(--ivory);
+    margin-bottom:20px;
+  }
+  .testi-who{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .testi-avatar{
+    width:36px; height:36px;
+    border-radius:50%;
+    background:var(--panel-2);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:0.8rem;
+    color:var(--gold-soft);
+    border:1px solid var(--line-strong);
+  }
+  .testi-who b{ font-size:0.88rem; display:block; }
+  .testi-who span{ font-size:0.76rem; color:var(--slate); }
+
+  /* ============ CTA BAND ============ */
+  .cta-band{
+    background:linear-gradient(120deg, #1b2430, #171b22 60%);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:64px 0;
+  }
+  .cta-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:30px;
+    flex-wrap:wrap;
+  }
+  .cta-inner h2{ font-size:clamp(1.5rem,2.6vw,2rem); }
+  .cta-inner p{ color:var(--slate); margin-top:8px; }
+  .cta-actions{ display:flex; gap:14px; flex-wrap:wrap; }
+
+  /* ============ FOOTER ============ */
+  .site-footer{ padding:64px 0 30px; }
+  .footer-grid{
+    display:grid;
+    grid-template-columns:1.4fr 1fr 1fr 1fr;
+    gap:34px;
+    margin-bottom:44px;
+  }
+  .footer-brand{ display:flex; gap:12px; align-items:center; margin-bottom:14px; }
+  .footer-about{ color:var(--slate); font-size:0.9rem; max-width:32ch; }
+  .footer-col h4{
+    font-family:'Cairo', sans-serif;
+    font-size:0.85rem;
+    letter-spacing:0.06em;
+    color:var(--gold-soft);
+    margin-bottom:16px;
+  }
+  .footer-col li{ margin-bottom:10px; }
+  .footer-col a, .footer-col span{
+    color:var(--slate);
+    font-size:0.9rem;
+  }
+  .footer-col a:hover{ color:var(--ivory); }
+  .footer-bottom{
+    border-top:1px solid var(--line);
+    padding-top:22px;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+    color:var(--slate);
+    font-size:0.82rem;
+  }
+
+  /* ============ REVEAL ANIMATION ============ */
+  .reveal{
+    opacity:0;
+    transform:translateY(16px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .reveal.is-visible{ opacity:1; transform:translateY(0); }
+
+  /* ============ CART TRIGGER ============ */
+  .cart-trigger{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:42px; height:42px;
+    border-radius:8px;
+    border:1px solid var(--line-strong);
+    background:transparent;
+    color:var(--ivory);
+    cursor:pointer;
+    transition:border-color .18s ease, color .18s ease;
+    flex-shrink:0;
+  }
+  .cart-trigger:hover{ border-color:var(--gold-soft); color:var(--gold-soft); }
+  .cart-trigger svg{ width:20px; height:20px; }
+  .cart-count{
+    position:absolute;
+    top:-7px; right:-7px;
+    min-width:19px; height:19px;
+    padding:0 4px;
+    border-radius:10px;
+    background:var(--rust);
+    color:var(--ivory);
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size:0.68rem;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .header-actions{ display:flex; align-items:center; gap:12px; }
+
+  .account-chip{ position:relative; }
+  .account-chip-btn{
+    display:flex; align-items:center; gap:9px;
+    background:transparent;
+    border:1px solid var(--line-strong);
+    border-radius:30px;
+    padding:5px 14px 5px 6px;
+    cursor:pointer;
+    color:var(--ivory);
+    transition:border-color .18s ease;
+    animation:acctPop .35s ease;
+    position:relative;
+  }
+  .account-chip-btn:hover{ border-color:var(--gold-soft); }
+  .account-chip-btn.has-notification{ border-color:var(--rust); }
+  .account-chip-btn.has-notification::after{
+    content:"";
+    position:absolute; top:-2px; left:-2px;
+    width:9px; height:9px; border-radius:50%;
+    background:var(--rust);
+    border:2px solid var(--bg);
+  }
+  @keyframes acctPop{
+    0%{ transform:scale(0.85); opacity:0; }
+    100%{ transform:scale(1); opacity:1; }
+  }
+  .account-avatar{
+    width:30px; height:30px;
+    border-radius:50%;
+    background:var(--panel-2);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Cairo', sans-serif; font-weight:800; font-size:0.78rem;
+    color:var(--gold-soft);
+    overflow:hidden;
+    flex-shrink:0;
+  }
+  .account-avatar img{ width:100%; height:100%; object-fit:cover; }
+  .account-name{ font-size:0.85rem; font-weight:600; max-width:110px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .account-menu{
+    position:absolute; top:calc(100% + 10px); left:0;
+    background:var(--panel); border:1px solid var(--line-strong);
+    border-radius:10px; padding:14px;
+    min-width:180px;
+    box-shadow:0 16px 34px rgba(0,0,0,0.35);
+    display:none;
+    z-index:60;
+  }
+  .account-menu.is-open{ display:block; animation:acctPop .18s ease; }
+  .account-menu-info{ margin-bottom:12px; padding-bottom:12px; border-bottom:1px solid var(--line); }
+  .account-menu-info b{ display:block; font-size:0.88rem; }
+  .account-menu-info span{ font-size:0.76rem; color:var(--slate); direction:ltr; display:block; text-align:right; }
+  .loyalty-row{
+    font-size:0.8rem; color:var(--slate);
+    margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid var(--line);
+  }
+  .loyalty-row b{ color:var(--gold-soft); }
+  .account-menu-link{
+    width:100%; background:transparent; border:1px solid var(--line-strong);
+    color:var(--ivory); font-family:'Cairo', sans-serif; font-weight:700; font-size:0.8rem;
+    padding:8px; border-radius:7px; cursor:pointer; margin-bottom:8px;
+  }
+  .account-menu-link:hover{ border-color:var(--gold-soft); color:var(--gold-soft); }
+  .account-menu-logout{
+    width:100%; background:transparent; border:1px solid var(--line-strong);
+    color:var(--rust); font-family:'Cairo', sans-serif; font-weight:700; font-size:0.8rem;
+    padding:8px; border-radius:7px; cursor:pointer;
+  }
+  .account-menu-logout:hover{ background:rgba(178,58,46,0.1); }
+
+  /* ============ CART DRAWER ============ */
+  .drawer-backdrop{
+    position:fixed; inset:0;
+    background:rgba(8,10,13,0.55);
+    z-index:90;
+    opacity:0; visibility:hidden;
+    transition:opacity .25s ease;
+  }
+  .drawer-backdrop.is-open{ opacity:1; visibility:visible; }
+  .cart-drawer{
+    position:fixed; top:0; bottom:0; left:0;
+    width:100%; max-width:400px;
+    background:var(--panel);
+    border-right:1px solid var(--line-strong);
+    z-index:95;
+    display:flex; flex-direction:column;
+    transform:translateX(-100%);
+    transition:transform .3s ease;
+  }
+  .cart-drawer.is-open{ transform:translateX(0); }
+  .cart-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 22px;
+    border-bottom:1px solid var(--line);
+  }
+  .cart-head h3{ font-size:1.05rem; }
+  .cart-close{
+    background:transparent; border:none; color:var(--slate);
+    width:32px; height:32px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    border-radius:6px;
+  }
+  .cart-close:hover{ color:var(--gold-soft); }
+  .cart-close svg{ width:18px; height:18px; }
+  .cart-body{ flex:1; overflow-y:auto; padding:16px 22px; }
+  .cart-empty{ color:var(--slate); font-size:0.92rem; text-align:center; padding:60px 10px; }
+  .cart-item{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:14px 0; border-bottom:1px solid var(--line);
+  }
+  .cart-item-info b{ display:block; font-size:0.92rem; font-family:'Cairo', sans-serif; font-weight:700; }
+  .cart-item-info span{ font-size:0.8rem; color:var(--slate); }
+  .cart-qty{ display:flex; align-items:center; gap:8px; }
+  .qty-btn{
+    width:26px; height:26px; border-radius:6px;
+    background:var(--bg); border:1px solid var(--line-strong); color:var(--ivory);
+    cursor:pointer; font-size:0.95rem; line-height:1;
+  }
+  .qty-btn:hover{ border-color:var(--gold-soft); color:var(--gold-soft); }
+  .cart-item-remove{
+    background:transparent; border:none; color:var(--rust); cursor:pointer;
+    font-size:0.78rem;
+  }
+  .cart-foot{
+    padding:18px 22px 22px;
+    border-top:1px solid var(--line);
+  }
+  .cart-total{
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin-bottom:14px;
+  }
+  .cart-total b{ font-family:'Cairo', sans-serif; font-weight:800; color:var(--gold-soft); font-size:1.2rem; }
+  .cart-total span{ color:var(--slate); font-size:0.85rem; }
+
+  /* ============ CHECKOUT MODAL ============ */
+  .modal-backdrop{
+    position:fixed; inset:0; background:rgba(8,10,13,0.6);
+    display:none; align-items:center; justify-content:center;
+    padding:20px; z-index:100;
+  }
+  .modal-backdrop.is-active{ display:flex; }
+  .checkout-modal{
+    width:100%; max-width:420px;
+    background:var(--panel);
+    border:1px solid var(--line-strong);
+    border-radius:var(--radius);
+    padding:28px;
+  }
+  .checkout-modal h3{ font-size:1.1rem; margin-bottom:6px; }
+  .checkout-modal p.sub{ color:var(--slate); font-size:0.86rem; margin-bottom:20px; }
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-size:0.82rem; color:var(--slate); margin-bottom:7px; }
+  .field input{
+    width:100%; padding:11px 13px; border-radius:8px;
+    border:1px solid var(--line-strong); background:var(--bg); color:var(--ivory);
+    font-size:0.92rem;
+  }
+  .field input:focus{ border-color:var(--gold-soft); }
+  .btn-sm{ padding:8px 14px; font-size:0.78rem; width:auto; }
+  .modal-row{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .modal-row input{
+    padding:11px 13px; border-radius:8px;
+    border:1px solid var(--line-strong); background:var(--bg); color:var(--ivory);
+    font-size:0.86rem;
+  }
+  .field-note{ font-size:0.76rem; color:var(--slate); margin-top:6px; min-height:14px; }
+  .field-note.is-success{ color:var(--green-soft, #69c48d); }
+  .field-note.is-error{ color:var(--rust); }
+
+  .payment-options{ display:flex; gap:10px; }
+  .payment-option{
+    flex:1;
+    display:flex; align-items:center; justify-content:center;
+    gap:6px;
+    border:1px solid var(--line-strong);
+    border-radius:8px;
+    padding:11px;
+    font-size:0.85rem;
+    cursor:pointer;
+    transition:border-color .18s ease, background .18s ease;
+  }
+  .payment-option input{ display:none; }
+  .payment-option.is-active{ border-color:var(--gold-soft); background:rgba(201,162,39,0.08); }
+  .instapay-box{
+    margin-top:12px;
+    background:var(--bg);
+    border:1px dashed var(--line-strong);
+    border-radius:9px;
+    padding:12px 14px;
+  }
+  .instapay-box p{ font-size:0.82rem; color:var(--slate); margin:0 0 6px; line-height:1.6; }
+  .instapay-box p:last-child{ margin-bottom:0; }
+  .instapay-number{
+    font-family:'Cairo', sans-serif; font-weight:800; color:var(--gold-soft);
+    direction:ltr; display:inline-block;
+  }
+
+  .checkout-summary{
+    background:var(--bg); border:1px solid var(--line);
+    border-radius:8px; padding:12px 14px; margin-bottom:18px;
+    font-size:0.84rem; color:var(--slate);
+  }
+  .checkout-summary li{ display:flex; justify-content:space-between; padding:3px 0; }
+  .modal-actions{ display:flex; gap:10px; }
+  .modal-actions .btn{ flex:1; }
+
+  .mb-item{
+    background:var(--bg); border:1px solid var(--line);
+    border-radius:8px; padding:12px 14px; margin-bottom:10px;
+    font-size:0.85rem;
+  }
+  .mb-item-top{ display:flex; justify-content:space-between; margin-bottom:6px; }
+  .mb-item-top b{ font-family:'Cairo', sans-serif; font-size:0.88rem; }
+  .mb-empty{ color:var(--slate); text-align:center; padding:24px 0; font-size:0.88rem; }
+
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--panel-2); border:1px solid var(--line-strong);
+    color:var(--ivory); padding:12px 20px; border-radius:9px;
+    font-size:0.85rem; opacity:0; transition:opacity .25s ease, transform .25s ease;
+    z-index:200; text-align:center; max-width:90vw;
+  }
+  .toast.is-visible{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width:980px){
+    .main-nav{ display:none; }
+    .hero-grid{ grid-template-columns:1fr; }
+    .trust-strip{ grid-template-columns:repeat(2,1fr); }
+    .trust-item:nth-child(3){ border-inline-start:none; }
+    .process-grid{ grid-template-columns:1fr; }
+    .process-step{ border-inline-start:none; border-top:1px solid var(--line); }
+    .process-step:first-child{ border-top:none; }
+    .fleet-grid{ grid-template-columns:repeat(2,1fr); }
+    .why-grid{ grid-template-columns:1fr; }
+    .terms-grid{ grid-template-columns:1fr; }
+    .testi-grid{ grid-template-columns:1fr; }
+    .footer-grid{ grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width:560px){
+    .fleet-grid{ grid-template-columns:1fr; }
+    .footer-grid{ grid-template-columns:1fr; }
+    .header-inner{ padding:14px 18px; }
+    .hero{ padding:52px 0 30px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner wrap">
+    <a class="brand" href="#top" aria-label="محمد عمر موتورز - الرئيسية">
+      <svg class="brand-mark" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="30" cy="30" r="28" stroke="#c9a227" stroke-width="2"/>
+        <circle cx="30" cy="30" r="22" stroke="#c9a227" stroke-width="1" opacity="0.5"/>
+        <text x="30" y="38" text-anchor="middle" font-family="Cairo, sans-serif" font-weight="800" font-size="20" fill="#ede7da">MO</text>
+      </svg>
+      <span class="brand-text">
+        <strong>محمد عمر موتورز</strong>
+        <span>MOHAMED OMAR MOTORS</span>
+      </span>
+    </a>
+    <nav class="main-nav" aria-label="التنقل الرئيسي">
+      <a href="#fleet">أسطولنا</a>
+      <a href="#process">طريقة الحجز</a>
+      <a href="#terms">شروط الإيجار</a>
+      <a href="#why">ليه احنا</a>
+      <a href="#testimonials">آراء العملاء</a>
+      <a href="#contact">تواصل معنا</a>
+    </nav>
+    <div class="header-actions">
+      <a href="login.html" class="btn btn-ghost login-btn" id="login-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/></svg>
+        تسجيل الدخول
+      </a>
+      <div class="account-chip" id="account-chip" style="display:none;">
+        <button type="button" class="account-chip-btn" id="account-chip-btn">
+          <span class="account-avatar" id="account-avatar">؟</span>
+          <span class="account-name" id="account-name-label"></span>
+        </button>
+        <div class="account-menu" id="account-menu">
+          <div class="account-menu-info">
+            <b id="account-menu-name"></b>
+            <span id="account-menu-phone"></span>
+          </div>
+          <div class="loyalty-row" id="loyalty-row">🎁 نقاط الولاء: <b id="loyalty-points">0</b></div>
+          <button type="button" class="account-menu-link" id="my-bookings-btn">حجوزاتي</button>
+          <button type="button" class="account-menu-logout" id="account-logout-btn">تسجيل الخروج</button>
+        </div>
+      </div>
+      <button class="cart-trigger" id="cart-trigger" aria-label="سلة الحجز">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1.4"/><circle cx="18" cy="21" r="1.4"/><path d="M2.5 3h2.4l2.6 12.3a2 2 0 0 0 2 1.6h8a2 2 0 0 0 2-1.6L21 7H6"/></svg>
+        <span class="cart-count" id="cart-count" style="display:none;">0</span>
+      </button>
+      <a href="#fleet" class="btn btn-gold">احجز الآن</a>
+    </div>
+  </div>
+</header>
+
+<!-- CART DRAWER -->
+<div class="drawer-backdrop" id="drawer-backdrop"></div>
+<aside class="cart-drawer" id="cart-drawer" aria-label="سلة الحجز">
+  <div class="cart-head">
+    <h3>سلة الحجز</h3>
+    <button class="cart-close" id="cart-close" aria-label="إغلاق السلة">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <div class="cart-body" id="cart-body">
+    <div class="cart-empty">لسه ماخترتش أي سيارة. تصفح الأسطول وضيف اللي يعجبك.</div>
+  </div>
+  <div class="cart-foot">
+    <div class="cart-total">
+      <span>الإجمالي التقديري / اليوم</span>
+      <b id="cart-total-amount">0 ج.م</b>
+    </div>
+    <button class="btn btn-gold btn-block" id="checkout-btn" disabled>إتمام الحجز</button>
+  </div>
+</aside>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-backdrop" id="checkout-backdrop">
+  <div class="checkout-modal">
+    <h3>بيانات إتمام الحجز</h3>
+    <p class="sub">هنبعت طلبك مباشرة لفريقنا على واتساب لتأكيد الحجز.</p>
+    <ul class="checkout-summary" id="checkout-summary"></ul>
+    <form id="checkout-form">
+      <div class="field" id="rental-days-field">
+        <label>تاريخ الاستلام والتسليم</label>
+        <div class="modal-row">
+          <input type="date" id="checkout-pickup-date" required>
+          <input type="date" id="checkout-return-date" required>
+        </div>
+        <div class="field-note" id="days-note">مدة الإيجار: يوم واحد</div>
+      </div>
+      <div class="field">
+        <label for="checkout-name">الاسم بالكامل</label>
+        <input type="text" id="checkout-name" placeholder="مثال: أحمد فتحي" required>
+      </div>
+      <div class="field">
+        <label for="checkout-phone">رقم الهاتف</label>
+        <input type="tel" id="checkout-phone" placeholder="01xxxxxxxxx" pattern="^01[0-9]{9}$" required>
+      </div>
+      <div class="field">
+        <label for="checkout-coupon">كود خصم (اختياري)</label>
+        <div style="display:flex; gap:8px;">
+          <input type="text" id="checkout-coupon" placeholder="مثال: WELCOME10" style="flex:1;">
+          <button type="button" class="btn btn-ghost btn-sm" id="apply-coupon-btn">تطبيق</button>
+        </div>
+        <div class="field-note" id="coupon-note"></div>
+      </div>
+
+      <div class="field">
+        <label>طريقة الدفع</label>
+        <div class="payment-options">
+          <label class="payment-option is-active">
+            <input type="radio" name="payment-method" value="cash" checked>
+            <span>💵 كاش عند الاستلام</span>
+          </label>
+          <label class="payment-option">
+            <input type="radio" name="payment-method" value="instapay">
+            <span>📲 InstaPay مقدّم</span>
+          </label>
+        </div>
+        <div class="instapay-box" id="instapay-box" style="display:none;">
+          <p><b>حوّل على رقم InstaPay:</b> <span class="instapay-number">01551831312</span></p>
+          <p>بعد التحويل، ابعتلنا صورة إيصال التحويل على واتساب مع رقم الطلب عشان نأكد الحجز فورًا.</p>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" id="checkout-cancel">رجوع</button>
+        <button type="submit" class="btn btn-gold">تأكيد عبر واتساب</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- CAR PHOTOS LIGHTBOX -->
+<div class="gallery-backdrop" id="gallery-backdrop">
+  <div class="gallery-modal detail-modal">
+    <div class="gallery-head">
+      <h3 id="gallery-title">صور السيارة</h3>
+      <button class="gallery-close" id="gallery-close" aria-label="إغلاق">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="gallery-stage" id="gallery-stage"></div>
+    <div class="gallery-thumbs" id="gallery-thumbs"></div>
+    <p class="gallery-note" id="gallery-note">صور توضيحية مبدئية — تقدر تستبدلها بصور حقيقية للسيارة من لوحة التحكم.</p>
+
+    <div class="detail-body" id="detail-body">
+      <div class="detail-badges" id="detail-badges"></div>
+      <p class="detail-desc" id="detail-desc"></p>
+      <ul class="detail-specs" id="detail-specs"></ul>
+      <div class="detail-price-row">
+        <div id="detail-price"></div>
+        <button type="button" class="btn btn-gold" id="detail-cta">أضف للسلة</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MY BOOKINGS MODAL -->
+<div class="modal-backdrop" id="mybookings-backdrop">
+  <div class="checkout-modal">
+    <h3>حجوزاتي</h3>
+    <p class="sub" id="mybookings-sub">آخر الحجوزات المرتبطة برقم هاتفك</p>
+    <div id="mybookings-list"></div>
+    <div class="modal-actions" style="margin-top:16px;">
+      <button type="button" class="btn btn-ghost btn-block" id="mybookings-close">إغلاق</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">تأجير سيارات في القاهرة والإسكندرية وشرم الشيخ</span>
+        <h1 class="hero-headline">اختار عربيتك<br><span class="hl">وسيبك من الباقي</span></h1>
+        <p class="hero-sub">من الاقتصادية للفاخرة، بأسعار واضحة من غير رسوم مفاجئة، وتسليم في نفس اليوم في أي فرع من فروعنا.</p>
+        <div class="hero-actions">
+          <a href="#fleet" class="btn btn-gold">تصفح الأسطول</a>
+          <a href="#contact" class="btn btn-ghost">تواصل واتساب</a>
+        </div>
+        <div class="trust-strip">
+          <div class="trust-item"><b>2011</b><small>سنة التأسيس</small></div>
+          <div class="trust-item"><b>+5000</b><small>عملية تأجير</small></div>
+          <div class="trust-item"><b>4</b><small>فروع</small></div>
+          <div class="trust-item"><b>4.8</b><small>تقييم العملاء</small></div>
+        </div>
+      </div>
+
+      <div class="hero-art">
+        <div class="hero-art-glow" aria-hidden="true"></div>
+        <svg viewBox="0 0 480 260" width="100%" aria-hidden="true">
+          <ellipse cx="240" cy="222" rx="170" ry="14" fill="#000" opacity="0.35"/>
+          <path d="M40 175 C 55 120, 120 100, 165 98 L 200 70 C 220 58, 300 58, 320 72 L 355 100 C 400 104, 435 120, 445 150 L 445 178 C 445 186, 438 190, 428 190 L 58 190 C 46 190, 40 184, 40 175 Z"
+                fill="#1b2430" stroke="#2c3847" stroke-width="2"/>
+          <path d="M200 100 L 222 76 C 236 68 290 68 304 78 L 328 100 Z" fill="#12151a" opacity="0.6"/>
+          <line x1="264" y1="100" x2="264" y2="76" stroke="#2c3847" stroke-width="2"/>
+          <circle class="headlight-glow" cx="430" cy="150" r="10" fill="#e4c55e"/>
+          <circle cx="430" cy="150" r="16" fill="none" stroke="#e4c55e" stroke-width="1" opacity="0.4"/>
+          <circle cx="60" cy="150" r="8" fill="#b23a2e" opacity="0.85"/>
+          <circle cx="130" cy="192" r="26" fill="#0d0f13" stroke="#c9a227" stroke-width="3"/>
+          <circle cx="130" cy="192" r="10" fill="#2c3847"/>
+          <circle cx="360" cy="192" r="26" fill="#0d0f13" stroke="#c9a227" stroke-width="3"/>
+          <circle cx="360" cy="192" r="10" fill="#2c3847"/>
+          <rect x="185" y="160" width="110" height="4" fill="#3a4655" opacity="0.6"/>
+        </svg>
+        <span class="plate-tag">م ع  •  موتورز</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section" id="process">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">خطوات الحجز</span>
+        <h2 class="section-title">من الاختيار للاستلام في 3 خطوات</h2>
+        <p class="section-lead">مفيش تعقيد ومفيش أوراق كتير. احجز أونلاين واستلم عربيتك جاهزة.</p>
+      </div>
+      <div class="process-grid reveal">
+        <div class="process-step">
+          <div class="process-num">01</div>
+          <h3>اختر سيارتك</h3>
+          <p>تصفح الفئات من الاقتصادية للفاخرة، وشوف المواصفات والسعر قبل ما تحجز.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-num">02</div>
+          <h3>حدد التواريخ</h3>
+          <p>اختار تاريخ ومكان الاستلام والتسليم، وهنجهزلك العربية في ميعادها.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-num">03</div>
+          <h3>استلم واستمتع</h3>
+          <p>تعال للفرع أو اطلب توصيل العربية لحد عندك، وخد المفتاح وسيبها علينا.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLEET -->
+  <section class="section section-alt" id="fleet">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">أسطولنا</span>
+        <h2 class="section-title">فيه عربية لكل رحلة</h2>
+        <p class="section-lead">كل سيارة عندها بطاقة مواصفات واضحة، زي اللي بتشوفها على شباك العربية عند البيع.</p>
+      </div>
+
+      <div class="fleet-toolbar reveal">
+        <div class="fleet-filters" id="fleet-filters">
+          <button type="button" class="filter-tab is-active" data-filter="all">كل السيارات</button>
+          <button type="button" class="filter-tab" data-filter="rent">للإيجار</button>
+          <button type="button" class="filter-tab" data-filter="sale">للبيع</button>
+          <button type="button" class="filter-tab" data-filter="wishlist">❤ المفضلة</button>
+        </div>
+        <select class="sort-select" id="sort-select">
+          <option value="default">الترتيب: الأحدث</option>
+          <option value="price-asc">السعر: من الأقل للأعلى</option>
+          <option value="price-desc">السعر: من الأعلى للأقل</option>
+        </select>
+      </div>
+
+      <div class="fleet-grid reveal" id="fleet-grid-dynamic">
+        <div class="fleet-loading" id="fleet-loading">جاري تحميل الأسطول...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="section" id="why">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">ليه تختارنا</span>
+        <h2 class="section-title">راحتك من أول ما تحجز</h2>
+      </div>
+      <div class="why-grid reveal">
+        <div class="why-card">
+          <svg class="why-icon" viewBox="0 0 40 40" fill="none"><path d="M20 4 L34 10 V19 C34 28 28 34 20 36 C12 34 6 28 6 19 V10 Z" stroke="#e4c55e" stroke-width="2"/><path d="M14 20 L18 24 L27 15" stroke="#e4c55e" stroke-width="2"/></svg>
+          <h3>تأمين شامل</h3>
+          <p>كل سياراتنا مؤمنة بالكامل عشان تسافر وانت مطمن من غير أي مفاجآت.</p>
+        </div>
+        <div class="why-card">
+          <svg class="why-icon" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="15" stroke="#e4c55e" stroke-width="2"/><path d="M20 12 V20 L26 24" stroke="#e4c55e" stroke-width="2"/></svg>
+          <h3>صيانة دورية</h3>
+          <p>كل سيارة بتتفحص وتتصان قبل كل عملية تسليم عشان تضمن رحلة من غير مشاكل.</p>
+        </div>
+        <div class="why-card">
+          <svg class="why-icon" viewBox="0 0 40 40" fill="none"><path d="M8 30 L8 16 C8 10 13 6 20 6 C27 6 32 10 32 16 L32 30 L26 26 L14 26 Z" stroke="#e4c55e" stroke-width="2"/></svg>
+          <h3>دعم على مدار الساعة</h3>
+          <p>فريقنا موجود على واتساب والتليفون في أي وقت لو احتجت أي مساعدة على الطريق.</p>
+        </div>
+        <div class="why-card">
+          <svg class="why-icon" viewBox="0 0 40 40" fill="none"><rect x="6" y="10" width="28" height="20" rx="3" stroke="#e4c55e" stroke-width="2"/><line x1="6" y1="17" x2="34" y2="17" stroke="#e4c55e" stroke-width="2"/></svg>
+          <h3>أسعار واضحة</h3>
+          <p>السعر اللي بتشوفه هو اللي بتدفعه، من غير رسوم مخفية أو مفاجآت في الفاتورة.</p>
+        </div>
+        <div class="why-card">
+          <svg class="why-icon" viewBox="0 0 40 40" fill="none"><path d="M6 20 C6 12 12 6 20 6 C28 6 34 12 34 20 C34 28 28 34 20 34" stroke="#e4c55e" stroke-width="2"/><path d="M20 34 L20 26 M14 30 L20 34 L26 30" stroke="#e4c55e" stroke-width="2"/></svg>
+          <h3>فروع متعددة</h3>
+          <p>استلم وسلم في أي فرع من فروعنا في القاهرة، الجيزة، الإسكندرية، وشرم الشيخ.</p>
+        </div>
+        <div class="why-card">
+          <svg class="why-icon" viewBox="0 0 40 40" fill="none"><path d="M10 30 L10 18 L20 10 L30 18 L30 30 Z" stroke="#e4c55e" stroke-width="2"/><rect x="17" y="22" width="6" height="8" stroke="#e4c55e" stroke-width="1.6"/></svg>
+          <h3>توصيل للباب</h3>
+          <p>محتاج العربية تيجي عندك؟ نوصلها لحد باب البيت أو المطار في مواعيد مرنة.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RENTAL TERMS -->
+  <section class="section section-alt" id="terms">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">قبل ما تحجز</span>
+        <h2 class="section-title">شروط الإيجار</h2>
+        <p class="section-lead">اقرأها كويس قبل الحجز، عشان تبقى عارف كل حاجة بالظبط من غير مفاجآت.</p>
+      </div>
+      <div class="terms-grid reveal">
+        <div class="terms-card">
+          <svg class="terms-icon" viewBox="0 0 40 40" fill="none"><rect x="8" y="6" width="24" height="30" rx="2" stroke="#e4c55e" stroke-width="2"/><line x1="14" y1="14" x2="26" y2="14" stroke="#e4c55e" stroke-width="1.6"/><line x1="14" y1="20" x2="26" y2="20" stroke="#e4c55e" stroke-width="1.6"/><line x1="14" y1="26" x2="22" y2="26" stroke="#e4c55e" stroke-width="1.6"/></svg>
+          <h3>المستندات المطلوبة</h3>
+          <p>رخصة قيادة سارية (مصرية أو دولية)، وبطاقة الرقم القومي أو جواز السفر ساري. لازم تحضرهم وقت الاستلام.</p>
+        </div>
+        <div class="terms-card">
+          <svg class="terms-icon" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="14" r="6" stroke="#e4c55e" stroke-width="2"/><path d="M8 34c0-7 5-11 12-11s12 4 12 11" stroke="#e4c55e" stroke-width="2"/></svg>
+          <h3>الحد الأدنى للسن</h3>
+          <p>21 سنة للسيارات الاقتصادية والصالون، و25 سنة للـ SUV والفئات الفاخرة، مع رخصة قيادة لا تقل مدتها عن سنة.</p>
+        </div>
+        <div class="terms-card">
+          <svg class="terms-icon" viewBox="0 0 40 40" fill="none"><path d="M20 4 L34 10 V19 C34 28 28 34 20 36 C12 34 6 28 6 19 V10 Z" stroke="#e4c55e" stroke-width="2"/></svg>
+          <h3>التأمين والتحمل (Deposit)</h3>
+          <p>كل سياراتنا مؤمنة تأمين شامل. بندفع مبلغ تحمّل مسترد وقت الاستلام (يختلف حسب فئة السيارة) وبيرجع كامل عند التسليم بحالة سليمة.</p>
+        </div>
+        <div class="terms-card">
+          <svg class="terms-icon" viewBox="0 0 40 40" fill="none"><path d="M10 30h20M14 30V14a6 6 0 0 1 12 0v16" stroke="#e4c55e" stroke-width="2"/></svg>
+          <h3>سياسة الوقود</h3>
+          <p>بتستلم السيارة بخزان ممتلئ، وبترجعها بنفس المستوى. لو رجعتها فاضية، بنحسب فرق الوقود + رسوم تعبئة.</p>
+        </div>
+        <div class="terms-card">
+          <svg class="terms-icon" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="15" stroke="#e4c55e" stroke-width="2"/><path d="M20 12v8l6 4" stroke="#e4c55e" stroke-width="2"/></svg>
+          <h3>غرامة التأخير</h3>
+          <p>لو رجّعت السيارة بعد ميعاد التسليم المتفق عليه، بيتحسب يوم إيجار إضافي كامل عن كل تأخير يتجاوز ساعتين.</p>
+        </div>
+        <div class="terms-card">
+          <svg class="terms-icon" viewBox="0 0 40 40" fill="none"><path d="M8 20h24M20 8v24" stroke="#e4c55e" stroke-width="2"/><circle cx="20" cy="20" r="15" stroke="#e4c55e" stroke-width="2"/></svg>
+          <h3>الإلغاء والاسترجاع</h3>
+          <p>إلغاء مجاني حتى 24 ساعة قبل ميعاد الاستلام. الإلغاء بعد كده بيخصم منه 20% من قيمة اليوم الأول كرسوم إدارية.</p>
+        </div>
+      </div>
+      <label class="terms-agree-note reveal">
+        📄 بمجرد إتمام أي حجز من الموقع، إنت بتوافق تلقائيًا على الشروط دي بالكامل.
+      </label>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">أسئلة شائعة</span>
+        <h2 class="section-title">عندك سؤال؟ يمكن إجابته هنا</h2>
+      </div>
+      <div class="faq-list reveal" id="faq-list">
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span>ممكن أدفع كاش ولا لازم أونلاين؟</span>
+            <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><p>تقدر تدفع كاش وقت الاستلام، أو تحوّل مقدّم عن طريق InstaPay على الرقم 01551831312 وتبعتلنا صورة التحويل على واتساب لتأكيد الحجز فورًا.</p></div>
+        </div>
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span>لو رجّعت العربية متأخر يحصل إيه؟</span>
+            <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><p>مسموح بساعتين سماح بعد ميعاد التسليم من غير أي غرامة. بعد كده بيتحسب يوم إيجار إضافي كامل. لو هتتأخر، كلّمنا الأول ونتفاهم.</p></div>
+        </div>
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span>ينفع سائق تاني غيري يقود السيارة؟</span>
+            <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><p>لازم أي سائق إضافي يكون مسجل معانا وقت الحجز بنفس شروط السن والرخصة، عشان التأمين يغطّيه.</p></div>
+        </div>
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span>فيه مبلغ تأمين (Deposit) بيترد إمتى؟</span>
+            <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><p>بيترد كامل وقت تسليم السيارة مباشرة لو مفيش أي أضرار أو مخالفات، وبيتحصّل منه أي فرق وقود أو غرامة تأخير لو حصلت.</p></div>
+        </div>
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span>ممكن أستلم السيارة في فرع وأسلمها في فرع تاني؟</span>
+            <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer"><p>أيوه، بس ده بيتحسبله رسوم نقل بسيطة حسب المسافة بين الفروع — كلّمنا وقت الحجز نتفق على التفاصيل.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BRANCHES MAP -->
+  <section class="section section-alt" id="branches-map">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">فروعنا</span>
+        <h2 class="section-title">لاقينا على الخريطة</h2>
+        <p class="section-lead">القاهرة، الجيزة، الإسكندرية، وشرم الشيخ — اختار أقرب فرع ليك.</p>
+      </div>
+      <div class="map-wrap reveal">
+        <iframe
+          src="https://www.google.com/maps?q=Cairo,Egypt&output=embed"
+          width="100%" height="380" style="border:0; border-radius:14px;"
+          allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          title="فروع محمد عمر موتورز"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section" id="testimonials">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">آراء عملائنا</span>
+        <h2 class="section-title">كلام الناس اللي جربت</h2>
+      </div>
+      <div class="testi-grid reveal">
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">استأجرت عربية للسفر للساحل الشمالي، وكل حاجة كانت زي ما اتفقنا بالظبط من غير أي تأخير.</p>
+          <div class="testi-who">
+            <span class="testi-avatar">أ.ف</span>
+            <div><b>أحمد فتحي</b><span>القاهرة</span></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">خدمة سريعة والعربية كانت نظيفة ومجهزة كويس جدًا، هرجع تاني أكيد المرة الجاية.</p>
+          <div class="testi-who">
+            <span class="testi-avatar">م.ش</span>
+            <div><b>منى الشربيني</b><span>الإسكندرية</span></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">الأسعار واضحة من الأول والفريق كان متعاون جدًا وقت الاستلام والتسليم.</p>
+          <div class="testi-who">
+            <span class="testi-avatar">ك.ع</span>
+            <div><b>كريم عادل</b><span>الجيزة</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section class="cta-band" id="contact">
+    <div class="wrap cta-inner">
+      <div>
+        <h2>جاهز تحجز عربيتك؟</h2>
+        <p>كلمنا دلوقتي وهنجهزلك العربية المناسبة لرحلتك في أقل من ساعة.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="https://wa.me/201551831312" class="btn btn-gold">تواصل واتساب</a>
+        <a href="tel:+201551831312" class="btn btn-ghost">اتصل: 01551831312</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <svg width="40" height="40" viewBox="0 0 60 60" fill="none">
+            <circle cx="30" cy="30" r="28" stroke="#c9a227" stroke-width="2"/>
+            <text x="30" y="38" text-anchor="middle" font-family="Cairo, sans-serif" font-weight="800" font-size="20" fill="#ede7da">MO</text>
+          </svg>
+          <strong style="font-family:'Cairo',sans-serif; font-weight:800;">محمد عمر موتورز</strong>
+        </div>
+        <p class="footer-about">شركة تأجير سيارات مصرية بخبرة أكتر من 13 سنة، بنوفر أسطول متنوع وخدمة واضحة من غير تعقيد.</p>
+      </div>
+      <div class="footer-col">
+        <h4>فروعنا</h4>
+        <ul>
+          <li><span>القاهرة - مدينة نصر</span></li>
+          <li><span>الجيزة - الشيخ زايد</span></li>
+          <li><span>الإسكندرية - سموحة</span></li>
+          <li><span>شرم الشيخ</span></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>روابط سريعة</h4>
+        <ul>
+          <li><a href="#fleet">أسطولنا</a></li>
+          <li><a href="#process">طريقة الحجز</a></li>
+          <li><a href="#terms">شروط الإيجار</a></li>
+          <li><a href="#faq">أسئلة شائعة</a></li>
+          <li><a href="#why">ليه احنا</a></li>
+          <li><a href="#testimonials">آراء العملاء</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>تواصل معنا</h4>
+        <ul>
+          <li><a href="tel:+201551831312">01551831312</a></li>
+          <li><a href="mailto:info@momotors.example">info@momotors.example</a></li>
+          <li><a href="https://wa.me/201551831312">واتساب</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 محمد عمر موتورز. جميع الحقوق محفوظة.</span>
+      <span>الأسعار بالجنيه المصري وتشمل الضريبة</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold:0.12 });
+    revealEls.forEach(el=> io.observe(el));
+  } else {
+    revealEls.forEach(el=> el.classList.add('is-visible'));
+  }
+
+  /* ============ الأسئلة الشائعة (أكورديون) ============ */
+  document.querySelectorAll('.faq-question').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const item = btn.closest('.faq-item');
+      const wasOpen = item.classList.contains('is-open');
+      document.querySelectorAll('.faq-item.is-open').forEach(i=> i.classList.remove('is-open'));
+      if(!wasOpen) item.classList.add('is-open');
+    });
+  });
+</script>
+
+<script>
+  /* ============ إعدادات ============ */
+  const BUSINESS_WHATSAPP = '201551831312'; // رقم واتساب محمد عمر موتورز (بصيغة دولية بدون +)
+
+  /* ============ حساب المستخدم (تسجيل دخول دائم) ============
+     نقرأ نفس بيانات الحساب المحفوظة من صفحة login.html عبر window.storage
+     الشخصي، فلو العميل سجل قبل كده، هيلاقي نفسه مسجل دخول تلقائيًا هنا
+     من غير ما يحتاج يرجع لصفحة الدخول تاني. */
+  let loggedInAccount = null;
+
+  async function loadAndRenderAccount(){
+    try{
+      if(window.storage){
+        const res = await window.storage.get('account:profile', false);
+        if(res && res.value){ loggedInAccount = JSON.parse(res.value); }
+      }
+    } catch(err){ /* لا يوجد حساب محفوظ، أو التخزين غير متاح في هذه البيئة */ }
+    renderAccountUI();
+    if(loggedInAccount){ updateLoyaltyPoints(); startStatusPolling(); }
+  }
+
+  function renderAccountUI(){
+    const loginBtn = document.getElementById('login-btn');
+    const accountChip = document.getElementById('account-chip');
+    if(!loggedInAccount){
+      loginBtn.style.display = 'inline-flex';
+      accountChip.style.display = 'none';
+      return;
+    }
+    loginBtn.style.display = 'none';
+    accountChip.style.display = 'block';
+    const displayName = loggedInAccount.name || loggedInAccount.phone || loggedInAccount.email || 'حسابي';
+    document.getElementById('account-name-label').textContent = displayName.length > 14 ? displayName.slice(0,14)+'…' : displayName;
+    document.getElementById('account-menu-name').textContent = displayName;
+    document.getElementById('account-menu-phone').textContent = loggedInAccount.phone ? ('+20 ' + loggedInAccount.phone) : (loggedInAccount.email || '');
+    const avatarEl = document.getElementById('account-avatar');
+    if(loggedInAccount.photo){
+      avatarEl.innerHTML = `<img src="${loggedInAccount.photo}" alt="${displayName}">`;
+    } else {
+      avatarEl.textContent = displayName.trim().charAt(0) || '؟';
+    }
+  }
+
+  document.getElementById('account-chip-btn').addEventListener('click', ()=>{
+    document.getElementById('account-menu').classList.toggle('is-open');
+  });
+  document.addEventListener('click', (e)=>{
+    const chip = document.getElementById('account-chip');
+    if(chip && !chip.contains(e.target)){
+      document.getElementById('account-menu').classList.remove('is-open');
+    }
+  });
+  document.getElementById('account-logout-btn').addEventListener('click', async ()=>{
+    try{ if(window.storage) await window.storage.delete('account:profile', false); } catch(err){}
+    loggedInAccount = null;
+    renderAccountUI();
+    document.getElementById('account-menu').classList.remove('is-open');
+    showToast('تم تسجيل الخروج من حسابك');
+  });
+
+  loadAndRenderAccount();
+
+  /* ============ حجوزاتي ونقاط الولاء ============ */
+  async function fetchMyBookings(){
+    if(!loggedInAccount || !loggedInAccount.phone || !window.storage) return [];
+    try{
+      const list = await window.storage.list('booking:', true);
+      if(!list || !list.keys) return [];
+      const mine = [];
+      for(const key of list.keys){
+        try{
+          const res = await window.storage.get(key, true);
+          if(!res || !res.value) continue;
+          const order = JSON.parse(res.value);
+          if(order.phone === loggedInAccount.phone) mine.push(order);
+        } catch(err){}
+      }
+      return mine.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt));
+    } catch(err){ return []; }
+  }
+
+  async function updateLoyaltyPoints(){
+    const mine = await fetchMyBookings();
+    document.getElementById('loyalty-points').textContent = (mine.length * 10);
+  }
+
+  /* ============ تنبيه العميل عند تغيّر حالة حجزه ============ */
+  let seenBookingStatuses = {};
+  let statusCheckStarted = false;
+
+  async function loadSeenStatuses(){
+    try{
+      if(window.storage){
+        const res = await window.storage.get('seen-booking-statuses', false);
+        if(res && res.value) seenBookingStatuses = JSON.parse(res.value);
+      }
+    } catch(err){ seenBookingStatuses = {}; }
+  }
+  async function saveSeenStatuses(){
+    try{ if(window.storage) await window.storage.set('seen-booking-statuses', JSON.stringify(seenBookingStatuses), false); }
+    catch(err){}
+  }
+
+  async function checkBookingStatusUpdates(){
+    if(!loggedInAccount || !loggedInAccount.phone) return;
+    const mine = await fetchMyBookings();
+    let changed = false;
+    mine.forEach(o=>{
+      const prev = seenBookingStatuses[o.id];
+      if(prev !== undefined && prev !== o.status){
+        showToast(`🔔 تحديث في حجزك ${o.id}: بقت حالته "${o.status}"`);
+        document.getElementById('account-chip-btn').classList.add('has-notification');
+        changed = true;
+      }
+      seenBookingStatuses[o.id] = o.status;
+    });
+    if(changed) saveSeenStatuses();
+  }
+
+  function startStatusPolling(){
+    if(statusCheckStarted) return;
+    statusCheckStarted = true;
+    loadSeenStatuses().then(checkBookingStatusUpdates);
+    setInterval(checkBookingStatusUpdates, 10000);
+  }
+
+  document.getElementById('account-chip-btn').addEventListener('click', ()=>{
+    document.getElementById('account-chip-btn').classList.remove('has-notification');
+  });
+
+  document.getElementById('my-bookings-btn').addEventListener('click', async ()=>{
+    document.getElementById('account-menu').classList.remove('is-open');
+    const list = document.getElementById('mybookings-list');
+    list.innerHTML = '<div class="mb-empty">جاري التحميل...</div>';
+    document.getElementById('mybookings-backdrop').classList.add('is-active');
+    const mine = await fetchMyBookings();
+    if(mine.length === 0){
+      list.innerHTML = '<div class="mb-empty">لسه معملتش أي حجز من الموقع.</div>';
+      return;
+    }
+    list.innerHTML = mine.map(o=>{
+      const items = (o.items||[]).map(i=> `${i.name} ×${i.qty}`).join('، ');
+      return `<div class="mb-item">
+        <div class="mb-item-top"><b>${o.id}</b><span>${(o.total||0).toLocaleString('ar-EG')} ج.م</span></div>
+        <div>${items}</div>
+        <div style="color:var(--slate); margin-top:6px;">الحالة: ${o.status || 'قيد الانتظار'}</div>
+      </div>`;
+    }).join('');
+  });
+  document.getElementById('mybookings-close').addEventListener('click', ()=>{
+    document.getElementById('mybookings-backdrop').classList.remove('is-active');
+  });
+  document.getElementById('mybookings-backdrop').addEventListener('click', (e)=>{
+    if(e.target.id === 'mybookings-backdrop') e.currentTarget.classList.remove('is-active');
+  });
+
+  /* ============ حالة السلة (في الذاكرة فقط) ============ */
+  let cart = [];
+
+  const cartTrigger = document.getElementById('cart-trigger');
+  const cartDrawer = document.getElementById('cart-drawer');
+  const drawerBackdrop = document.getElementById('drawer-backdrop');
+  const cartClose = document.getElementById('cart-close');
+  const cartBody = document.getElementById('cart-body');
+  const cartCount = document.getElementById('cart-count');
+  const cartTotalAmount = document.getElementById('cart-total-amount');
+  const checkoutBtn = document.getElementById('checkout-btn');
+  const checkoutBackdrop = document.getElementById('checkout-backdrop');
+  const checkoutSummary = document.getElementById('checkout-summary');
+  const checkoutForm = document.getElementById('checkout-form');
+  const toastEl = document.getElementById('toast');
+
+  function openCart(){ cartDrawer.classList.add('is-open'); drawerBackdrop.classList.add('is-open'); }
+  function closeCart(){ cartDrawer.classList.remove('is-open'); drawerBackdrop.classList.remove('is-open'); }
+  cartTrigger.addEventListener('click', openCart);
+  cartClose.addEventListener('click', closeCart);
+  drawerBackdrop.addEventListener('click', closeCart);
+
+  function showToast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add('is-visible');
+    setTimeout(()=> toastEl.classList.remove('is-visible'), 2600);
+  }
+
+  /* ============ بيانات الأسطول (افتراضية — تُستبدل ببيانات الأدمن لو متاحة) ============ */
+  const CATEGORY_ICONS = {
+    'اقتصادية': `<path d="M8 40 C10 30 20 24 28 24 L36 24 C44 24 54 30 56 40 L56 46 C56 48 54 50 52 50 L12 50 C10 50 8 48 8 46 Z" stroke="#1c1710" stroke-width="2.4"/><circle cx="20" cy="50" r="6" fill="#1c1710"/><circle cx="44" cy="50" r="6" fill="#1c1710"/>`,
+    'صالون': `<path d="M6 40 C8 28 18 22 26 22 L38 22 C46 22 56 28 58 40 L58 46 C58 48 56 50 54 50 L10 50 C8 50 6 48 6 46 Z" stroke="#1c1710" stroke-width="2.4"/><path d="M22 22 L28 12 L38 12 L44 22" stroke="#1c1710" stroke-width="2.2"/><circle cx="19" cy="50" r="6" fill="#1c1710"/><circle cx="45" cy="50" r="6" fill="#1c1710"/>`,
+    'SUV': `<path d="M4 42 C6 26 18 18 28 18 L36 18 C46 18 58 26 60 42 L60 47 C60 49 58 51 56 51 L8 51 C6 51 4 49 4 47 Z" stroke="#1c1710" stroke-width="2.4"/><rect x="14" y="30" width="10" height="10" rx="1" fill="#1c1710" opacity="0.15"/><circle cx="18" cy="51" r="6.5" fill="#1c1710"/><circle cx="46" cy="51" r="6.5" fill="#1c1710"/>`,
+    'فاخرة': `<path d="M6 40 C9 27 20 20 30 20 L34 20 C44 20 55 27 58 40 L58 46 C58 48 56 50 54 50 L10 50 C8 50 6 48 6 46 Z" stroke="#1c1710" stroke-width="2.4"/><line x1="14" y1="34" x2="50" y2="34" stroke="#1c1710" stroke-width="1.6" opacity="0.5"/><circle cx="19" cy="50" r="6" fill="#1c1710"/><circle cx="45" cy="50" r="6" fill="#1c1710"/>`
+  };
+  const DEFAULT_CARS = [
+    { id:'1', name:'هيونداي إلنترا 2023', cat:'اقتصادية', price:550, trans:'أوتوماتيك', seats:5, status:'available', type:'rent' },
+    { id:'2', name:'تويوتا كورولا 2024', cat:'صالون', price:750, trans:'أوتوماتيك', seats:5, status:'available', type:'rent' },
+    { id:'3', name:'هيونداي توسان 2023', cat:'SUV', price:1200, trans:'أوتوماتيك', seats:5, status:'rented', type:'rent' },
+    { id:'4', name:'مرسيدس E200 2024', cat:'فاخرة', price:2500, trans:'أوتوماتيك', seats:5, status:'available', type:'rent' },
+    { id:'5', name:'شيفروليه أوبترا 2019', cat:'اقتصادية', price:350000, trans:'أوتوماتيك', seats:5, status:'available', type:'sale' }
+  ];
+  let fleetCars = DEFAULT_CARS.slice();
+  let currentFilter = 'all';
+  let currentSort = 'default';
+  let wishlist = [];
+
+  const fleetGridEl = document.getElementById('fleet-grid-dynamic');
+  const filterTabs = document.querySelectorAll('.filter-tab');
+  const sortSelect = document.getElementById('sort-select');
+
+  /* ============ المفضلة (تخزين شخصي دائم) ============ */
+  async function loadWishlist(){
+    try{
+      if(window.storage){
+        const res = await window.storage.get('wishlist', false);
+        if(res && res.value) wishlist = JSON.parse(res.value);
+      }
+    } catch(err){ wishlist = []; }
+  }
+  async function saveWishlist(){
+    try{ if(window.storage) await window.storage.set('wishlist', JSON.stringify(wishlist), false); }
+    catch(err){ /* التخزين غير متاح — المفضلة هتفضل للجلسة الحالية بس */ }
+  }
+  function toggleWishlist(id){
+    const idx = wishlist.indexOf(String(id));
+    if(idx === -1){ wishlist.push(String(id)); } else { wishlist.splice(idx,1); }
+    saveWishlist();
+  }
+
+  function fleetAvailBadge(status){
+    const map = { available:'متوفر الآن', rented:'محجوزة حاليًا', maintenance:'في الصيانة' };
+    return map[status] || 'متوفر الآن';
+  }
+
+  function renderFleetGrid(){
+    let list = fleetCars.filter(c=>{
+      if(currentFilter === 'all') return true;
+      if(currentFilter === 'wishlist') return wishlist.includes(String(c.id));
+      return c.type === currentFilter;
+    });
+    if(currentSort === 'price-asc') list = [...list].sort((a,b)=> a.price - b.price);
+    if(currentSort === 'price-desc') list = [...list].sort((a,b)=> b.price - a.price);
+    if(list.length === 0){
+      const emptyMsg = currentFilter === 'wishlist' ? 'لسه مضفتش أي سيارة للمفضلة. دوس على ❤ على أي كارت.' : 'مفيش سيارات في هذا التصنيف حاليًا.';
+      fleetGridEl.innerHTML = `<div class="fleet-empty">${emptyMsg}</div>`;
+      return;
+    }
+    fleetGridEl.innerHTML = list.map(car=>{
+      const isSale = car.type === 'sale';
+      const priceLabel = isSale ? 'السعر' : 'لليوم الواحد';
+      const icon = CATEGORY_ICONS[car.cat] || CATEGORY_ICONS['صالون'];
+      const isBookable = !isSale && car.status === 'available';
+      const discount0 = Number(car.discount) || 0;
+      const finalPrice0 = discount0 > 0 ? Math.round(car.price * (1 - discount0/100)) : car.price;
+      const ctaHtml = isSale
+        ? `<button type="button" class="sticker-cta cta-sale sale-inquiry-btn" data-id="${car.id}" data-name="${car.name}" data-price="${finalPrice0}">استفسر عن الشراء</button>`
+        : `<button type="button" class="sticker-cta add-to-cart-btn" data-id="${car.id}" data-name="${car.name}" data-price="${finalPrice0}" ${isBookable ? '' : 'disabled'}>${isBookable ? 'أضف للسلة' : 'غير متاح حاليًا'}</button>`;
+      const frontImg = (car.images && car.images.front) || car.image || '';
+      const media = frontImg
+        ? `<img class="sticker-photo" src="${frontImg}" alt="${car.name}">`
+        : `<svg class="sticker-icon" viewBox="0 0 64 64" fill="none">${icon}</svg>`;
+      const descHtml = car.desc ? `<p class="sticker-desc">${car.desc}</p>` : '';
+      const featuredBadge = car.featured ? `<span class="sticker-featured">⭐ مميزة</span>` : '';
+      const isWished = wishlist.includes(String(car.id));
+      const priceHtml = discount0 > 0
+        ? `<b>${finalPrice0.toLocaleString('ar-EG')} ج.م <span class="price-original">${Number(car.price).toLocaleString('ar-EG')}</span></b>`
+        : `<b>${Number(car.price).toLocaleString('ar-EG')} ج.م</b>`;
+      const discountBadge = discount0 > 0 ? `<span class="sticker-discount-badge">خصم ${discount0}%</span>` : '';
+
+      return `
+      <article class="sticker-card">
+        <div class="sticker-tape" aria-hidden="true"></div>
+        <div class="sticker-top-row">
+          <span class="sticker-type-badge sticker-type-${car.type}" style="position:static;">${isSale ? 'للبيع' : 'للإيجار'}</span>
+          <div class="sticker-quick-actions">
+            <button type="button" class="wishlist-btn ${isWished ? 'is-active' : ''}" data-id="${car.id}" aria-label="أضف للمفضلة">
+              <svg viewBox="0 0 24 24" fill="${isWished ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+            </button>
+            <button type="button" class="share-btn" data-id="${car.id}" aria-label="مشاركة">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.6l6.8-3.8M8.6 13.4l6.8 3.8"/></svg>
+            </button>
+          </div>
+        </div>
+        ${discountBadge}
+        <span class="sticker-avail">${isSale ? 'معروضة للبيع' : fleetAvailBadge(car.status)}</span>
+        ${media}
+        ${featuredBadge}
+        <span class="sticker-cat">${car.cat}</span>
+        <h3 class="sticker-name car-detail-trigger" data-id="${car.id}" style="cursor:pointer;">${car.name}</h3>
+        ${descHtml}
+        <ul class="sticker-specs">
+          <li><span>ناقل الحركة</span><span>${car.trans}</span></li>
+          <li><span>عدد الركاب</span><span>${car.seats}</span></li>
+          <li><span>الحالة</span><span>${isSale ? 'معروضة للبيع' : fleetAvailBadge(car.status)}</span></li>
+        </ul>
+        <div class="sticker-price">
+          ${priceHtml}
+          <small>${priceLabel}</small>
+        </div>
+        <button type="button" class="sticker-photos-btn photos-btn" data-id="${car.id}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 16l-5-4-4 3-3-2-6 5"/></svg>
+          صور السيارة
+        </button>
+        ${ctaHtml}
+      </article>`;
+    }).join('');
+
+    // ربط أزرار الإضافة للسلة
+    fleetGridEl.querySelectorAll('.add-to-cart-btn:not([disabled])').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const id = btn.dataset.id;
+        const name = btn.dataset.name;
+        const price = Number(btn.dataset.price);
+        const existing = cart.find(item=> item.id === id);
+        if(existing){ existing.qty += 1; } else { cart.push({ id, name, price, qty:1 }); }
+        renderCart();
+        showToast(`تمت إضافة "${name}" للسلة`);
+        openCart();
+      });
+    });
+
+    // ربط أزرار الاستفسار عن الشراء (سيارات البيع)
+    fleetGridEl.querySelectorAll('.sale-inquiry-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const name = btn.dataset.name;
+        const price = Number(btn.dataset.price);
+        const msg = `استفسار عن شراء سيارة من موقع محمد عمر موتورز%0A` +
+          `السيارة: ${name}%0A` +
+          `السعر المعروض: ${price.toLocaleString('ar-EG')} ج.م%0A` +
+          `من فضلكم كلموني لمناقشة التفاصيل.`;
+        window.open(`https://wa.me/${BUSINESS_WHATSAPP}?text=${msg}`, '_blank');
+      });
+    });
+
+    // ربط أزرار الصور — بنجيب بيانات السيارة كاملة من القائمة الحالية عشان نعرض الصور الأربعة
+    fleetGridEl.querySelectorAll('.photos-btn, .car-detail-trigger').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const car = fleetCars.find(c=> String(c.id) === String(btn.dataset.id));
+        if(car) openGallery(car);
+      });
+    });
+
+    // ربط زر المفضلة
+    fleetGridEl.querySelectorAll('.wishlist-btn').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        toggleWishlist(btn.dataset.id);
+        renderFleetGrid();
+        showToast(wishlist.includes(String(btn.dataset.id)) ? 'تمت الإضافة للمفضلة' : 'تمت الإزالة من المفضلة');
+      });
+    });
+
+    // ربط زر المشاركة
+    fleetGridEl.querySelectorAll('.share-btn').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        const car = fleetCars.find(c=> String(c.id) === String(btn.dataset.id));
+        if(!car) return;
+        const text = `شوف السيارة دي في محمد عمر موتورز: ${car.name} — ${Number(car.price).toLocaleString('ar-EG')} ج.م`;
+        window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+      });
+    });
+  }
+
+  filterTabs.forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      filterTabs.forEach(t=> t.classList.toggle('is-active', t === tab));
+      currentFilter = tab.dataset.filter;
+      renderFleetGrid();
+    });
+  });
+  sortSelect.addEventListener('change', ()=>{
+    currentSort = sortSelect.value;
+    renderFleetGrid();
+  });
+
+  /* ============ مزامنة الأسطول مع لوحة الأدمن (تخزين مشترك) ============ */
+  async function syncFleetFromAdmin(){
+    if(!window.storage) { renderFleetGrid(); return; }
+    try{
+      const res = await window.storage.get('fleet:cars', true);
+      if(res && res.value){
+        const parsed = JSON.parse(res.value);
+        if(Array.isArray(parsed) && parsed.length){
+          fleetCars = parsed;
+        }
+      }
+    } catch(err){ /* لا توجد بيانات محفوظة بعد، أو التخزين غير متاح — نستخدم البيانات الافتراضية */ }
+    renderFleetGrid();
+  }
+  (async ()=>{ await loadWishlist(); syncFleetFromAdmin(); })();
+  setInterval(syncFleetFromAdmin, 6000);
+
+
+  /* ============ معرض صور السيارة (Lightbox) ============ */
+  const galleryBackdrop = document.getElementById('gallery-backdrop');
+  const galleryStage = document.getElementById('gallery-stage');
+  const galleryThumbs = document.getElementById('gallery-thumbs');
+  const galleryTitle = document.getElementById('gallery-title');
+  let galleryShots = [];
+  let galleryIndex = 0;
+
+  function openGallery(car){
+    galleryTitle.textContent = car.name;
+    const icon = CATEGORY_ICONS[car.cat] || CATEGORY_ICONS['صالون'];
+    const angleLabels = { front:'الأمام', right:'الجانب الأيمن', left:'الجانب الأيسر', back:'الخلف' };
+    const images = car.images || (car.image ? { front: car.image } : {});
+    const realShots = Object.keys(angleLabels)
+      .filter(angle=> images[angle])
+      .map(angle=> ({ label: angleLabels[angle], tint:'#12151a', image: images[angle] }));
+
+    galleryShots = realShots.length ? realShots : [
+      { label:'الواجهة الأمامية', tint:'#1b2430' },
+      { label:'الجانب', tint:'#20293a' },
+      { label:'الداخلية', tint:'#171b22' }
+    ].map(shot=> ({ ...shot, icon }));
+
+    galleryIndex = 0;
+    galleryThumbs.innerHTML = galleryShots.length > 1
+      ? galleryShots.map((_,i)=> `<div class="gallery-thumb ${i===0?'is-active':''}" data-i="${i}"></div>`).join('')
+      : '';
+    galleryThumbs.querySelectorAll('.gallery-thumb').forEach(t=>{
+      t.addEventListener('click', ()=> renderGalleryShot(Number(t.dataset.i)));
+    });
+    renderGalleryShot(0);
+    galleryBackdrop.classList.add('is-active');
+
+    // تعبئة قسم التفاصيل الكاملة
+    const isSale = car.type === 'sale';
+    const discount = Number(car.discount) || 0;
+    const finalPrice = discount > 0 ? Math.round(car.price * (1 - discount/100)) : car.price;
+    const isBookable = !isSale && car.status === 'available';
+
+    document.getElementById('detail-badges').innerHTML = `
+      <span>${isSale ? 'للبيع' : 'للإيجار'}</span>
+      <span>${car.cat}</span>
+      ${car.featured ? '<span>⭐ مميزة</span>' : ''}
+      ${discount > 0 ? `<span>خصم ${discount}%</span>` : ''}
+    `;
+    document.getElementById('detail-desc').textContent = car.desc || 'سيارة بحالة ممتازة وجاهزة للاستخدام فورًا.';
+    document.getElementById('detail-specs').innerHTML = `
+      <li><span>ناقل الحركة</span><span>${car.trans}</span></li>
+      <li><span>عدد الركاب</span><span>${car.seats}</span></li>
+      <li><span>الفئة</span><span>${car.cat}</span></li>
+      <li><span>الحالة</span><span>${isSale ? 'معروضة للبيع' : fleetAvailBadge(car.status)}</span></li>
+    `;
+    document.getElementById('detail-price').innerHTML = discount > 0
+      ? `<b>${finalPrice.toLocaleString('ar-EG')} ج.م</b> <span class="price-original">${Number(car.price).toLocaleString('ar-EG')}</span> <small style="color:var(--slate);">${isSale?'':' / اليوم'}</small>`
+      : `<b>${Number(car.price).toLocaleString('ar-EG')} ج.م</b> <small style="color:var(--slate);">${isSale?'':' / اليوم'}</small>`;
+
+    const detailCta = document.getElementById('detail-cta');
+    if(isSale){
+      detailCta.textContent = 'استفسر عن الشراء';
+      detailCta.disabled = false;
+      detailCta.onclick = ()=>{
+        const msg = `استفسار عن شراء سيارة من موقع محمد عمر موتورز%0Aالسيارة: ${car.name}%0Aالسعر المعروض: ${finalPrice.toLocaleString('ar-EG')} ج.م%0Aمن فضلكم كلموني لمناقشة التفاصيل.`;
+        window.open(`https://wa.me/${BUSINESS_WHATSAPP}?text=${msg}`, '_blank');
+      };
+    } else {
+      detailCta.textContent = isBookable ? 'أضف للسلة' : 'غير متاح حاليًا';
+      detailCta.disabled = !isBookable;
+      detailCta.onclick = isBookable ? ()=>{
+        const existing = cart.find(item=> item.id === String(car.id));
+        if(existing){ existing.qty += 1; } else { cart.push({ id:String(car.id), name:car.name, price:finalPrice, qty:1 }); }
+        renderCart();
+        showToast(`تمت إضافة "${car.name}" للسلة`);
+        galleryBackdrop.classList.remove('is-active');
+        openCart();
+      } : null;
+    }
+  }
+  function renderGalleryShot(i){
+    galleryIndex = i;
+    const shot = galleryShots[i];
+    galleryStage.style.background = shot.tint;
+    if(shot.image){
+      galleryStage.innerHTML = `<img src="${shot.image}" alt="${galleryTitle.textContent}" style="width:100%;height:100%;object-fit:cover;"><span>${shot.label}</span>`;
+    } else {
+      galleryStage.innerHTML = `<svg viewBox="0 0 64 64" fill="none" stroke="#e4c55e" stroke-width="1.4">${shot.icon}</svg><span>${shot.label}</span>`;
+    }
+    galleryThumbs.querySelectorAll('.gallery-thumb').forEach((t, idx)=> t.classList.toggle('is-active', idx === i));
+  }
+  document.getElementById('gallery-close').addEventListener('click', ()=> galleryBackdrop.classList.remove('is-active'));
+  galleryBackdrop.addEventListener('click', (e)=>{ if(e.target === galleryBackdrop) galleryBackdrop.classList.remove('is-active'); });
+
+  function renderCart(){
+    // العدّاد في الهيدر
+    const totalQty = cart.reduce((s,i)=> s + i.qty, 0);
+    cartCount.textContent = totalQty;
+    cartCount.style.display = totalQty > 0 ? 'flex' : 'none';
+
+    // محتوى السلة
+    if(cart.length === 0){
+      cartBody.innerHTML = '<div class="cart-empty">لسه ماخترتش أي سيارة. تصفح الأسطول وضيف اللي يعجبك.</div>';
+      checkoutBtn.disabled = true;
+    } else {
+      cartBody.innerHTML = cart.map(item=> `
+        <div class="cart-item" data-id="${item.id}">
+          <div class="cart-item-info">
+            <b>${item.name}</b>
+            <span>${item.price.toLocaleString('ar-EG')} ج.م / اليوم</span>
+            <div><button type="button" class="cart-item-remove" data-remove="${item.id}">إزالة</button></div>
+          </div>
+          <div class="cart-qty">
+            <button type="button" class="qty-btn" data-decr="${item.id}">−</button>
+            <span>${item.qty}</span>
+            <button type="button" class="qty-btn" data-incr="${item.id}">+</button>
+          </div>
+        </div>
+      `).join('');
+      checkoutBtn.disabled = false;
+    }
+
+    // الإجمالي
+    const total = cart.reduce((s,i)=> s + (i.price * i.qty), 0);
+    cartTotalAmount.textContent = total.toLocaleString('ar-EG') + ' ج.م';
+
+    // ربط أزرار التحكم بالكمية والحذف
+    cartBody.querySelectorAll('[data-incr]').forEach(b=> b.addEventListener('click', ()=>{
+      const item = cart.find(i=> i.id === b.dataset.incr);
+      item.qty += 1; renderCart();
+    }));
+    cartBody.querySelectorAll('[data-decr]').forEach(b=> b.addEventListener('click', ()=>{
+      const item = cart.find(i=> i.id === b.dataset.decr);
+      item.qty -= 1;
+      if(item.qty <= 0){ cart = cart.filter(i=> i.id !== b.dataset.decr); }
+      renderCart();
+    }));
+    cartBody.querySelectorAll('[data-remove]').forEach(b=> b.addEventListener('click', ()=>{
+      cart = cart.filter(i=> i.id !== b.dataset.remove);
+      renderCart();
+    }));
+  }
+
+  /* ============ نافذة إتمام الحجز ============ */
+  const COUPONS = { 'WELCOME10': 10, 'MOM20': 20, 'EID15': 15 }; // أكواد خصم تجريبية (نسبة %)
+  let appliedCoupon = null;
+
+  function getRentalDays(){
+    const pickup = document.getElementById('checkout-pickup-date').value;
+    const ret = document.getElementById('checkout-return-date').value;
+    if(!pickup || !ret) return 1;
+    const diff = Math.round((new Date(ret) - new Date(pickup)) / (1000*60*60*24));
+    return diff > 0 ? diff : 1;
+  }
+
+  function computeCheckoutTotals(){
+    const days = getRentalDays();
+    const rawTotal = cart.reduce((s,i)=> s + (i.price * i.qty * days), 0);
+    const discountAmount = appliedCoupon ? Math.round(rawTotal * appliedCoupon.percent / 100) : 0;
+    const finalTotal = rawTotal - discountAmount;
+    return { days, rawTotal, discountAmount, finalTotal };
+  }
+
+  function renderCheckoutSummary(){
+    const { days, rawTotal, discountAmount, finalTotal } = computeCheckoutTotals();
+    document.getElementById('days-note').textContent = `مدة الإيجار: ${days} ${days === 1 ? 'يوم' : 'أيام'}`;
+    let html = cart.map(i=> `<li><span>${i.name} × ${i.qty} × ${days} يوم</span><span>${(i.price*i.qty*days).toLocaleString('ar-EG')} ج.م</span></li>`).join('');
+    if(discountAmount > 0){
+      html += `<li style="color:var(--green-soft,#69c48d);"><span>خصم الكوبون (${appliedCoupon.code})</span><span>-${discountAmount.toLocaleString('ar-EG')} ج.م</span></li>`;
+    }
+    html += `<li style="border-top:1px dashed var(--line-strong); margin-top:6px; padding-top:8px; color:var(--ivory); font-weight:700;"><span>الإجمالي</span><span>${finalTotal.toLocaleString('ar-EG')} ج.م</span></li>`;
+    checkoutSummary.innerHTML = html;
+  }
+
+  checkoutBtn.addEventListener('click', ()=>{
+    if(cart.length === 0) return;
+    appliedCoupon = null;
+    document.getElementById('checkout-coupon').value = '';
+    document.getElementById('coupon-note').textContent = '';
+    const today = new Date();
+    const tomorrow = new Date(today.getTime() + 86400000);
+    document.getElementById('checkout-pickup-date').value = today.toISOString().slice(0,10);
+    document.getElementById('checkout-return-date').value = tomorrow.toISOString().slice(0,10);
+    document.getElementById('checkout-pickup-date').min = today.toISOString().slice(0,10);
+    document.getElementById('checkout-return-date').min = tomorrow.toISOString().slice(0,10);
+    // لو في السلة سيارات بيع بس (مش إيجار)، اخفاء حقل التواريخ لعدم الحاجة له
+    const hasRentItems = cart.some(i=> {
+      const car = fleetCars.find(c=> String(c.id) === String(i.id));
+      return !car || car.type !== 'sale';
+    });
+    document.getElementById('rental-days-field').style.display = hasRentItems ? 'block' : 'none';
+    // إعادة الضبط على الدفع كاش كافتراضي في كل مرة
+    document.querySelector('input[name="payment-method"][value="cash"]').checked = true;
+    document.querySelectorAll('.payment-option').forEach(opt=> opt.classList.remove('is-active'));
+    document.querySelector('.payment-option').classList.add('is-active');
+    document.getElementById('instapay-box').style.display = 'none';
+    renderCheckoutSummary();
+    // تعبئة تلقائية لبيانات العميل لو مسجل دخول، لتوفير وقته
+    if(loggedInAccount){
+      if(loggedInAccount.name) document.getElementById('checkout-name').value = loggedInAccount.name;
+      if(loggedInAccount.phone) document.getElementById('checkout-phone').value = loggedInAccount.phone;
+    }
+    checkoutBackdrop.classList.add('is-active');
+    closeCart();
+  });
+  document.getElementById('checkout-pickup-date').addEventListener('change', ()=>{
+    const pickup = document.getElementById('checkout-pickup-date').value;
+    const returnInput = document.getElementById('checkout-return-date');
+    if(pickup){
+      const nextDay = new Date(new Date(pickup).getTime() + 86400000).toISOString().slice(0,10);
+      returnInput.min = nextDay;
+      if(returnInput.value && returnInput.value <= pickup) returnInput.value = nextDay;
+    }
+    renderCheckoutSummary();
+  });
+  document.getElementById('checkout-return-date').addEventListener('change', renderCheckoutSummary);
+  document.getElementById('apply-coupon-btn').addEventListener('click', ()=>{
+    const code = document.getElementById('checkout-coupon').value.trim().toUpperCase();
+    const note = document.getElementById('coupon-note');
+    if(!code){ note.textContent=''; note.className='field-note'; appliedCoupon=null; renderCheckoutSummary(); return; }
+    if(COUPONS[code]){
+      appliedCoupon = { code, percent: COUPONS[code] };
+      note.textContent = `✓ تم تطبيق خصم ${COUPONS[code]}%`;
+      note.className = 'field-note is-success';
+    } else {
+      appliedCoupon = null;
+      note.textContent = 'الكود غير صحيح';
+      note.className = 'field-note is-error';
+    }
+    renderCheckoutSummary();
+  });
+  document.getElementById('checkout-cancel').addEventListener('click', ()=>{
+    checkoutBackdrop.classList.remove('is-active');
+    openCart();
+  });
+  checkoutBackdrop.addEventListener('click', (e)=>{
+    if(e.target === checkoutBackdrop) checkoutBackdrop.classList.remove('is-active');
+  });
+
+  /* ============ اختيار طريقة الدفع ============ */
+  document.querySelectorAll('input[name="payment-method"]').forEach(radio=>{
+    radio.addEventListener('change', ()=>{
+      document.querySelectorAll('.payment-option').forEach(opt=> opt.classList.remove('is-active'));
+      radio.closest('.payment-option').classList.add('is-active');
+      document.getElementById('instapay-box').style.display = radio.value === 'instapay' ? 'block' : 'none';
+    });
+  });
+
+  checkoutForm.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const name = document.getElementById('checkout-name').value.trim();
+    const phone = document.getElementById('checkout-phone').value.trim();
+    if(!name || !phone || cart.length === 0) return;
+
+    const { days, finalTotal } = computeCheckoutTotals();
+    const orderId = 'BK-' + Date.now().toString().slice(-6);
+    const pickupDate = document.getElementById('checkout-pickup-date').value;
+    const returnDate = document.getElementById('checkout-return-date').value;
+    const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+
+    // محاولة حفظ الطلب في تخزين مشترك (يعمل فقط داخل معاينة Claude، مع تجاهل الخطأ في أي مكان آخر)
+    try{
+      if(window.storage){
+        await window.storage.set('booking:' + orderId, JSON.stringify({
+          id: orderId, customer:name, phone, items:cart, days, pickupDate, returnDate,
+          coupon: appliedCoupon ? appliedCoupon.code : null,
+          paymentMethod,
+          total: finalTotal,
+          status:'قيد الانتظار', createdAt: new Date().toISOString()
+        }), true);
+      }
+    } catch(err){ /* تجاهل: التخزين المشترك مش متاح في هذه البيئة */ }
+
+    // تحديث نقاط الولاء فورًا لو العميل مسجل دخول بنفس الرقم
+    if(loggedInAccount && loggedInAccount.phone === phone) updateLoyaltyPoints();
+
+    // بناء رسالة واتساب وإرسالها لفريق العمل
+    const lines = cart.map(i=> `- ${i.name} × ${i.qty} × ${days} يوم`).join('%0A');
+    const couponLine = appliedCoupon ? `كود الخصم: ${appliedCoupon.code} (${appliedCoupon.percent}%)%0A` : '';
+    const datesLine = pickupDate && returnDate ? `الاستلام: ${pickupDate} — التسليم: ${returnDate}%0A` : '';
+    const paymentLine = paymentMethod === 'instapay'
+      ? `طريقة الدفع: InstaPay مقدّم (هبعت صورة التحويل حالًا)%0A`
+      : `طريقة الدفع: كاش عند الاستلام%0A`;
+    const message =
+      `طلب حجز جديد من موقع محمد عمر موتورز%0A` +
+      `رقم الطلب: ${orderId}%0A` +
+      `الاسم: ${name}%0A` +
+      `رقم الهاتف: ${phone}%0A` +
+      datesLine +
+      paymentLine +
+      `السيارات المطلوبة:%0A${lines}%0A` +
+      couponLine +
+      `الإجمالي النهائي: ${finalTotal.toLocaleString('ar-EG')} ج.م`;
+
+    window.open(`https://wa.me/${BUSINESS_WHATSAPP}?text=${message}`, '_blank');
+
+    checkoutBackdrop.classList.remove('is-active');
+    cart = [];
+    appliedCoupon = null;
+    renderCart();
+    checkoutForm.reset();
+    showToast(`تم إرسال طلبك، هنتواصل معاك على ${phone} لتأكيد الحجز`);
+  });
+
+  renderCart();
+</script>
+
+</body>
+</html>
