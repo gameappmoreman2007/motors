@@ -23,7 +23,7 @@ const DB_PATH = path.join(__dirname, 'db.json');
 
 app.use(cors());
 app.use(express.json({ limit: '15mb' })); // limit كبير عشان الصور base64
-
+app.use(express.static(__dirname));
 // ---------- قاعدة بيانات بسيطة (ملف JSON) ----------
 function readDB(){
   if(!fs.existsSync(DB_PATH)){
@@ -118,7 +118,9 @@ app.get('/api/accounts/:phone', (req, res)=>{
   if(!account) return res.status(404).json({ error: 'account not found' });
   res.json(account);
 });
-
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'mohamed-omar-motors.html'));
+});
 app.listen(PORT, ()=>{
   console.log(`✅ السيرفر شغال على http://localhost:${PORT}`);
 });
