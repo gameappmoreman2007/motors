@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تسجيل الدخول | محمد عمر موتورز</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 60 60%27%3E%3Ccircle cx=%2730%27 cy=%2730%27 r=%2728%27 fill=%27%2312151a%27 stroke=%27%23c9a227%27 stroke-width=%272%27/%3E%3Ctext x=%2730%27 y=%2739%27 text-anchor=%27middle%27 font-family=%27Arial%27 font-weight=%27800%27 font-size=%2722%27 fill=%27%23e4c55e%27%3EMO%3C/text%3E%3Cpath d=%27M15 43 Q30 47 45 43%27 stroke=%27%23c9a227%27 stroke-width=%271.6%27 fill=%27none%27/%3E%3Ccircle cx=%2745%27 cy=%2719%27 r=%272.3%27 fill=%27%23e4c55e%27/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12151a;
+    --panel:#1b2430;
+    --panel-2:#20293a;
+    --line: rgba(237,231,218,0.12);
+    --line-strong: rgba(237,231,218,0.22);
+    --gold:#c9a227;
+    --gold-soft:#e4c55e;
+    --ivory:#ede7da;
+    --slate:#8b94a3;
+    --rust:#b23a2e;
+    --green-soft:#69c48d;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    min-height:100vh;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 8%, rgba(201,162,39,0.10), transparent 60%),
+      radial-gradient(ellipse 70% 55% at 10% 100%, rgba(178,58,46,0.08), transparent 60%),
+      var(--bg);
+    color:var(--ivory);
+    font-family:'Tajawal', sans-serif;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:'Cairo', sans-serif; font-weight:800; margin:0; }
+  button, input{ font-family:inherit; }
+  a{ color:inherit; text-decoration:none; }
+  :focus-visible{ outline:2px solid var(--gold-soft); outline-offset:2px; border-radius:4px; }
+  @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
+
+  .auth-card{
+    width:100%;
+    max-width:400px;
+    background:var(--panel);
+    border:1px solid var(--line-strong);
+    border-radius:var(--radius);
+    padding:34px 30px;
+    box-shadow:0 30px 60px rgba(0,0,0,0.4);
+    position:relative;
+    overflow:hidden;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:24px;
+  }
+  .brand svg{ width:42px; height:42px; flex-shrink:0; }
+  .brand strong{ display:block; font-size:1rem; }
+  .brand span{ font-size:0.72rem; color:var(--slate); letter-spacing:0.08em; }
+
+  .step{ display:none; }
+  .step.is-active{ display:block; animation:fadeIn .3s ease; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(6px);} to{ opacity:1; transform:translateY(0);} }
+
+  .step-title{ font-size:1.25rem; margin-bottom:6px; }
+  .step-sub{ color:var(--slate); font-size:0.87rem; margin-bottom:24px; line-height:1.6; }
+  .step-sub b{ color:var(--ivory); font-weight:700; }
+
+  .tabs{
+    display:flex;
+    background:var(--bg);
+    border:1px solid var(--line-strong);
+    border-radius:10px;
+    padding:4px;
+    margin-bottom:24px;
+  }
+  .tab-btn{
+    flex:1;
+    background:transparent;
+    border:none;
+    color:var(--slate);
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:0.85rem;
+    padding:10px;
+    border-radius:7px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    transition:background .18s ease, color .18s ease;
+  }
+  .tab-btn svg{ width:15px; height:15px; }
+  .tab-btn.is-active{ background:var(--panel-2); color:var(--gold-soft); }
+
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-size:0.82rem; color:var(--slate); margin-bottom:7px; }
+  .phone-input-wrap{
+    display:flex;
+    align-items:center;
+    background:var(--bg);
+    border:1px solid var(--line-strong);
+    border-radius:8px;
+    overflow:hidden;
+    transition:border-color .15s ease;
+  }
+  .phone-input-wrap:focus-within{ border-color:var(--gold-soft); }
+  .phone-code{
+    padding:11px 12px;
+    color:var(--slate);
+    font-size:0.9rem;
+    border-left:1px solid var(--line-strong);
+    flex-shrink:0;
+  }
+  .phone-input-wrap input{
+    flex:1;
+    min-width:0;
+    padding:11px 13px;
+    border:none;
+    background:transparent;
+    color:var(--ivory);
+    font-size:0.92rem;
+    direction:ltr;
+    text-align:right;
+  }
+  .phone-input-wrap input:focus{ outline:none; }
+  .field input{
+    width:100%;
+    padding:11px 13px;
+    border-radius:8px;
+    border:1px solid var(--line-strong);
+    background:var(--bg);
+    color:var(--ivory);
+    font-size:0.92rem;
+  }
+  .field input:focus{ border-color:var(--gold-soft); }
+  .field-error{
+    font-size:0.76rem;
+    color:var(--rust);
+    margin-top:6px;
+    display:none;
+  }
+  .field-error.is-visible{ display:block; }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size:0.92rem;
+    padding:12px 20px;
+    border-radius:8px;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease, border-color .15s ease;
+    width:100%;
+  }
+  .btn-gold{ background:linear-gradient(180deg, var(--gold-soft), var(--gold)); color:#1a1305; }
+  .btn-gold:hover{ transform:translateY(-1px); box-shadow:0 10px 22px rgba(201,162,39,0.28); }
+  .btn-gold:disabled{ opacity:0.5; cursor:not-allowed; transform:none; box-shadow:none; }
+  .btn-ghost{ background:transparent; border-color:var(--line-strong); color:var(--ivory); }
+  .btn-ghost:hover{ border-color:var(--gold-soft); color:var(--gold-soft); }
+  .btn-google{
+    background:var(--ivory); color:#1c1710;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+  }
+  .btn-google:hover{ transform:translateY(-1px); box-shadow:0 10px 22px rgba(0,0,0,0.25); }
+  .btn-google svg{ width:18px; height:18px; }
+
+  .divider{
+    display:flex; align-items:center; gap:12px;
+    color:var(--slate); font-size:0.78rem;
+    margin:20px 0;
+  }
+  .divider::before, .divider::after{
+    content:""; flex:1; height:1px; background:var(--line-strong);
+  }
+
+  /* OTP boxes */
+  .otp-row{
+    display:flex;
+    gap:10px;
+    direction:ltr;
+    margin-bottom:6px;
+  }
+  .otp-box{
+    width:46px; height:54px;
+    text-align:center;
+    font-size:1.3rem;
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    border-radius:9px;
+    border:1px solid var(--line-strong);
+    background:var(--bg);
+    color:var(--ivory);
+  }
+  .otp-box:focus{ border-color:var(--gold-soft); outline:none; }
+
+  .otp-demo-hint{
+    background:rgba(201,162,39,0.1);
+    border:1px dashed var(--line-strong);
+    border-radius:8px;
+    padding:10px 12px;
+    font-size:0.8rem;
+    color:var(--gold-soft);
+    margin:16px 0;
+    text-align:center;
+  }
+
+  .resend-row{
+    display:flex; align-items:center; justify-content:space-between;
+    margin:16px 0 20px;
+    font-size:0.82rem;
+  }
+  .resend-row span{ color:var(--slate); }
+  .resend-btn{
+    background:transparent; border:none; color:var(--gold-soft);
+    font-family:'Cairo', sans-serif; font-weight:700; font-size:0.82rem;
+    cursor:pointer;
+  }
+  .resend-btn:disabled{ color:var(--slate); cursor:not-allowed; }
+
+  .back-row{ margin-top:18px; text-align:center; }
+  .back-row a{ font-size:0.83rem; color:var(--slate); }
+  .back-row a:hover{ color:var(--gold-soft); }
+
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--panel-2); border:1px solid var(--line-strong);
+    color:var(--ivory); padding:12px 20px; border-radius:9px;
+    font-size:0.85rem; opacity:0; transition:opacity .25s ease, transform .25s ease;
+    z-index:200; text-align:center; max-width:90vw;
+  }
+  .toast.is-visible{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  .avatar-upload-box{
+    width:84px; height:84px;
+    border-radius:50%;
+    border:1.5px dashed var(--line-strong);
+    background:var(--bg);
+    display:flex; align-items:center; justify-content:center;
+    margin:0 auto;
+    cursor:pointer;
+    overflow:hidden;
+    color:var(--slate);
+    transition:border-color .18s ease;
+  }
+  .avatar-upload-box:hover{ border-color:var(--gold-soft); }
+  #avatar-upload-icon{ width:30px; height:30px; }
+  #avatar-upload-img{ width:100%; height:100%; object-fit:cover; }
+
+  .wb-avatar{
+    width:64px; height:64px;
+    border-radius:50%;
+    background:var(--panel-2);
+    border:1px solid var(--line-strong);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Cairo', sans-serif; font-weight:800; font-size:1.3rem;
+    color:var(--gold-soft);
+    margin:0 auto 16px;
+    overflow:hidden;
+    animation:popIn .4s ease;
+  }
+  .wb-avatar img{ width:100%; height:100%; object-fit:cover; }
+
+  @keyframes popIn{
+    0%{ transform:scale(0.6); opacity:0; }
+    70%{ transform:scale(1.08); opacity:1; }
+    100%{ transform:scale(1); }
+  }
+  .success-icon{
+    animation:popIn .45s ease;
+    width:56px; height:56px;
+    border-radius:50%;
+    background:rgba(63,143,95,0.15);
+    display:flex; align-items:center; justify-content:center;
+    margin:0 auto 18px;
+  }
+  .success-icon svg{ width:28px; height:28px; color:var(--green-soft); }
+  .step-center{ text-align:center; }
+  .redirect-note{ font-size:0.8rem; color:var(--slate); margin-bottom:16px; }
+  .redirect-note b{ color:var(--gold-soft); }
+  .troubleshoot-note{
+    font-size:0.74rem; color:var(--slate); margin-top:16px; line-height:1.6;
+    background:rgba(201,162,39,0.06); border:1px dashed var(--line-strong);
+    padding:10px 12px; border-radius:8px;
+  }
+  .troubleshoot-note code{ color:var(--gold-soft); }
+  .welcome-name{ color:var(--gold-soft); }
+</style>
+</head>
+<body>
+
+<div class="auth-card">
+  <div class="brand">
+    <svg viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="28" stroke="#c9a227" stroke-width="2"/><text x="30" y="38" text-anchor="middle" font-family="Cairo, sans-serif" font-weight="800" font-size="20" fill="#ede7da">MO</text><path d="M15 43 Q30 47 45 43" stroke="#c9a227" stroke-width="1.6" fill="none" stroke-linecap="round" opacity="0.8"/><circle cx="45" cy="19" r="2.3" fill="#e4c55e"/></svg>
+    <div>
+      <strong>محمد عمر موتورز</strong>
+      <span>MOHAMED OMAR MOTORS</span>
+    </div>
+  </div>
+
+  <!-- ===== الخطوة 1: اختيار طريقة الدخول ===== -->
+  <div class="step is-active" id="step-choose">
+    <h1 class="step-title">تسجيل الدخول</h1>
+    <p class="step-sub">سجّل دخولك عشان تتابع حجوزاتك وتستلم عروضنا الخاصة.</p>
+
+    <div class="tabs">
+      <button type="button" class="tab-btn is-active" data-tab="phone">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
+        رقم الهاتف
+      </button>
+      <button type="button" class="tab-btn" data-tab="email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6l10 7 10-7"/></svg>
+        جيميل
+      </button>
+    </div>
+
+    <!-- تبويب الهاتف -->
+    <div id="tab-phone">
+      <form id="phone-form">
+        <div class="field">
+          <label for="phone-input">رقم الهاتف</label>
+          <div class="phone-input-wrap">
+            <span class="phone-code">+20</span>
+            <input type="tel" id="phone-input" placeholder="1xxxxxxxxx" inputmode="numeric" maxlength="10" required>
+          </div>
+          <div class="field-error" id="phone-error">اكتب رقم مصري صحيح (10 أرقام بعد 20+).</div>
+        </div>
+        <button type="submit" class="btn btn-gold">إرسال كود التحقق</button>
+      </form>
+    </div>
+
+    <!-- تبويب الجيميل -->
+    <div id="tab-email" style="display:none;">
+      <button type="button" class="btn btn-google" id="google-btn">
+        <svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.9 32.5 29.4 35.5 24 35.5c-7.5 0-13.5-6-13.5-13.5S16.5 8.5 24 8.5c3.4 0 6.5 1.3 8.9 3.4l6-6C34.9 2.5 29.7 0.5 24 0.5 11.6 0.5 1.5 10.6 1.5 23S11.6 45.5 24 45.5 46.5 35.4 46.5 23c0-.8-.1-1.7-.9-2.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 15.9 18.9 13.5 24 13.5c3.4 0 6.5 1.3 8.9 3.4l6-6C34.9 6.9 29.7 4.9 24 4.9c-8.2 0-15.2 4.7-17.7 9.8z"/><path fill="#4CAF50" d="M24 45.5c5.6 0 10.7-1.9 14.6-5.2l-6.7-5.7c-2 1.4-4.6 2.4-7.9 2.4-5.4 0-9.9-3-11.4-7.6l-6.6 5C9 41 15.9 45.5 24 45.5z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.7 2-2 3.7-3.5 5l6.7 5.7C41.9 36 46.5 30 46.5 23c0-.8-.1-1.7-.9-2.5z"/></svg>
+        الدخول بحساب جيميل
+      </button>
+      <div class="divider">أو</div>
+      <form id="email-form">
+        <div class="field">
+          <label for="email-input">البريد الإلكتروني</label>
+          <input type="email" id="email-input" placeholder="name@gmail.com" required>
+        </div>
+        <button type="submit" class="btn btn-gold">إرسال رابط الدخول</button>
+      </form>
+    </div>
+
+    <div class="divider">أو</div>
+    <button type="button" class="btn btn-ghost btn-block" id="open-signup-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg>
+      إنشاء حساب جديد
+    </button>
+  </div>
+
+  <div class="back-row" style="margin-top:22px;">
+    <a href="#" id="admin-code-link">أنت من فريق العمل؟ دخول بكود الإدارة</a>
+  </div>
+
+  <!-- ===== دخول الإدارة بكود ===== -->
+  <div class="step" id="step-admin-code">
+    <h1 class="step-title">دخول فريق العمل</h1>
+    <p class="step-sub">اكتب كود الدخول الخاص بالإدارة للانتقال مباشرة للوحة التحكم.</p>
+    <form id="admin-code-form">
+      <div class="field">
+        <label for="admin-code-input">كود الإدارة</label>
+        <input type="text" id="admin-code-input" placeholder="اكتب الكود" inputmode="numeric" required>
+        <div class="field-error" id="admin-code-error">الكود غير صحيح، حاول تاني.</div>
+      </div>
+      <button type="submit" class="btn btn-gold">دخول للوحة التحكم</button>
+    </form>
+    <div class="back-row"><a href="#" id="admin-code-back">← رجوع لتسجيل الدخول</a></div>
+  </div>
+
+  <!-- ===== إنشاء حساب جديد ===== -->
+  <div class="step" id="step-signup">
+    <h1 class="step-title">إنشاء حساب جديد</h1>
+    <p class="step-sub">بياناتك هتتحفظ عشان مش تحتاج تسجل دخول تاني كل ما تزور الموقع.</p>
+    <form id="signup-form">
+      <div class="field" style="text-align:center;">
+        <label>صورتك الشخصية (اختياري)</label>
+        <div class="avatar-upload-box" id="avatar-upload-box">
+          <input type="file" id="signup-photo-input" accept="image/*" hidden>
+          <svg id="avatar-upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+          <img id="avatar-upload-img" style="display:none;">
+        </div>
+      </div>
+      <div class="field">
+        <label for="signup-name">الاسم بالكامل</label>
+        <input type="text" id="signup-name" placeholder="مثال: أحمد فتحي" required>
+      </div>
+      <div class="field">
+        <label for="signup-phone">رقم الهاتف</label>
+        <div class="phone-input-wrap">
+          <span class="phone-code">+20</span>
+          <input type="tel" id="signup-phone" placeholder="1xxxxxxxxx" inputmode="numeric" maxlength="10" required>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-gold">إنشاء الحساب والدخول</button>
+    </form>
+    <div class="back-row"><a href="#" id="signup-back-link">← رجوع لتسجيل الدخول</a></div>
+  </div>
+
+  <!-- ===== أهلاً بيك تاني (حساب محفوظ مسبقًا) ===== -->
+  <div class="step" id="step-welcome-back">
+    <div class="step-center">
+      <div class="wb-avatar" id="wb-avatar">؟</div>
+      <h1 class="step-title">أهلاً بيك تاني، <span class="welcome-name" id="wb-name"></span></h1>
+      <p class="step-sub" id="wb-phone"></p>
+      <a href="mohamed-omar-motors.html" class="btn btn-gold">متابعة للموقع</a>
+      <button type="button" class="btn btn-ghost" id="wb-logout-btn" style="margin-top:10px;">تسجيل الخروج من هذا الحساب</button>
+      <p class="troubleshoot-note">لو الصفحة معرفتش تفتح: تأكد إن ملف <code>mohamed-omar-motors.html</code> موجود في نفس المجلد اللي فيه هذا الملف بالظبط.</p>
+    </div>
+  </div>
+
+
+  <!-- ===== الخطوة 2: إدخال كود OTP (للهاتف) ===== -->
+  <div class="step" id="step-otp">
+    <h1 class="step-title">أدخل كود التحقق</h1>
+    <p class="step-sub">بعتنالك كود مكوّن من 6 أرقام على <b id="otp-target-phone">01000000000</b></p>
+
+    <div class="otp-demo-hint" id="otp-demo-hint">وضع تجريبي: الكود هو <strong id="otp-demo-code">123456</strong></div>
+
+    <div class="otp-row" id="otp-row">
+      <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+      <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+      <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+      <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+      <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+      <input type="text" class="otp-box" maxlength="1" inputmode="numeric">
+    </div>
+    <div class="field-error" id="otp-error">الكود غير صحيح، حاول تاني.</div>
+
+    <div class="resend-row">
+      <span id="resend-timer">تقدر تطلب كود جديد بعد 00:30</span>
+      <button type="button" class="resend-btn" id="resend-btn" disabled>إعادة الإرسال</button>
+    </div>
+
+    <button type="button" class="btn btn-gold" id="otp-confirm-btn">تأكيد</button>
+
+    <div class="back-row"><a href="#" id="otp-back-link">← تغيير رقم الهاتف</a></div>
+  </div>
+
+  <!-- ===== الخطوة 3: تأكيد البريد (رابط دخول) ===== -->
+  <div class="step" id="step-email-sent">
+    <div class="step-center">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6l10 7 10-7"/></svg>
+      </div>
+      <h1 class="step-title">افتح بريدك الإلكتروني</h1>
+      <p class="step-sub">بعتنالك رابط تسجيل دخول على <b id="email-target"></b>. دوس على الرابط جوه الإيميل عشان تكمّل الدخول.</p>
+      <button type="button" class="btn btn-ghost" id="email-back-btn">← الرجوع</button>
+    </div>
+  </div>
+
+  <!-- ===== الخطوة 4: تم الدخول ===== -->
+  <div class="step" id="step-success">
+    <div class="step-center">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <h1 class="step-title">أهلاً بيك، <span class="welcome-name" id="success-name">عميلنا العزيز</span></h1>
+      <p class="step-sub">تم تسجيل دخولك وحفظ بياناتك بنجاح. تقدر دلوقتي تتصفح الأسطول وتحجز سيارتك.</p>
+      <p class="redirect-note" id="redirect-note">هننقلك تلقائيًا للموقع خلال <b id="redirect-seconds">2</b> ثانية...</p>
+      <a href="mohamed-omar-motors.html" class="btn btn-gold">الذهاب لصفحة الحجز الآن</a>
+      <p class="troubleshoot-note">لو الصفحة معرفتش تفتح: تأكد إن ملف <code>mohamed-omar-motors.html</code> موجود في نفس المجلد اللي فيه هذا الملف بالظبط.</p>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  /* ==========================================================
+     هذه الصفحة واجهة تجريبية (Front-end فقط) لإظهار تجربة الدخول.
+     لتشغيلها فعليًا محتاج باك إند حقيقي:
+     - رقم الهاتف: خدمة إرسال SMS مثل Twilio / Vonage لإرسال كود حقيقي، وتخزين الكود والتحقق منه في سيرفر.
+     - جيميل: تسجيل دخول عبر Google OAuth (Google Identity Services) بمفتاح مشروع حقيقي من Google Cloud Console.
+     ========================================================== */
+
+  const steps = document.querySelectorAll('.step');
+  function showStep(id){
+    steps.forEach(s=> s.classList.toggle('is-active', s.id === id));
+  }
+
+  /* ============ توجيه تلقائي بعد نجاح تسجيل الدخول/الحساب ============
+     ملاحظة: التوجيه محتاج ملف mohamed-omar-motors.html يكون موجود فعليًا
+     في نفس المجلد، وإلا المتصفح هيوريك خطأ "الملف غير موجود" (زي أي رابط
+     عادي في أي موقع) — ده مش خطأ في الكود، لازم الملفات الأربعة كلها
+     تكون محفوظة مع بعض في نفس المكان. */
+  function startRedirectCountdown(){
+    let seconds = 2;
+    const secEl = document.getElementById('redirect-seconds');
+    if(secEl) secEl.textContent = seconds;
+    const interval = setInterval(()=>{
+      seconds -= 1;
+      if(secEl) secEl.textContent = Math.max(seconds, 0);
+      if(seconds <= 0){
+        clearInterval(interval);
+        window.location.href = 'mohamed-omar-motors.html';
+      }
+    }, 1000);
+  }
+
+  const toastEl = document.getElementById('toast');
+  function showToast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add('is-visible');
+    setTimeout(()=> toastEl.classList.remove('is-visible'), 2500);
+  }
+
+  /* ============ حفظ واسترجاع بيانات الحساب (تخزين دائم) ============
+     نستخدم window.storage (شخصي، غير مشترك) عشان بيانات العميل تفضل
+     محفوظة بين الزيارات المختلفة من غير ما يسجل دخول تاني كل مرة.
+     ده بيشتغل داخل معاينة Claude. لو الموقع اتفتح كملف عادي في متصفح
+     عادي بره Claude، الحفظ الدائم محتاج باك إند حقيقي (قاعدة بيانات + سيرفر). */
+  async function saveAccount(account){
+    try{
+      if(window.storage){
+        await window.storage.set('account:profile', JSON.stringify(account), false);
+        return true;
+      }
+    } catch(err){ /* التخزين غير متاح */ }
+    return false;
+  }
+  async function loadAccount(){
+    try{
+      if(window.storage){
+        const res = await window.storage.get('account:profile', false);
+        if(res && res.value) return JSON.parse(res.value);
+      }
+    } catch(err){ /* لا يوجد حساب محفوظ */ }
+    return null;
+  }
+  async function clearAccount(){
+    try{ if(window.storage) await window.storage.delete('account:profile', false); }
+    catch(err){ /* تجاهل */ }
+  }
+
+  /* ============ التحقق من وجود حساب محفوظ عند فتح الصفحة ============ */
+  (async ()=>{
+    const account = await loadAccount();
+    if(account){
+      document.getElementById('wb-name').textContent = account.name || account.phone || account.email || 'عميلنا العزيز';
+      document.getElementById('wb-phone').textContent = account.phone ? ('+20 ' + account.phone) : (account.email || '');
+      const avatarEl = document.getElementById('wb-avatar');
+      if(account.photo){
+        avatarEl.innerHTML = `<img src="${account.photo}" alt="${account.name || ''}">`;
+      } else {
+        avatarEl.textContent = (account.name || 'ع').trim().charAt(0);
+      }
+      showStep('step-welcome-back');
+    }
+  })();
+
+  document.getElementById('wb-logout-btn').addEventListener('click', async ()=>{
+    await clearAccount();
+    showStep('step-choose');
+    showToast('تم تسجيل الخروج من الحساب');
+  });
+
+  /* ============ إنشاء حساب جديد ============ */
+  document.getElementById('open-signup-btn').addEventListener('click', ()=> showStep('step-signup'));
+  document.getElementById('signup-back-link').addEventListener('click', (e)=>{ e.preventDefault(); showStep('step-choose'); });
+
+  function compressImage(file, cb){
+    const reader = new FileReader();
+    reader.onload = (ev)=>{
+      const img = new Image();
+      img.onload = ()=>{
+        const maxW = 300;
+        const scale = Math.min(1, maxW / img.width);
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        cb(canvas.toDataURL('image/jpeg', 0.75));
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  let signupPhoto = '';
+  const avatarUploadBox = document.getElementById('avatar-upload-box');
+  const avatarUploadIcon = document.getElementById('avatar-upload-icon');
+  const avatarUploadImg = document.getElementById('avatar-upload-img');
+  const signupPhotoInput = document.getElementById('signup-photo-input');
+  avatarUploadBox.addEventListener('click', ()=> signupPhotoInput.click());
+  signupPhotoInput.addEventListener('change', ()=>{
+    const file = signupPhotoInput.files[0];
+    if(!file) return;
+    compressImage(file, (dataUrl)=>{
+      signupPhoto = dataUrl;
+      avatarUploadImg.src = dataUrl;
+      avatarUploadImg.style.display = 'block';
+      avatarUploadIcon.style.display = 'none';
+    });
+  });
+
+  document.getElementById('signup-form').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const name = document.getElementById('signup-name').value.trim();
+    const phone = document.getElementById('signup-phone').value.trim();
+    if(!name || !/^1[0125][0-9]{8}$/.test(phone)){
+      showToast('تأكد من الاسم ورقم الهاتف قبل المتابعة');
+      return;
+    }
+    const account = { name, phone, photo: signupPhoto, createdAt: new Date().toISOString() };
+    await saveAccount(account);
+    document.getElementById('success-name').textContent = name;
+    showStep('step-success'); startRedirectCountdown();
+    showToast('تم إنشاء حسابك وحفظ بياناتك بنجاح');
+  });
+
+  /* ============ التبويبات ============ */
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabPhone = document.getElementById('tab-phone');
+  const tabEmail = document.getElementById('tab-email');
+  tabBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      tabBtns.forEach(b=> b.classList.toggle('is-active', b === btn));
+      const isPhone = btn.dataset.tab === 'phone';
+      tabPhone.style.display = isPhone ? 'block' : 'none';
+      tabEmail.style.display = isPhone ? 'none' : 'block';
+    });
+  });
+
+  /* ============ توليد كود عشوائي (محاكاة فقط) ============ */
+  function generateDemoCode(){
+    return String(Math.floor(100000 + Math.random()*900000));
+  }
+  let currentOtp = '123456';
+  let enteredPhone = '';
+
+  /* ============ نموذج الهاتف ============ */
+  const phoneForm = document.getElementById('phone-form');
+  const phoneInput = document.getElementById('phone-input');
+  const phoneError = document.getElementById('phone-error');
+
+  phoneForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const val = phoneInput.value.trim();
+    const isValid = /^1[0125][0-9]{8}$/.test(val);
+    if(!isValid){
+      phoneError.classList.add('is-visible');
+      return;
+    }
+    phoneError.classList.remove('is-visible');
+    enteredPhone = '0' + val;
+    currentOtp = generateDemoCode();
+
+    document.getElementById('otp-target-phone').textContent = '+20 ' + val;
+    document.getElementById('otp-demo-code').textContent = currentOtp;
+    showStep('step-otp');
+    startResendTimer();
+    document.querySelector('#otp-row .otp-box').focus();
+    showToast(`(محاكاة) تم إرسال كود التحقق إلى +20${val}`);
+  });
+
+  /* ============ صناديق الـ OTP ============ */
+  const otpBoxes = document.querySelectorAll('.otp-box');
+  otpBoxes.forEach((box, idx)=>{
+    box.addEventListener('input', ()=>{
+      box.value = box.value.replace(/[^0-9]/g,'');
+      if(box.value && idx < otpBoxes.length - 1){ otpBoxes[idx+1].focus(); }
+    });
+    box.addEventListener('keydown', (e)=>{
+      if(e.key === 'Backspace' && !box.value && idx > 0){ otpBoxes[idx-1].focus(); }
+    });
+    box.addEventListener('paste', (e)=>{
+      const text = (e.clipboardData.getData('text') || '').replace(/[^0-9]/g,'').slice(0,6);
+      if(text.length === 6){
+        e.preventDefault();
+        otpBoxes.forEach((b,i)=> b.value = text[i] || '');
+        otpBoxes[5].focus();
+      }
+    });
+  });
+
+  document.getElementById('otp-confirm-btn').addEventListener('click', ()=>{
+    const code = Array.from(otpBoxes).map(b=> b.value).join('');
+    const otpError = document.getElementById('otp-error');
+    if(code.length < 6){
+      otpError.textContent = 'اكتب الكود كامل (6 أرقام).';
+      otpError.classList.add('is-visible');
+      return;
+    }
+    if(code !== currentOtp){
+      otpError.textContent = 'الكود غير صحيح، حاول تاني.';
+      otpError.classList.add('is-visible');
+      return;
+    }
+    otpError.classList.remove('is-visible');
+    const phoneForAccount = enteredPhone.slice(1);
+    document.getElementById('success-name').textContent = '+20' + phoneForAccount;
+    saveAccount({ name:'', phone: phoneForAccount, photo:'', createdAt: new Date().toISOString() });
+    showStep('step-success'); startRedirectCountdown();
+  });
+
+  document.getElementById('otp-back-link').addEventListener('click', (e)=>{
+    e.preventDefault();
+    showStep('step-choose');
+    otpBoxes.forEach(b=> b.value = '');
+  });
+
+  /* ============ عدّاد إعادة الإرسال ============ */
+  let resendInterval;
+  function startResendTimer(){
+    let seconds = 30;
+    const resendBtn = document.getElementById('resend-btn');
+    const resendTimer = document.getElementById('resend-timer');
+    resendBtn.disabled = true;
+    resendTimer.style.display = 'inline';
+    clearInterval(resendInterval);
+    resendInterval = setInterval(()=>{
+      seconds -= 1;
+      const m = String(Math.floor(seconds/60)).padStart(2,'0');
+      const s = String(seconds%60).padStart(2,'0');
+      resendTimer.textContent = `تقدر تطلب كود جديد بعد ${m}:${s}`;
+      if(seconds <= 0){
+        clearInterval(resendInterval);
+        resendTimer.style.display = 'none';
+        resendBtn.disabled = false;
+      }
+    }, 1000);
+  }
+  document.getElementById('resend-btn').addEventListener('click', ()=>{
+    currentOtp = generateDemoCode();
+    document.getElementById('otp-demo-code').textContent = currentOtp;
+    otpBoxes.forEach(b=> b.value = '');
+    otpBoxes[0].focus();
+    startResendTimer();
+    showToast('(محاكاة) تم إرسال كود جديد');
+  });
+
+  /* ============ نموذج الجيميل (رابط دخول) ============ */
+  document.getElementById('email-form').addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const email = document.getElementById('email-input').value.trim();
+    document.getElementById('email-target').textContent = email;
+    showStep('step-email-sent');
+    showToast(`(محاكاة) تم إرسال رابط الدخول إلى ${email}`);
+  });
+  document.getElementById('email-back-btn').addEventListener('click', ()=> showStep('step-choose'));
+
+  /* ============ زر جيميل المباشر (محاكاة Google OAuth) ============ */
+  document.getElementById('google-btn').addEventListener('click', ()=>{
+    showToast('(محاكاة) هيتفتح هنا نافذة اختيار حساب جيميل الحقيقية بعد ربط Google OAuth');
+    setTimeout(()=>{
+      document.getElementById('success-name').textContent = 'name@gmail.com';
+      saveAccount({ name:'', phone:'', email:'name@gmail.com', photo:'', createdAt: new Date().toISOString() });
+      showStep('step-success'); startRedirectCountdown();
+    }, 900);
+  });
+  /* ============ دخول الإدارة بكود ============ */
+  const ADMIN_ACCESS_CODE = '208700';
+  document.getElementById('admin-code-link').addEventListener('click', (e)=>{
+    e.preventDefault();
+    showStep('step-admin-code');
+  });
+  document.getElementById('admin-code-back').addEventListener('click', (e)=>{
+    e.preventDefault();
+    showStep('step-choose');
+  });
+  document.getElementById('admin-code-form').addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const code = document.getElementById('admin-code-input').value.trim();
+    const errorEl = document.getElementById('admin-code-error');
+    if(code === ADMIN_ACCESS_CODE){
+      errorEl.classList.remove('is-visible');
+      window.location.href = 'admin.html?code=' + code;
+    } else {
+      errorEl.classList.add('is-visible');
+    }
+  });
+</script>
+
+</body>
+</html>
